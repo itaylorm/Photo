@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AlbumsVC.swift
 //  Photo
 //
 //  Created by Taylor Maxwell on 2/5/20.
@@ -8,13 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class AlbumsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
-
 }
-
