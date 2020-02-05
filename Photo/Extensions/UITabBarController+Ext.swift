@@ -10,13 +10,14 @@ import UIKit
 
 extension UITabBarController {
     
-    func createNC(vc: UIViewController, title: String, image: UIImage?, tabPosition: Int) -> UINavigationController {
-        guard title != "", let image = image, tabPosition > -1 else {
+    func createNC(viewController: UIViewController, title: String, image: UIImage?, tabPosition: Int) -> UINavigationController {
+        guard !title.isEmpty, let image = image, tabPosition > -1 else {
+            print("Unable to create view controller")
             return UINavigationController()
         }
-        vc.title = title
-        vc.tabBarItem = UITabBarItem(title: title, image: image, tag: tabPosition)
-        return UINavigationController(rootViewController: vc)
+        viewController.title = title
+        viewController.tabBarItem = UITabBarItem(title: title, image: image, tag: tabPosition)
+        return UINavigationController(rootViewController: viewController)
     }
     
 }

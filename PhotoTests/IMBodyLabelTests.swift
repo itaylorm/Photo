@@ -19,12 +19,14 @@ class IMBodyLabelTests: XCTestCase {
         XCTAssertEqual(bodyLabel.textAlignment, alignment, "IMBodyLabel did not keep the passed text alignment")
         
         let expectedTextColor = UIColor.secondaryLabel
-        XCTAssertEqual(bodyLabel.textColor, expectedTextColor, "IMBodyLabel textColor property has changed from expected \(expectedTextColor.description)")
+        XCTAssertEqual(bodyLabel.textColor, expectedTextColor,
+                       "IMBodyLabel textColor property has changed from expected \(expectedTextColor.description)")
         XCTAssertTrue(bodyLabel.adjustsFontSizeToFitWidth, "IMBodyLabel adjustsFontSizeToFitWidth is not true")
         
         let expectedMinimumScaleFactor: CGFloat = 0.75
         let actualMiniumScaleFactor: CGFloat = bodyLabel.minimumScaleFactor
-        XCTAssertTrue(abs(actualMiniumScaleFactor - expectedMinimumScaleFactor) < 0.01, "IMBodyLabel minimumScaleFactor is not set to \(expectedMinimumScaleFactor)")
+        XCTAssertTrue(abs(actualMiniumScaleFactor - expectedMinimumScaleFactor) < 0.01,
+                      "IMBodyLabel minimumScaleFactor is not set to \(expectedMinimumScaleFactor)")
         
         let expectedLineBreakMode = NSLineBreakMode.byWordWrapping
         XCTAssertEqual(bodyLabel.lineBreakMode, expectedLineBreakMode)

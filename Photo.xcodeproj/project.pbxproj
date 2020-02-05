@@ -36,6 +36,7 @@
 		34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227223EB1F7700B5F25D /* MemoriesVC.swift */; };
 		34CF227723EB347600B5F25D /* UITabBarController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227623EB347600B5F25D /* UITabBarController+Ext.swift */; };
 		34CF228723EB3C2400B5F25D /* IMTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF228623EB3C2400B5F25D /* IMTabBarControllerTests.swift */; };
+		8A788BB2104C70BCC72C0765 /* libPods-Photo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16366A05DC7A909F304AA480 /* Pods-Photo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo.debug.xcconfig"; path = "Target Support Files/Pods-Photo/Pods-Photo.debug.xcconfig"; sourceTree = "<group>"; };
 		3406763123EB5E9B00DED300 /* IMTitleLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMTitleLabelTests.swift; sourceTree = "<group>"; };
 		3406763323EB682500DED300 /* IMBodyLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMBodyLabelTests.swift; sourceTree = "<group>"; };
 		3406763523EB691800DED300 /* IMButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMButtonTests.swift; sourceTree = "<group>"; };
@@ -82,6 +84,8 @@
 		34CF227C23EB3B8A00B5F25D /* PhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF228023EB3B8A00B5F25D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34CF228623EB3C2400B5F25D /* IMTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMTabBarControllerTests.swift; sourceTree = "<group>"; };
+		71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo.release.xcconfig"; path = "Target Support Files/Pods-Photo/Pods-Photo.release.xcconfig"; sourceTree = "<group>"; };
+		87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Photo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A788BB2104C70BCC72C0765 /* libPods-Photo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,12 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26C85916239F643156B201F1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				16366A05DC7A909F304AA480 /* Pods-Photo.debug.xcconfig */,
+				71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		34CF222823EB030900B5F25D = {
 			isa = PBXGroup;
 			children = (
 				34CF223323EB030900B5F25D /* Photo */,
 				34CF227D23EB3B8A00B5F25D /* PhotoTests */,
 				34CF223223EB030900B5F25D /* Products */,
+				26C85916239F643156B201F1 /* Pods */,
+				EFADC8CCBE2A6EA9933C6F32 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,6 +229,14 @@
 			path = PhotoTests;
 			sourceTree = "<group>";
 		};
+		EFADC8CCBE2A6EA9933C6F32 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,9 +244,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 34CF224523EB030900B5F25D /* Build configuration list for PBXNativeTarget "Photo" */;
 			buildPhases = (
+				0F55BD299A4C9FA98D20CBD7 /* [CP] Check Pods Manifest.lock */,
 				34CF222D23EB030900B5F25D /* Sources */,
 				34CF222E23EB030900B5F25D /* Frameworks */,
 				34CF222F23EB030900B5F25D /* Resources */,
+				349CDC4C23EB76E60041431F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -307,6 +333,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F55BD299A4C9FA98D20CBD7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Photo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		349CDC4C23EB76E60041431F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null; then\n  ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		34CF222D23EB030900B5F25D /* Sources */ = {
@@ -488,6 +556,7 @@
 		};
 		34CF224623EB030900B5F25D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16366A05DC7A909F304AA480 /* Pods-Photo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -506,6 +575,7 @@
 		};
 		34CF224723EB030900B5F25D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

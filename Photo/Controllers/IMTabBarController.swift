@@ -18,18 +18,20 @@ class IMTabBarController: UITabBarController {
     }
     
     func createPhotosNC() -> UINavigationController {
-        return createNC(vc: PhotosVC(), title: TabBarNames.photos, image: Images.tabImagePhotos, tabPosition: TabBarIndexes.photos)
+        return createNC(viewController: PhotosVC(), title: TabBarNames.photos, image: Images.tabImagePhotos, tabPosition: TabBarIndexes.photos)
     }
     
     func createAlbumsNC() -> UINavigationController {
-        return createNC(vc: AlbumsVC(), title: TabBarNames.albums, image: Images.tabImageAlbums, tabPosition: TabBarIndexes.albums)
+        return createNC(viewController: AlbumsVC(), title: TabBarNames.albums, image: Images.tabImageAlbums, tabPosition: TabBarIndexes.albums)
     }
     
     func createLocationsNC() -> UINavigationController {
-        return createNC(vc: LocationsVC(), title: TabBarNames.locations, image: Images.tabImageLocations, tabPosition: TabBarIndexes.locations)
+        return createNC(viewController: LocationsVC(), title: TabBarNames.locations, image: Images.tabImageLocations,
+                        tabPosition: TabBarIndexes.locations)
     }
     
     func createMemoriesNC() -> UINavigationController {
-        return createNC(vc: MemoriesVC(), title: TabBarNames.memories, image: Images.tabImageMemories, tabPosition: TabBarIndexes.memories)
+        return createNC(viewController: MemoriesVC(), title: TabBarNames.memories, image: Images.tabImageMemories,
+                        tabPosition: TabBarIndexes.memories)
     }
 }

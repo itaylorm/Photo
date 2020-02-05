@@ -16,7 +16,8 @@ class IMTabBarControllerTests: XCTestCase {
         XCTAssert(tabBarController.tabBar.tintColor == Colors.tintColor)
         
         let expectedTabCount = 4
-        XCTAssertEqual(tabBarController.children.count, expectedTabCount, "TabBarController does not have the correct number of children with \(tabBarController.children.count) instead of \(expectedTabCount)")
+        XCTAssertEqual(tabBarController.children.count, expectedTabCount,
+                       "TabBarController does all expected children with \(tabBarController.children.count) expected: \(expectedTabCount)")
     }
 
     func testTabBarControllerCreatedWithInvalidTintColor() {
@@ -49,18 +50,20 @@ class IMTabBarControllerTests: XCTestCase {
         
         let controller = tabBarController.viewControllers![tabPosition]
         XCTAssertTrue(controller is UINavigationController)
-        let nc = controller as! UINavigationController
+        let navController = controller as? UINavigationController
         
         let expectedCount = 1
-        XCTAssertEqual(nc.viewControllers.count, expectedCount, "\(title)NC has \(nc.viewControllers.count) view controllers instead of the expected: \(expectedCount)")
+        XCTAssertEqual(navController?.viewControllers.count, expectedCount,
+                       "\(title)NC has \(String(describing: navController?.viewControllers.count)) expected: \(expectedCount)")
         
-        let childController = nc.viewControllers[0]
+        let childController = navController?.viewControllers[0]
         XCTAssertTrue(childController is T, "\(title)NC has a child controller that is not of the expected type: \(title)VC")
-        let vc = childController as! T
-        XCTAssertEqual(vc.title, title)
-        XCTAssertNotNil(vc.tabBarItem, "PhotosVC is not associated with the TabBarController")
-        XCTAssertEqual(vc.tabBarItem.tag, tabPosition, "\(title)VC is in position: \(vc.tabBarItem.tag) instead of expected: \(tabPosition)")
-        XCTAssertEqual(vc.tabBarItem.image, image)
+        let viewController = childController as? T
+        XCTAssertEqual(viewController?.title, title)
+        XCTAssertNotNil(viewController?.tabBarItem, "PhotosVC is not associated with the TabBarController")
+        XCTAssertEqual(viewController?.tabBarItem.tag, tabPosition,
+                       "\(title)VC is in position: \(String(describing: viewController?.tabBarItem.tag)) instead of expected: \(tabPosition)")
+        XCTAssertEqual(viewController?.tabBarItem.image, image)
     }
     
 }
