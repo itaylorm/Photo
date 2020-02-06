@@ -24,5 +24,21 @@ enum UIHelper {
         
         return flowLayout
     }
+ 
+    static func createColumnFlowLayout(in view: UIView, columns: CGFloat) -> UICollectionViewFlowLayout {
+        
+        let width = view.bounds.width
+        let padding: CGFloat = 12
+        let minimumItemSpacing: CGFloat = 10
+        let spaces = columns - 1
+        let availableSize = width - (padding * spaces) - (minimumItemSpacing * spaces)
+        let itemSize =  availableSize / columns
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
+        
+        return flowLayout
+    }
     
 }

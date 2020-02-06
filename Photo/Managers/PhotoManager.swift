@@ -66,7 +66,7 @@ class PhotoManager {
             for imageIndex in startIndex...endIndex {
                 let asset = fetchResult.object(at: imageIndex)
                  imgManager.requestImage(for: asset,
-                                         targetSize: CGSize(width: 500, height: 500),
+                                         targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight),
                                          contentMode: .aspectFill, options: requestOptions) { (image, _) in
                      if let image = image {
                         images.append(PhotoViewModel(asset: asset, image: image))
