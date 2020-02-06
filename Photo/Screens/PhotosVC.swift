@@ -7,21 +7,115 @@
 //
 
 import UIKit
+import Photos
 
-class PhotosVC: UIViewController {
+class PhotosVC: DataLoadingVC {
 
+    enum Section {
+        case main
+    }
+    
+    private var page = 1
+    private var isLoadingMorePhotos = false
+    private var hasMorePhotos = true
+    
     var collectionView: UICollectionView!
-    var images = [UIImage]()
+    var photos = [UIImage]()
+    var dataSource: UICollectionViewDiffableDataSource<Section, UIImage>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureCollectionView()
+        getPhotos()
+        configureDataSource()
     }
-
+    
+    func getPhotos() {
+        
+        showLoadingView()
+        isLoadingMorePhotos = true
+        
+        PhotoManager.shared.getPhotos(page: page) { [weak self] result in
+            guard let self = self else { return }
+            
+            self.dismissLoadingView()
+            
+            switch result {
+            case .success(let photos):
+                self.updateData(on: photos)
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "OK")
+            }
+        }
+        self.isLoadingMorePhotos = false
+    }
+    
     func configureViewController() {
         title = "Photos"
         view.backgroundColor = Colors.background
         navigationController?.navigationBar.prefersLargeTitles = true
         
+    }
+    
+    func configureCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnFlowLayout(in: view))
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
+        collectionView.delegate = self
+    }
+    
+    func configureDataSource() {
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, UIImage>(
+            collectionView: collectionView, cellProvider: { (collectionView, indexPath, photo) -> UICollectionViewCell? in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell
+            
+            if let cell = cell {
+                cell.set(photo: photo)
+            }
+
+            return cell
+            
+        })
+    }
+    
+    func pruneNegativeWidthConstraints() {
+        for subView in self.view.subviews {
+            for constraint in subView.constraints where constraint.debugDescription.contains("width == - 16") {
+                subView.removeConstraint(constraint)
+            }
+        }
+    }
+    
+    func updateData(on images: [UIImage]) {
+        if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
+        
+        self.photos.append(contentsOf: images)
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, UIImage>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(self.photos)
+        
+        DispatchQueue.main.async {
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+
+    }
+}
+
+extension PhotosVC: UICollectionViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard !isLoadingMorePhotos, hasMorePhotos else { return }
+            page += 1
+            getPhotos()
+        }
     }
 }

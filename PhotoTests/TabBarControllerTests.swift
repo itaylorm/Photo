@@ -9,10 +9,10 @@
 import XCTest
 @testable import Photo
 
-class IMTabBarControllerTests: XCTestCase {
+class TabBarControllerTests: XCTestCase {
     
     func testValidTabBarControllerCreated() {
-        let tabBarController = IMTabBarController()
+        let tabBarController = TabBarController()
         XCTAssert(tabBarController.tabBar.tintColor == Colors.tint)
         
         let expectedTabCount = 4
@@ -21,7 +21,7 @@ class IMTabBarControllerTests: XCTestCase {
     }
 
     func testTabBarControllerCreatedWithInvalidTintColor() {
-        let tabBarController = IMTabBarController()
+        let tabBarController = TabBarController()
         XCTAssert(tabBarController.tabBar.tintColor != UIColor.systemRed, "TabBarController does not have the correct tint color")
     }
     
@@ -42,7 +42,7 @@ class IMTabBarControllerTests: XCTestCase {
     }
     
     private func validateTab<T: UIViewController>(vcType: T, title: String, image: UIImage, tabPosition: Int) {
-        let tabBarController = IMTabBarController()
+        let tabBarController = TabBarController()
         let viewControllers = tabBarController.viewControllers
         XCTAssertNotNil(viewControllers, "The tab view controllers cannot be nil")
         

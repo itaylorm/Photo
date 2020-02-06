@@ -8,12 +8,12 @@
 
 import UIKit
 
-class IMAlertVC: UIViewController {
+class AlertVC: UIViewController {
 
-    let containerView = IMContainerView()
-    let titleLabel = IMTitleLabel(textAlignment: .center, fontSize: 20)
-    let messageLabel = IMBodyLabel(textAlignment: .center)
-    let actionButton = IMButton(backgroundColor: .systemPink, title: "Ok")
+    let containerView = ContainerView()
+    let titleLabel = TitleLabel(textAlignment: .center, fontSize: 20)
+    let messageLabel = BodyLabel(textAlignment: .center)
+    let actionButton = Button(backgroundColor: .systemPink, title: "Ok")
     
     var alertTitle: String?
     var message: String?

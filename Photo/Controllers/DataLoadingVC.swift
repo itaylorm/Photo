@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IMDataLoadingVC: UIViewController {
+class DataLoadingVC: UIViewController {
 
     var containerView: UIView!
     
@@ -46,7 +46,7 @@ class IMDataLoadingVC: UIViewController {
      
      func showEmptyStateView(with message: String, in view: UIView) {
         navigationItem.searchController = nil
-        let emptyStateView = IMEmptyStateView(message: message)
+        let emptyStateView = EmptyStateView(message: message)
         emptyStateView.frame = view.bounds
         view.addSubview(emptyStateView)
      }

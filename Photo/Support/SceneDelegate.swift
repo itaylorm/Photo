@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = IMTabBarController()
+        window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
         UINavigationBar.appearance().tintColor = Colors.tint
     }

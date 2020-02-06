@@ -8,9 +8,9 @@
 
 import UIKit
 
-class IMEmptyStateView: UIView {
+class EmptyStateView: UIView {
 
-    let messageLabel = IMTitleLabel(textAlignment: .center, fontSize: 28)
+    let messageLabel = TitleLabel(textAlignment: .center, fontSize: 28)
     let logoImageView = UIImageView()
     
     override init(frame: CGRect) {

@@ -1,5 +1,5 @@
 //
-//  IMButton.swift
+//  IMTitleLabel.swift
 //  Photo
 //
 //  Created by Taylor Maxwell on 2/5/20.
@@ -8,31 +8,28 @@
 
 import UIKit
 
-class IMButton: UIButton {
+class TitleLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(backgroundColor: UIColor, title: String) {
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
         self.init(frame: .zero)
-        set(backgroundColor: backgroundColor, title: title)
-    }
-    
-    func set(backgroundColor: UIColor, title: String) {
-        self.backgroundColor = backgroundColor
-        self.setTitle(title, for: .normal)
+        self.textAlignment = textAlignment
+        self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
     }
     
     private func configure() {
-        layer.cornerRadius = 10
-        setTitleColor(.white, for: .normal)
-        titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        textColor = .label
+        adjustsFontSizeToFitWidth = true
+        minimumScaleFactor = 0.90
+        lineBreakMode = .byTruncatingTail
         translatesAutoresizingMaskIntoConstraints = false
     }
     

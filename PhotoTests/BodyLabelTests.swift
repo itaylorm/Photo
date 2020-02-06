@@ -9,24 +9,24 @@
 import XCTest
 @testable import Photo
 
-class IMBodyLabelTests: XCTestCase {
+class BodyLabelTests: XCTestCase {
 
-    func testIMBodyLabelCreate() {
+    func testValidBodyLabelCreated() {
         
         let alignment = NSTextAlignment.left
-        let bodyLabel = IMBodyLabel(textAlignment: alignment)
-        XCTAssertNotNil(bodyLabel, "IMBodyLabel instance could not be created")
-        XCTAssertEqual(bodyLabel.textAlignment, alignment, "IMBodyLabel did not keep the passed text alignment")
+        let bodyLabel = BodyLabel(textAlignment: alignment)
+        XCTAssertNotNil(bodyLabel, "BodyLabel instance could not be created")
+        XCTAssertEqual(bodyLabel.textAlignment, alignment, "BodyLabel did not keep the passed text alignment")
         
         let expectedTextColor = UIColor.secondaryLabel
         XCTAssertEqual(bodyLabel.textColor, expectedTextColor,
-                       "IMBodyLabel textColor property has changed from expected \(expectedTextColor.description)")
-        XCTAssertTrue(bodyLabel.adjustsFontSizeToFitWidth, "IMBodyLabel adjustsFontSizeToFitWidth is not true")
+                       "BodyLabel textColor property has changed from expected \(expectedTextColor.description)")
+        XCTAssertTrue(bodyLabel.adjustsFontSizeToFitWidth, "BodyLabel adjustsFontSizeToFitWidth is not true")
         
         let expectedMinimumScaleFactor: CGFloat = 0.75
         let actualMiniumScaleFactor: CGFloat = bodyLabel.minimumScaleFactor
         XCTAssertTrue(abs(actualMiniumScaleFactor - expectedMinimumScaleFactor) < 0.01,
-                      "IMBodyLabel minimumScaleFactor is not set to \(expectedMinimumScaleFactor)")
+                      "BodyLabel minimumScaleFactor is not set to \(expectedMinimumScaleFactor)")
         
         let expectedLineBreakMode = NSLineBreakMode.byWordWrapping
         XCTAssertEqual(bodyLabel.lineBreakMode, expectedLineBreakMode)

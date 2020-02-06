@@ -23,6 +23,10 @@ class PhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func set(photo: UIImage) {
+        imageView.image = photo
+    }
+    
     private func configure() {
         self.addSubview(imageView)
         imageView.pinToEdges(of: self)

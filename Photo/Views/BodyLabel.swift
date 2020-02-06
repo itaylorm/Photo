@@ -1,5 +1,5 @@
 //
-//  IMTitleLabel.swift
+//  IMBodyLabel.swift
 //  Photo
 //
 //  Created by Taylor Maxwell on 2/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IMTitleLabel: UILabel {
+class BodyLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,18 +19,19 @@ class IMTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+    convenience init(textAlignment: NSTextAlignment) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
-        self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+
     }
     
     private func configure() {
-        textColor = .label
+        textColor = .secondaryLabel
+        font = UIFont.preferredFont(forTextStyle: .body)
+        adjustsFontForContentSizeCategory = true
         adjustsFontSizeToFitWidth = true
-        minimumScaleFactor = 0.90
-        lineBreakMode = .byTruncatingTail
+        minimumScaleFactor = 0.75
+        lineBreakMode = .byWordWrapping
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
 }
