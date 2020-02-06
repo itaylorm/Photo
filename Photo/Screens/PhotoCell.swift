@@ -1,5 +1,5 @@
 //
-//  IMContainerView.swift
+//  ImageCell.swift
 //  Photo
 //
 //  Created by Taylor Maxwell on 2/5/20.
@@ -8,8 +8,12 @@
 
 import UIKit
 
-class IMContainerView: UIView {
-
+class PhotoCell: UICollectionViewCell {
+    
+    static let reuseID = "PhotoCell"
+    
+    let imageView = IMPhotoImageView(frame: .zero)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -20,12 +24,7 @@ class IMContainerView: UIView {
     }
     
     private func configure() {
-        
-        backgroundColor = Colors.background
-        layer.cornerRadius = 16
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.white.cgColor
-        translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(imageView)
+        imageView.pinToEdges(of: self)
     }
-
 }

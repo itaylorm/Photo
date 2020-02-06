@@ -20,6 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = IMTabBarController()
         window?.makeKeyAndVisible()
-        UINavigationBar.appearance().tintColor = Colors.tintColor
+        UINavigationBar.appearance().tintColor = Colors.tint
     }
 }

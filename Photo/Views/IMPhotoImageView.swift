@@ -1,5 +1,5 @@
 //
-//  IMContainerView.swift
+//  IMImageView.swift
 //  Photo
 //
 //  Created by Taylor Maxwell on 2/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IMContainerView: UIView {
+class IMPhotoImageView: UIImageView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,11 +20,8 @@ class IMContainerView: UIView {
     }
     
     private func configure() {
-        
-        backgroundColor = Colors.background
-        layer.cornerRadius = 16
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.white.cgColor
+        contentMode = .scaleAspectFill
+        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
     }
 

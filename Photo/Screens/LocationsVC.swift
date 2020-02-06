@@ -12,6 +12,13 @@ class LocationsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureViewController()
     }
 
+    func configureViewController() {
+        title = "Locations"
+        view.backgroundColor = Colors.background
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+    }
 }

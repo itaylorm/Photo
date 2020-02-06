@@ -12,8 +12,8 @@ class IMTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        UITabBar.appearance().tintColor = Colors.tintColor
+        tabBar.backgroundColor = .secondarySystemBackground
+        UITabBar.appearance().tintColor = Colors.tint
         self.viewControllers = [createPhotosNC(), createAlbumsNC(), createLocationsNC(), createMemoriesNC()]
     }
     

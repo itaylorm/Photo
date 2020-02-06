@@ -11,6 +11,9 @@
 		3406763423EB682500DED300 /* IMBodyLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763323EB682500DED300 /* IMBodyLabelTests.swift */; };
 		3406763623EB691800DED300 /* IMButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763523EB691800DED300 /* IMButtonTests.swift */; };
 		3406763823EB6D4A00DED300 /* IMContainerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763723EB6D4A00DED300 /* IMContainerViewTests.swift */; };
+		349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4D23EB97860041431F /* PhotoCell.swift */; };
+		349CDC5023EB985F0041431F /* IMPhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */; };
+		349CDC5223EB98F70041431F /* IMPhotoImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC5123EB98F70041431F /* IMPhotoImageViewTests.swift */; };
 		34CF223523EB030900B5F25D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF223423EB030900B5F25D /* AppDelegate.swift */; };
 		34CF223723EB030900B5F25D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF223623EB030900B5F25D /* SceneDelegate.swift */; };
 		34CF223E23EB030900B5F25D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34CF223D23EB030900B5F25D /* Assets.xcassets */; };
@@ -55,6 +58,9 @@
 		3406763323EB682500DED300 /* IMBodyLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMBodyLabelTests.swift; sourceTree = "<group>"; };
 		3406763523EB691800DED300 /* IMButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMButtonTests.swift; sourceTree = "<group>"; };
 		3406763723EB6D4A00DED300 /* IMContainerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMContainerViewTests.swift; sourceTree = "<group>"; };
+		349CDC4D23EB97860041431F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMPhotoImageView.swift; sourceTree = "<group>"; };
+		349CDC5123EB98F70041431F /* IMPhotoImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMPhotoImageViewTests.swift; sourceTree = "<group>"; };
 		34CF223123EB030900B5F25D /* Photo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF223423EB030900B5F25D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34CF223623EB030900B5F25D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 		34CF224823EB192000B5F25D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				349CDC4D23EB97860041431F /* PhotoCell.swift */,
 				34CF226C23EB1EB800B5F25D /* PhotosVC.swift */,
 				34CF226E23EB1EEE00B5F25D /* AlbumsVC.swift */,
 				34CF227023EB1F5500B5F25D /* LocationsVC.swift */,
@@ -190,6 +197,7 @@
 				34CF226023EB1D5300B5F25D /* IMContainerView.swift */,
 				34CF226223EB1D7900B5F25D /* IMBodyLabel.swift */,
 				34CF226423EB1DB700B5F25D /* IMButton.swift */,
+				349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				3406763323EB682500DED300 /* IMBodyLabelTests.swift */,
 				3406763523EB691800DED300 /* IMButtonTests.swift */,
 				3406763723EB6D4A00DED300 /* IMContainerViewTests.swift */,
+				349CDC5123EB98F70041431F /* IMPhotoImageViewTests.swift */,
 			);
 			path = PhotoTests;
 			sourceTree = "<group>";
@@ -381,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				349CDC5023EB985F0041431F /* IMPhotoImageView.swift in Sources */,
 				34CF226123EB1D5300B5F25D /* IMContainerView.swift in Sources */,
 				34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */,
 				34CF226D23EB1EB800B5F25D /* PhotosVC.swift in Sources */,
@@ -400,6 +410,7 @@
 				34CF226523EB1DB700B5F25D /* IMButton.swift in Sources */,
 				34CF225123EB1B1E00B5F25D /* IMEmptyStateView.swift in Sources */,
 				34CF225F23EB1D0D00B5F25D /* IMAlertVC.swift in Sources */,
+				349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */,
 				34CF227123EB1F5500B5F25D /* LocationsVC.swift in Sources */,
 				34CF225923EB1C8600B5F25D /* String+Ext.swift in Sources */,
 				34CF225423EB1BD000B5F25D /* Constants.swift in Sources */,
@@ -412,6 +423,7 @@
 			files = (
 				34CF228723EB3C2400B5F25D /* IMTabBarControllerTests.swift in Sources */,
 				3406763823EB6D4A00DED300 /* IMContainerViewTests.swift in Sources */,
+				349CDC5223EB98F70041431F /* IMPhotoImageViewTests.swift in Sources */,
 				3406763423EB682500DED300 /* IMBodyLabelTests.swift in Sources */,
 				3406763223EB5E9B00DED300 /* IMTitleLabelTests.swift in Sources */,
 				3406763623EB691800DED300 /* IMButtonTests.swift in Sources */,

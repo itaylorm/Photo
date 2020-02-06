@@ -13,7 +13,7 @@ class IMContainerViewTests: XCTestCase {
 
     func testIMContainerViewCreate() {
         let container = IMContainerView()
-        let backgroundColor = UIColor.systemBackground
+        let backgroundColor = Colors.background
         
         XCTAssertEqual(container.backgroundColor, backgroundColor,
                        "IMContainerView background color \(String(describing: container.backgroundColor)) expected: \(backgroundColor)")

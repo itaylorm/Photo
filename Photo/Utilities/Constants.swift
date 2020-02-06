@@ -9,7 +9,8 @@
 import UIKit
 
 enum Colors {
-    static let tintColor = UIColor.systemBlue
+    static let background = UIColor.systemBackground
+    static let tint = UIColor.systemBlue
 }
 
 enum Images {

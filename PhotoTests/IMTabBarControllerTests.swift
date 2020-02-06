@@ -13,7 +13,7 @@ class IMTabBarControllerTests: XCTestCase {
     
     func testValidTabBarControllerCreated() {
         let tabBarController = IMTabBarController()
-        XCTAssert(tabBarController.tabBar.tintColor == Colors.tintColor)
+        XCTAssert(tabBarController.tabBar.tintColor == Colors.tint)
         
         let expectedTabCount = 4
         XCTAssertEqual(tabBarController.children.count, expectedTabCount,
