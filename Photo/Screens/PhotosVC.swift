@@ -20,8 +20,8 @@ class PhotosVC: DataLoadingVC {
     private var hasMorePhotos = true
     
     var collectionView: UICollectionView!
-    var photos = [UIImage]()
-    var dataSource: UICollectionViewDiffableDataSource<Section, UIImage>!
+    var photos = [PhotoViewModel]()
+    var dataSource: UICollectionViewDiffableDataSource<Section, PhotoViewModel>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,12 +68,12 @@ class PhotosVC: DataLoadingVC {
     
     func configureDataSource() {
         
-        dataSource = UICollectionViewDiffableDataSource<Section, UIImage>(
-            collectionView: collectionView, cellProvider: { (collectionView, indexPath, photo) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, PhotoViewModel>(
+            collectionView: collectionView, cellProvider: { (collectionView, indexPath, photoViewModel) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell
             
             if let cell = cell {
-                cell.set(photo: photo)
+                cell.set(photoViewModel: photoViewModel)
             }
 
             return cell
@@ -89,12 +89,12 @@ class PhotosVC: DataLoadingVC {
         }
     }
     
-    func updateData(on images: [UIImage]) {
+    func updateData(on images: [PhotoViewModel]) {
         if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
         
         self.photos.append(contentsOf: images)
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, UIImage>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(self.photos)
         
@@ -112,7 +112,7 @@ extension PhotosVC: UICollectionViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         
-        if offsetY > contentHeight - height {
+        if offsetY > (contentHeight - height) {
             guard !isLoadingMorePhotos, hasMorePhotos else { return }
             page += 1
             getPhotos()
