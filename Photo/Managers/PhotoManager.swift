@@ -71,7 +71,6 @@ class PhotoManager {
                      if let image = image {
                         images.append(PhotoViewModel(asset: asset, image: image))
                      }
-
                  }
              }
         }

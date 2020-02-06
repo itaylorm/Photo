@@ -20,7 +20,7 @@ class PhotosVC: DataLoadingVC {
     private var hasMorePhotos = true
     
     var collectionView: UICollectionView!
-    var photos = [PhotoViewModel]()
+    var photoViewModels = [PhotoViewModel]()
     var dataSource: UICollectionViewDiffableDataSource<Section, PhotoViewModel>!
     
     override func viewDidLoad() {
@@ -42,8 +42,8 @@ class PhotosVC: DataLoadingVC {
             self.dismissLoadingView()
             
             switch result {
-            case .success(let photos):
-                self.updateData(on: photos)
+            case .success(let photoViewModels):
+                self.updateData(on: photoViewModels)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "OK")
             }
@@ -55,11 +55,10 @@ class PhotosVC: DataLoadingVC {
         title = "Photos"
         view.backgroundColor = Colors.background
         navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
     
     func configureCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createColumnFlowLayout(in: view, columns: 5))
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createColumnFlowLayout(in: view))
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
@@ -67,7 +66,6 @@ class PhotosVC: DataLoadingVC {
     }
     
     func configureDataSource() {
-        
         dataSource = UICollectionViewDiffableDataSource<Section, PhotoViewModel>(
             collectionView: collectionView, cellProvider: { (collectionView, indexPath, photoViewModel) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell
@@ -75,33 +73,22 @@ class PhotosVC: DataLoadingVC {
             if let cell = cell {
                 cell.set(photoViewModel: photoViewModel)
             }
-
             return cell
-            
         })
-    }
-    
-    func pruneNegativeWidthConstraints() {
-        for subView in self.view.subviews {
-            for constraint in subView.constraints where constraint.debugDescription.contains("width == - 16") {
-                subView.removeConstraint(constraint)
-            }
-        }
     }
     
     func updateData(on images: [PhotoViewModel]) {
         if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
         
-        self.photos.append(contentsOf: images)
+        self.photoViewModels.append(contentsOf: images)
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoViewModel>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(self.photos)
+        snapshot.appendItems(self.photoViewModels)
         
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
-
     }
 }
 
