@@ -12,3 +12,13 @@ Application for working with photo library on an iPhone. Currently has basic pro
 
 # Swift Lint
 The only third party project is SwiftLint for syntax checking. You can learn more about this tool at https://academy.realm.io/posts/slug-jp-simard-swiftlint/
+
+# Technologies
+## PhotoKit Support
+This application uses PhotoKit to provide access to the photos in user photo library
+
+## Date Extensions
+The Extensions directory contains common fuctions for working with dates
+
+# Unit Tests
+There are unit tests for many of the types in the project. I will be adding more over time. When possible I build the tests first for TDD
