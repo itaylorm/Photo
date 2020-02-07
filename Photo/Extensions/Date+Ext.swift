@@ -55,6 +55,22 @@ extension Date {
       return dateFormatter.string(from: self)
   }
   
+  func convertToDateFormat() -> String {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "MMM dd yyyy"
+      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+      dateFormatter.timeZone = .current
+      return dateFormatter.string(from: self)
+  }
+  
+  func convertToTimeFormat() -> String {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "H:mm:ss a zzz"
+      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+      dateFormatter.timeZone = .current
+      return dateFormatter.string(from: self)
+  }
+  
   func convertToMonthYearFormat() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMM yyyy"

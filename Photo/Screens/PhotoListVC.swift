@@ -108,8 +108,12 @@ extension PhotoListVC: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photoViewModel = photoViewModels[indexPath.row]
-        print(photoViewModel.creationDate?.convertToString() ?? "No Creation Date")
-        
+      let viewModel = photoViewModels[indexPath.row]
+       
+      let destinationVC = PhotoInfoVC()
+      destinationVC.viewModel = viewModel
+      let navigationController = UINavigationController(rootViewController: destinationVC)
+      present(navigationController, animated: true)
+      
     }
 }
