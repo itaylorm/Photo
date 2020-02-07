@@ -53,6 +53,10 @@ class PhotoManager {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
+        //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
+//        let startDate = Date()
+//        let endDate = Date()
+//        fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate as NSDate, endDate as NSDate)
         let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         if !fetchResult.isEmpty() {
             
@@ -64,7 +68,7 @@ class PhotoManager {
             if endIndex > totalPhotos { endIndex = totalPhotos - 1 }
             
             for imageIndex in startIndex...endIndex {
-                let asset = fetchResult.object(at: imageIndex)
+                let asset = fetchResult.object(at: imageIndex) as PHAsset
                  imgManager.requestImage(for: asset,
                                          targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight),
                                          contentMode: .aspectFill, options: requestOptions) { (image, _) in
@@ -75,5 +79,20 @@ class PhotoManager {
              }
         }
         return images
+    }
+    
+    func setProperties(photoViewModel: PhotoViewModel) {
+        let options = PHContentEditingInputRequestOptions()
+        options.isNetworkAccessAllowed = true
+        photoViewModel.asset.requestContentEditingInput(with: options) { (contentEditingInput: PHContentEditingInput?, _) in
+            guard let url = contentEditingInput?.fullSizeImageURL else { return }
+            guard let fullImage = CIImage(contentsOf: url) else { return }
+            guard let exif = fullImage.properties["{Exif}"] else { return}
+
+            guard let dictionary = exif as? Dictionary<String, Any?> else { return }
+            guard let dateTimeString = dictionary["DateTimeOriginal"] as? String else { return }
+            let date = Date.convertPhotoDateToDate(dateTimeString)
+            print(date?.convertToMonthYearFormat() ?? "No Creation Date")
+        }
     }
 }

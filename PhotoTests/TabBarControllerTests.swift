@@ -26,7 +26,7 @@ class TabBarControllerTests: XCTestCase {
     }
     
     func testPhotosNCCreated() {
-        validateTab(vcType: PhotosVC(), title: TabBarNames.photos, image: Images.tabImagePhotos!, tabPosition: TabBarIndexes.photos)
+        validateTab(vcType: PhotoListVC(), title: TabBarNames.photos, image: Images.tabImagePhotos!, tabPosition: TabBarIndexes.photos)
     }
     
     func testAlbumsNCCreated() {

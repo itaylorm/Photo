@@ -8,8 +8,9 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
-class PhotosVC: DataLoadingVC {
+class PhotoListVC: DataLoadingVC {
 
     enum Section {
         case main
@@ -92,7 +93,7 @@ class PhotosVC: DataLoadingVC {
     }
 }
 
-extension PhotosVC: UICollectionViewDelegate {
+extension PhotoListVC: UICollectionViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
@@ -104,5 +105,11 @@ extension PhotosVC: UICollectionViewDelegate {
             page += 1
             getPhotos()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photoViewModel = photoViewModels[indexPath.row]
+        print(photoViewModel.creationDate?.convertToString() ?? "No Creation Date")
+        
     }
 }

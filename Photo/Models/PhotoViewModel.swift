@@ -9,8 +9,15 @@
 import UIKit
 import Photos
 
-struct PhotoViewModel: Hashable {
+class PhotoViewModel: Hashable {
+    static func == (lhs: PhotoViewModel, rhs: PhotoViewModel) -> Bool {
+        return lhs.image == rhs.image
+    }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(localIdentifier)
+    }
+    let asset: PHAsset
     let image: UIImage
     var location: CLLocation?
     let localIdentifier: String
@@ -26,11 +33,23 @@ struct PhotoViewModel: Hashable {
     let isDepthEffect: Bool
     
     init(asset: PHAsset, image: UIImage) {
+        self.asset = asset
         self.image = image
         self.location = asset.location
         self.localIdentifier = asset.localIdentifier
-        self.creationDate = asset.creationDate
-        self.modificationDate = asset.modificationDate
+        
+        if let creationDate = asset.creationDate {
+            self.creationDate = creationDate
+        } else {
+            self.creationDate = nil
+        }
+
+        if let modificationDate = asset.modificationDate {
+            self.modificationDate = modificationDate
+        } else {
+            self.modificationDate = nil
+        }
+        
         self.pixelHeight = asset.pixelHeight
         self.pixelWidth = asset.pixelWidth
         self.isFavorite = asset.isFavorite

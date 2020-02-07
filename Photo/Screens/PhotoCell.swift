@@ -12,7 +12,7 @@ class PhotoCell: UICollectionViewCell {
     
     static let reuseID = "PhotoCell"
     
-    let imageView = IMPhotoImageView(frame: .zero)
+    let imageView = PhotoImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

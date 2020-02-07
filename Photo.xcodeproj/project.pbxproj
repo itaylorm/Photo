@@ -13,8 +13,9 @@
 		3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763723EB6D4A00DED300 /* ContainerViewTests.swift */; };
 		3474472623EC97FE004E05BC /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474472523EC97FD004E05BC /* PhotoViewModel.swift */; };
 		349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4D23EB97860041431F /* PhotoCell.swift */; };
-		349CDC5023EB985F0041431F /* IMPhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */; };
+		349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4F23EB985F0041431F /* PhotoImageView.swift */; };
 		349CDC5223EB98F70041431F /* PhotoImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */; };
+		34B5111423EDA296001C9B6D /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B5111323EDA296001C9B6D /* DateTests.swift */; };
 		34BA87F323EC420F009CA973 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA87F223EC420F009CA973 /* UIHelper.swift */; };
 		34BA87F723EC49F6009CA973 /* PHFetchResult+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA87F623EC49F6009CA973 /* PHFetchResult+Ext.swift */; };
 		34BA87F923EC69B6009CA973 /* IMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA87F823EC69B6009CA973 /* IMError.swift */; };
@@ -38,7 +39,7 @@
 		34CF226723EB1DEC00B5F25D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226623EB1DEC00B5F25D /* Date+Ext.swift */; };
 		34CF226923EB1E0F00B5F25D /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226823EB1E0F00B5F25D /* UIView+Ext.swift */; };
 		34CF226B23EB1E3000B5F25D /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226A23EB1E3000B5F25D /* UITableView+Ext.swift */; };
-		34CF226D23EB1EB800B5F25D /* PhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226C23EB1EB800B5F25D /* PhotosVC.swift */; };
+		34CF226D23EB1EB800B5F25D /* PhotoListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226C23EB1EB800B5F25D /* PhotoListVC.swift */; };
 		34CF226F23EB1EEE00B5F25D /* AlbumsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF226E23EB1EEE00B5F25D /* AlbumsVC.swift */; };
 		34CF227123EB1F5500B5F25D /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227023EB1F5500B5F25D /* LocationsVC.swift */; };
 		34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227223EB1F7700B5F25D /* MemoriesVC.swift */; };
@@ -65,8 +66,9 @@
 		3406763723EB6D4A00DED300 /* ContainerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewTests.swift; sourceTree = "<group>"; };
 		3474472523EC97FD004E05BC /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		349CDC4D23EB97860041431F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
-		349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMPhotoImageView.swift; sourceTree = "<group>"; };
+		349CDC4F23EB985F0041431F /* PhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageView.swift; sourceTree = "<group>"; };
 		349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageViewTests.swift; sourceTree = "<group>"; };
+		34B5111323EDA296001C9B6D /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 		34BA87F223EC420F009CA973 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		34BA87F623EC49F6009CA973 /* PHFetchResult+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHFetchResult+Ext.swift"; sourceTree = "<group>"; };
 		34BA87F823EC69B6009CA973 /* IMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMError.swift; sourceTree = "<group>"; };
@@ -92,7 +94,7 @@
 		34CF226623EB1DEC00B5F25D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		34CF226823EB1E0F00B5F25D /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		34CF226A23EB1E3000B5F25D /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
-		34CF226C23EB1EB800B5F25D /* PhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosVC.swift; sourceTree = "<group>"; };
+		34CF226C23EB1EB800B5F25D /* PhotoListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListVC.swift; sourceTree = "<group>"; };
 		34CF226E23EB1EEE00B5F25D /* AlbumsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsVC.swift; sourceTree = "<group>"; };
 		34CF227023EB1F5500B5F25D /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
 		34CF227223EB1F7700B5F25D /* MemoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesVC.swift; sourceTree = "<group>"; };
@@ -188,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				349CDC4D23EB97860041431F /* PhotoCell.swift */,
-				34CF226C23EB1EB800B5F25D /* PhotosVC.swift */,
+				34CF226C23EB1EB800B5F25D /* PhotoListVC.swift */,
 				34CF226E23EB1EEE00B5F25D /* AlbumsVC.swift */,
 				34CF227023EB1F5500B5F25D /* LocationsVC.swift */,
 				34CF227223EB1F7700B5F25D /* MemoriesVC.swift */,
@@ -225,7 +227,7 @@
 				34CF226023EB1D5300B5F25D /* ContainerView.swift */,
 				34CF226223EB1D7900B5F25D /* BodyLabel.swift */,
 				34CF226423EB1DB700B5F25D /* Button.swift */,
-				349CDC4F23EB985F0041431F /* IMPhotoImageView.swift */,
+				349CDC4F23EB985F0041431F /* PhotoImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +267,7 @@
 				3406763523EB691800DED300 /* ButtonTests.swift */,
 				3406763723EB6D4A00DED300 /* ContainerViewTests.swift */,
 				349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */,
+				34B5111323EDA296001C9B6D /* DateTests.swift */,
 			);
 			path = PhotoTests;
 			sourceTree = "<group>";
@@ -421,12 +424,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				349CDC5023EB985F0041431F /* IMPhotoImageView.swift in Sources */,
+				349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */,
 				34BA87F723EC49F6009CA973 /* PHFetchResult+Ext.swift in Sources */,
 				34BA87FC23EC6ED5009CA973 /* PhotoManager.swift in Sources */,
 				34CF226123EB1D5300B5F25D /* ContainerView.swift in Sources */,
 				34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */,
-				34CF226D23EB1EB800B5F25D /* PhotosVC.swift in Sources */,
+				34CF226D23EB1EB800B5F25D /* PhotoListVC.swift in Sources */,
 				34CF226B23EB1E3000B5F25D /* UITableView+Ext.swift in Sources */,
 				34CF223523EB030900B5F25D /* AppDelegate.swift in Sources */,
 				34CF226F23EB1EEE00B5F25D /* AlbumsVC.swift in Sources */,
@@ -460,6 +463,7 @@
 				34CF228723EB3C2400B5F25D /* TabBarControllerTests.swift in Sources */,
 				3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */,
 				349CDC5223EB98F70041431F /* PhotoImageViewTests.swift in Sources */,
+				34B5111423EDA296001C9B6D /* DateTests.swift in Sources */,
 				3406763423EB682500DED300 /* BodyLabelTests.swift in Sources */,
 				3406763223EB5E9B00DED300 /* TitleLabelTests.swift in Sources */,
 				3406763623EB691800DED300 /* ButtonTests.swift in Sources */,
