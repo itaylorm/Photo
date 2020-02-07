@@ -10,10 +10,9 @@ import UIKit
 
 class ValueView: UIImageView {
 
+  private var stackView = UIStackView()
   private var titleLabel: SecondaryTitleLabel!
   private var valueLabel: BodyLabel!
-
-  private let padding: CGFloat = 10
   
   override init(frame: CGRect) {
       super.init(frame: frame)
@@ -32,7 +31,10 @@ class ValueView: UIImageView {
     
     valueLabel = BodyLabel(textAlignment: .left)
     valueLabel.text = value
-    addSubviews(titleLabel, valueLabel)
+    configureStackView(padding: 5)
+    
+    configureTitlelabel()
+    configureValuelabel()
     
   }
   
@@ -45,24 +47,30 @@ class ValueView: UIImageView {
     translatesAutoresizingMaskIntoConstraints = false
   }
   
+  private func configureStackView(padding: CGFloat) {
+    addSubview(stackView)
+    stackView.axis = .horizontal
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+        stackView.topAnchor.constraint(equalTo: topAnchor),
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+    ])
+
+    stackView.addArrangedSubview(titleLabel)
+    stackView.addArrangedSubview(valueLabel)
+  }
+  
   func configureTitlelabel() {
     titleLabel.sizeToFit()
-    
     NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-      titleLabel.heightAnchor.constraint(equalToConstant: 20)
+      titleLabel.widthAnchor.constraint(equalToConstant: 65)
     ])
   }
 
   func configureValuelabel() {
     valueLabel.sizeToFit()
-    
-    NSLayoutConstraint.activate([
-      valueLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-      valueLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: padding),
-      valueLabel.heightAnchor.constraint(equalToConstant: 20)
-    ])
   }
   
 }

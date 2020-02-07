@@ -59,7 +59,7 @@ class PhotoInfoVC: DataLoadingVC {
     NSLayoutConstraint.activate([
       creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
       creationDateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      creationDateView.heightAnchor.constraint(equalToConstant: 20)
+      creationDateView.heightAnchor.constraint(equalToConstant: 30)
     ])
   }
 
@@ -72,7 +72,7 @@ class PhotoInfoVC: DataLoadingVC {
     NSLayoutConstraint.activate([
       creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),
       creationTimeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      creationTimeView.heightAnchor.constraint(equalToConstant: 20)
+      creationTimeView.heightAnchor.constraint(equalToConstant: 30)
     ])
   }
   
