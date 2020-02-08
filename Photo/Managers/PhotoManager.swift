@@ -12,7 +12,12 @@ import Photos
 class PhotoManager {
   static let shared = PhotoManager()
 
-  let itemCountPerPage = 1000
+  enum PhotoType {
+    case forList
+    case forInfo
+  }
+  
+  let itemCountPerPage = 50
 
   private init() {}
 
@@ -43,15 +48,14 @@ class PhotoManager {
   
   private func getImagesFromPhotoLibrary(page: Int) -> [PhotoViewModel] {
     var images = [PhotoViewModel]()
-    let imgManager = PHImageManager.default()
     
     let requestOptions = PHImageRequestOptions()
     requestOptions.isSynchronous = true
-    requestOptions.deliveryMode = .highQualityFormat
-    requestOptions.resizeMode = .exact
+    requestOptions.deliveryMode = .fastFormat
+    requestOptions.resizeMode = .fast
     
     let fetchOptions = PHFetchOptions()
-    fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+    fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
     
     //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
 //    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
@@ -69,36 +73,54 @@ class PhotoManager {
       
       for imageIndex in startIndex...endIndex {
         let asset = fetchResult.object(at: imageIndex) as PHAsset
-        
-//        let ratio = CGFloat(asset.pixelWidth) / CGFloat(asset.pixelHeight)
-//        var width: CGFloat = 0
-//        var height: CGFloat = 0
-//        if asset.pixelHeight > asset.pixelWidth {
-//          width = UIScreen.main.bounds.width * ratio
-//          height = UIScreen.main.bounds.width
-//        }
-//        let size = CGSize(width: width, height: height)
-        var size = CGSize(width: CGFloat(asset.pixelWidth) * 0.01, height: CGFloat(asset.pixelHeight) * 0.1)
-        
-//        var minRatio: CGFloat = 1
-//        if CGFloat(asset.pixelWidth) > UIScreen.main.bounds.width || CGFloat(asset.pixelHeight) > UIScreen.main.bounds.height {
-//          minRatio = min(UIScreen.main.bounds.width/(CGFloat(asset.pixelWidth)), (UIScreen.main.bounds.height/CGFloat(asset.pixelHeight)))
-//        }
-//        let size = CGSize(width: CGFloat(asset.pixelWidth) * minRatio, height: CGFloat(asset.pixelHeight) * minRatio)
-        imgManager.requestImage(for: asset,
-        targetSize: size,
-        contentMode: .aspectFit, options: requestOptions) { (image, _) in
-          if let image = image {
-            images.append(PhotoViewModel(asset: asset, thumbNail: image))
-          } else {
-            print("Failed to retrieve image")
-          }
+        if let thumbNail = getPhoto(photoType: .forList, asset: asset) {
+          images.append(PhotoViewModel(asset: asset, thumbNail: thumbNail))
         }
       }
     } else { print("Returned no records") }
     return images
   }
 
+  func getPhoto(viewModel: PhotoViewModel) -> UIImage? {
+    let image = getPhoto(photoType: .forInfo, asset: viewModel.asset)
+    viewModel.image = image
+    return image
+  }
+  
+  private func getPhoto(photoType: PhotoType, asset: PHAsset) -> UIImage? {
+    var photo: UIImage?
+    let size = getPhotoSize(photoType: photoType, asset: asset)
+
+    let options = PHImageRequestOptions()
+    options.isSynchronous = true
+    options.deliveryMode = .highQualityFormat
+    options.resizeMode = .exact
+    
+    PHImageManager.default().requestImage(for: asset,
+    targetSize: size,
+    contentMode: .aspectFit, options: options) { (image, _) in
+      if let image = image {
+        photo = image
+      } else {
+        print("Failed to retrieve image")
+      }
+    }
+    return photo
+  }
+  
+  private func getPhotoSize(photoType: PhotoType, asset: PHAsset) -> CGSize {
+    switch photoType {
+    case .forInfo:
+      var minRatio: CGFloat = 1
+      if CGFloat(asset.pixelWidth) > UIScreen.main.bounds.width || CGFloat(asset.pixelHeight) > UIScreen.main.bounds.height {
+        minRatio = min(UIScreen.main.bounds.width/(CGFloat(asset.pixelWidth)), (UIScreen.main.bounds.height/CGFloat(asset.pixelHeight)))
+      }
+      return CGSize(width: CGFloat(asset.pixelWidth) * minRatio, height: CGFloat(asset.pixelHeight) * minRatio)
+    case .forList:
+      return CGSize(width: CGFloat(asset.pixelWidth) * 0.01, height: CGFloat(asset.pixelHeight) * 0.1)
+    }
+  }
+  
   func getPhotoInformation(viewModel: PhotoViewModel, completed: @escaping(Result<PhotoViewModel, IMError>) -> Void) {
     
     let options = PHContentEditingInputRequestOptions()

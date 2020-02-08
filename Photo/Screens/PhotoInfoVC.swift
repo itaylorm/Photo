@@ -55,7 +55,8 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func configurePhotoView() {
     view.addSubviews(photoImageView)
-    photoImageView.image = viewModel.thumbNail
+    photoImageView.image = PhotoManager.shared.getPhoto(viewModel: viewModel)
+    
     NSLayoutConstraint.activate([
       photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
