@@ -79,7 +79,7 @@ class PhotoListVC: DataLoadingVC {
     }
     
     func updateData(on images: [PhotoViewModel]) {
-        if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
+        //if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
         
         self.photoViewModels.append(contentsOf: images)
         

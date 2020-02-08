@@ -10,5 +10,8 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

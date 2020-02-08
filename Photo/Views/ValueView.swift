@@ -11,8 +11,23 @@ import UIKit
 class ValueView: UIImageView {
 
   private var stackView = UIStackView()
-  private var titleLabel: SecondaryTitleLabel!
-  private var valueLabel: BodyLabel!
+  private var titleLabel = SecondaryTitleLabel()
+  private var valueLabel = BodyLabel()
+  
+  var title: String {
+    get { return titleLabel.text ?? "" }
+    set { titleLabel.text = newValue }
+  }
+  
+  var titleFontSize: CGFloat {
+    get { return titleLabel.font.pointSize }
+    set { titleLabel.font = UIFont.systemFont(ofSize: newValue, weight: .medium) }
+  }
+  
+  var value: String {
+    get { return valueLabel.text ?? "" }
+    set { valueLabel.text = newValue }
+  }
   
   override init(frame: CGRect) {
       super.init(frame: frame)
@@ -23,23 +38,11 @@ class ValueView: UIImageView {
       fatalError("init(coder:) has not been implemented")
   }
   
-  convenience init(title: String, value: String, fontSize: CGFloat) {
-    self.init(frame: .zero)
-    
-    titleLabel = SecondaryTitleLabel(textAlignment: .left, fontSize: 20)
-    titleLabel.text = title
-    
-    valueLabel = BodyLabel(textAlignment: .left)
-    valueLabel.text = value
-    configureStackView(padding: 5)
-    
-    configureTitlelabel()
-    configureValuelabel()
-    
-  }
-  
   private func configure() {
     configureView()
+    configureStackView(padding: 5)
+    configureTitlelabel()
+    configureValuelabel()
   }
   
   private func configureView() {
@@ -57,12 +60,11 @@ class ValueView: UIImageView {
         stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
-
-    stackView.addArrangedSubview(titleLabel)
-    stackView.addArrangedSubview(valueLabel)
+    
   }
   
   func configureTitlelabel() {
+    stackView.addArrangedSubview(titleLabel)
     titleLabel.sizeToFit()
     NSLayoutConstraint.activate([
       titleLabel.widthAnchor.constraint(equalToConstant: 65)
@@ -70,6 +72,7 @@ class ValueView: UIImageView {
   }
 
   func configureValuelabel() {
+    stackView.addArrangedSubview(valueLabel)
     valueLabel.sizeToFit()
   }
   

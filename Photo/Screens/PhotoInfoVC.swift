@@ -11,8 +11,8 @@ import UIKit
 class PhotoInfoVC: DataLoadingVC {
   
   let photoImageView = PhotoImageView(frame: .zero)
-  var creationDateView: ValueView!
-  var creationTimeView: ValueView!
+  var creationDateView = ValueView(frame: .zero)
+  var creationTimeView = ValueView(frame: .zero)
   
   var viewModel: PhotoViewModel!
   
@@ -24,20 +24,36 @@ class PhotoInfoVC: DataLoadingVC {
     configurePhotoView()
     configureCreationDateView()
     configureCreationTimeView()
+    getPhotoInformation()
   }
   
   @objc func dismissVC() {
       dismiss(animated: true)
   }
   
-  func configureViewController() {
+  private func getPhotoInformation() {
+  
+    PhotoManager.shared.getPhotoInformation(viewModel: viewModel) { [weak self] result in
+      guard let self = self else { return }
+      
+      switch result {
+      case .success(let viewModel):
+        self.viewModel = viewModel
+        print("Done")
+      case .failure(let error):
+        print(error.rawValue)
+      }
+    }
+  }
+  
+  private func configureViewController() {
       view.backgroundColor = .systemBackground
       
       let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
       navigationItem.rightBarButtonItem = doneButton
   }
   
-  func configurePhotoView() {
+  private func configurePhotoView() {
     view.addSubviews(photoImageView)
     photoImageView.image = viewModel.image
 
@@ -50,11 +66,10 @@ class PhotoInfoVC: DataLoadingVC {
 
   }
   
-  func configureCreationDateView() {
-    let title = "Date:"
-    let value = viewModel.creationDate?.convertToDateFormat() ?? "Unknown"
-    creationDateView = ValueView(title: title, value: value, fontSize: 20)
+  private func configureCreationDateView() {
     view.addSubviews(creationDateView)
+    creationDateView.title = "Date"
+    creationDateView.value = viewModel.creationDate?.convertToDateFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
@@ -63,11 +78,10 @@ class PhotoInfoVC: DataLoadingVC {
     ])
   }
 
-  func configureCreationTimeView() {
-    let title = "Time:"
-    let value = viewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
-    creationTimeView = ValueView(title: title, value: value, fontSize: 20)
+  private func configureCreationTimeView() {
     view.addSubviews(creationTimeView)
+    creationTimeView.title = "Time:"
+    creationTimeView.value = viewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),
