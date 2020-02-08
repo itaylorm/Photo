@@ -38,4 +38,15 @@ class DateTests: XCTestCase {
     XCTAssertNil(date)
   }
   
+  func testDateConvertToNSDateSuccess() {
+    let date = Date.create(year: 2018, month: 02, day: 22)
+    let nsDate = Date.convertToNSDate(date)
+    XCTAssertEqual(nsDate?.compare(date!), ComparisonResult.orderedSame)
+  }
+  
+  func testDateConvertFromNSDateSuccess() {
+    let nsDate = NSDate()
+    let date = Date.convertFromNSDate(nsDate)
+    XCTAssertEqual(nsDate.compare(date!), ComparisonResult.orderedSame)
+  }
 }

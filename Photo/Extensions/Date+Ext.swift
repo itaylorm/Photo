@@ -39,6 +39,16 @@ extension Date {
       return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
   }
   
+  static func convertToNSDate(_ date: Date?) -> NSDate? {
+    guard let date = date else { return nil }
+    return NSDate.init(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate)
+  }
+  
+  static func convertFromNSDate(_ nsDate: NSDate?) -> Date? {
+    guard let nsDate = nsDate else { return nil }
+    return Date.init(timeIntervalSinceReferenceDate: nsDate.timeIntervalSinceReferenceDate)
+  }
+  
   static func convertPhotoDateToDate(_ dateString: String ) -> Date? {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US_POSIX")

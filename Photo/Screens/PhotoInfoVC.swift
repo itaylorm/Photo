@@ -55,15 +55,13 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func configurePhotoView() {
     view.addSubviews(photoImageView)
-    photoImageView.image = viewModel.image
-
+    photoImageView.image = viewModel.thumbNail
     NSLayoutConstraint.activate([
       photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-      photoImageView.heightAnchor.constraint(equalToConstant: 400)
+      photoImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: padding)
     ])
-
   }
   
   private func configureCreationDateView() {

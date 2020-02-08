@@ -3,15 +3,37 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "asset.pixelWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "asset.pixelWidth">
+            </PersistentString>
+            <PersistentString
+               value = "asset.pixelHeight / asset.pixelWidth">
+            </PersistentString>
+            <PersistentString
+               value = "asset.pixelHeight">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "PhotosVC.getPhotos():PhotosVC.swift">
          <PersistentStrings>
             <PersistentString
                value = "fetchResult.count">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2A90EE5C-4E47-42EC-BB25-F2547EC2CE33"
+            uuid = "C1EBF599-FDF4-42CE-AF66-0D92F2D34A7D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Photo/Managers/PhotoManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "getPhotoInformation(viewModel:completed:)"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "getPhotos(page:completed:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -24,7 +24,7 @@ class PhotoCell: UICollectionViewCell {
     }
     
     func set(photoViewModel: PhotoViewModel) {
-        imageView.image = photoViewModel.image
+        imageView.image = photoViewModel.thumbNail
     }
     
     private func configure() {

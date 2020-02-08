@@ -20,8 +20,8 @@ class PhotoImageView: UIImageView {
     }
     
     private func configure() {
-        contentMode = .scaleAspectFill
-        clipsToBounds = true
+        contentMode = .scaleAspectFit
+        clipsToBounds = false
         translatesAutoresizingMaskIntoConstraints = false
     }
 
