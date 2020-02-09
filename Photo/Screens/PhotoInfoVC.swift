@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 class PhotoInfoVC: DataLoadingVC {
   
@@ -14,12 +15,15 @@ class PhotoInfoVC: DataLoadingVC {
   var creationDateView = ValueView(frame: .zero)
   var creationTimeView = ValueView(frame: .zero)
   
-  var viewModel: PhotoViewModel!
+  var viewModels: [PhotoViewModel]!
+  var currentViewModel: PhotoViewModel!
+  var currentIndex: Int = -1
   
   let padding: CGFloat = 10
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     configureViewController()
     configurePhotoView()
     configureCreationDateView()
@@ -33,12 +37,12 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func getPhotoInformation() {
   
-    PhotoManager.shared.getPhotoInformation(viewModel: viewModel) { [weak self] result in
+    PhotoManager.shared.getPhotoInformation(viewModel: currentViewModel) { [weak self] result in
       guard let self = self else { return }
       
       switch result {
       case .success(let viewModel):
-        self.viewModel = viewModel
+        self.currentViewModel = viewModel
         print("Done")
       case .failure(let error):
         print(error.rawValue)
@@ -47,28 +51,59 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   private func configureViewController() {
-      view.backgroundColor = .systemBackground
-      
-      let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
-      navigationItem.rightBarButtonItem = doneButton
+    view.backgroundColor = .systemBackground
+    
+    let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
+    navigationItem.rightBarButtonItem = doneButton
   }
   
   private func configurePhotoView() {
     view.addSubviews(photoImageView)
-    photoImageView.image = PhotoManager.shared.getPhoto(viewModel: viewModel)
+    photoImageView.image = PhotoManager.shared.getPhoto(viewModel: currentViewModel)
+    
+    photoImageView.isUserInteractionEnabled = true
+    let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+    leftSwipe.direction = .left
+    view.addGestureRecognizer(leftSwipe)
+
+    let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+    rightSwipe.direction = .right
+    view.addGestureRecognizer(rightSwipe)
     
     NSLayoutConstraint.activate([
       photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-      photoImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: padding)
+      photoImageView.heightAnchor.constraint(equalToConstant: (photoImageView.image?.size.height)!)
     ])
+  }
+  
+  @objc func tap(_ sender: UITapGestureRecognizer) {
+    print("Tap")
+  }
+  
+  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+    
+    print(currentIndex)
+    if sender.direction == .right && currentIndex > 0 { currentIndex -= 1 }
+    
+    if sender.direction == .left && currentIndex < (viewModels.count - 1) { currentIndex += 1 }
+    
+    currentViewModel = viewModels[currentIndex]
+    PhotoManager.shared.getPhoto(viewModel: currentViewModel)
+    
+    UIView.transition(with: photoImageView, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+      self.photoImageView.image = self.currentViewModel.image
+    }, completion: nil)
+
+    getPhotoInformation()
+    
   }
   
   private func configureCreationDateView() {
     view.addSubviews(creationDateView)
     creationDateView.title = "Date"
-    creationDateView.value = viewModel.creationDate?.convertToDateFormat() ?? "Unknown"
+    creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
@@ -80,7 +115,7 @@ class PhotoInfoVC: DataLoadingVC {
   private func configureCreationTimeView() {
     view.addSubviews(creationTimeView)
     creationTimeView.title = "Time:"
-    creationTimeView.value = viewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
+    creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),

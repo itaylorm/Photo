@@ -81,6 +81,7 @@ class PhotoManager {
     return images
   }
 
+  @discardableResult
   func getPhoto(viewModel: PhotoViewModel) -> UIImage? {
     let image = getPhoto(photoType: .forInfo, asset: viewModel.asset)
     viewModel.image = image
