@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
 class PhotoManager {
   static let shared = PhotoManager()
@@ -17,7 +18,7 @@ class PhotoManager {
     case forInfo
   }
   
-  let itemCountPerPage = 50
+  let itemCountPerPage = 1000
 
   private init() {}
 
@@ -83,6 +84,8 @@ class PhotoManager {
 
   @discardableResult
   func getPhoto(viewModel: PhotoViewModel) -> UIImage? {
+    if viewModel.image != nil { return viewModel.image }
+    
     let image = getPhoto(photoType: .forInfo, asset: viewModel.asset)
     viewModel.image = image
     return image
@@ -123,60 +126,72 @@ class PhotoManager {
   }
   
   func getPhotoInformation(viewModel: PhotoViewModel, completed: @escaping(Result<PhotoViewModel, IMError>) -> Void) {
+    guard !viewModel.informationLoaded else { return }
     
     let options = PHContentEditingInputRequestOptions()
     options.isNetworkAccessAllowed = true
     viewModel.asset.requestContentEditingInput(with: options) { (contentEditingInput: PHContentEditingInput?, _) in
-      
       guard let url = contentEditingInput?.fullSizeImageURL, let fullImage = CIImage(contentsOf: url) else {
         completed(.failure(.unableToComplete))
         return
       }
-      //print(fullImage.properties)
-//      if let profileName = fullImage.properties["ProfileName"] {
-//        //print(profileName)
-//      } else {
-//        print("Profile Name Not Found")
-//      }
       
-      // Does not work yet
-      if let iso = fullImage.properties["ISOSpeedRatings"] {
-        print(iso)
-      }
-      
-      if let iptc = fullImage.properties["{IPTC}"], let iptcDictionary = iptc as? [String: Any?] {
-        print(iptcDictionary)
-      } else {
-        print("IPTC Not Found")
-      }
+      viewModel.colorModel = self.getValue(image: fullImage, keyName: "ColorModel", displayName: "Color Model: ")
+      viewModel.profileName = self.getValue(image: fullImage, keyName: "ProfileName", displayName: "Profile Name: ")
+      self.getIptcInformation(fullImage: fullImage, viewModel: viewModel)
+      self.getTifInformation(fullImage: fullImage, viewModel: viewModel)
+      self.getExifInformation(fullImage: fullImage, viewModel: viewModel)
 
-      if let tif = fullImage.properties["{TIFF}"], let tiffDictionary = tif as? [String: Any?] {
-        self.getValue(dictionary: tiffDictionary, keyName: "Make", displayName: "Make: ")
-        self.getValue(dictionary: tiffDictionary, keyName: "Model", displayName: "Model: ")
-        self.getValue(dictionary: tiffDictionary, keyName: "YResolution", displayName: "YResolution: ")
-        self.getValue(dictionary: tiffDictionary, keyName: "XResolution", displayName: "XResolution: ")
-        self.getValue(dictionary: tiffDictionary, keyName: "Software", displayName: "Software: ")
-      } else {
-        print("TIF Not Found")
-      }
-      
-      if let exif = fullImage.properties["{Exif}"], let exifDictionary = exif as? [String: Any?] {
-        self.getValue(dictionary: exifDictionary, keyName: "BodySerialNumber", displayName: "Body SN: ")
-         self.getValue(dictionary: exifDictionary, keyName: "LensSerialNumber", displayName: "Lens SN: ")
-         self.getValue(dictionary: exifDictionary, keyName: "LensModel", displayName: "Lens: ")
-         self.getValue(dictionary: exifDictionary, keyName: "FocalLength", displayName: "Focal Length: ")
-         self.getValue(dictionary: exifDictionary, keyName: "FNumber", displayName: "F")
-         self.getValue(dictionary: exifDictionary, keyName: "ShutterSpeedValue", displayName: "Shutter: ")
-      } else {
-        print("EXIF Not Found")
-      }
- 
+      viewModel.informationLoaded = true
       completed(.success(viewModel))
       
     }
   }
   
-  @discardableResult
+  private func getExifInformation(fullImage: CIImage, viewModel: PhotoViewModel) {
+    if let exif = fullImage.properties["{Exif}"], let exifDictionary = exif as? [String: Any?] {
+      viewModel.bodySerialNumber = self.getValue(dictionary: exifDictionary, keyName: "BodySerialNumber", displayName: "Body SN: ")
+      viewModel.lensSerialNumber = self.getValue(dictionary: exifDictionary, keyName: "LensSerialNumber", displayName: "Lens SN: ")
+      viewModel.lens = self.getValue(dictionary: exifDictionary, keyName: "LensModel", displayName: "Lens: ")
+      viewModel.focalLength = self.getValue(dictionary: exifDictionary, keyName: "FocalLength", displayName: "Focal Length: ")
+      viewModel.focalLength35mm = self.getValue(dictionary: exifDictionary, keyName: "FocalLenIn35mmFilm", displayName: "Focal Length In 35mm: ")
+      viewModel.aperture = self.getValue(dictionary: exifDictionary, keyName: "FNumber", displayName: "F")
+      viewModel.shutterSpeed = self.getValue(dictionary: exifDictionary, keyName: "ShutterSpeedValue", displayName: "Shutter: ")
+      
+      if let isoRaw = exifDictionary["ISOSpeedRatings"], let isoArray = isoRaw as? [Int] {
+        viewModel.iso = isoArray.map { String($0) }.joined(separator: ",")
+        print("ISO: \(viewModel.iso!)")
+      }
+    } else {
+      print("EXIF Not Found")
+    }
+  }
+  
+  private func getTifInformation(fullImage: CIImage, viewModel: PhotoViewModel) {
+    if let tif = fullImage.properties["{TIFF}"], let tiffDictionary = tif as? [String: Any?] {
+      viewModel.make = self.getValue(dictionary: tiffDictionary, keyName: "Make", displayName: "Make: ")
+      viewModel.model = self.getValue(dictionary: tiffDictionary, keyName: "Model", displayName: "Model: ")
+      viewModel.resolutionY = self.getValue(dictionary: tiffDictionary, keyName: "YResolution", displayName: "YResolution: ")
+      viewModel.resolutionX = self.getValue(dictionary: tiffDictionary, keyName: "XResolution", displayName: "XResolution: ")
+      viewModel.software = self.getValue(dictionary: tiffDictionary, keyName: "Software", displayName: "Software: ")
+    } else {
+      print("TIF Not Found")
+    }
+  }
+  
+  private func getIptcInformation(fullImage: CIImage, viewModel: PhotoViewModel) {
+    if let iptc = fullImage.properties["{IPTC}"], let iptcDictionary = iptc as? [String: Any?] {
+      viewModel.starRating = self.getValue(dictionary: iptcDictionary, keyName: "StarRating", displayName: "Rating: ")
+      
+      if let keywordRaw = iptcDictionary["Keywords"], let keywordArray = keywordRaw as? [String] {
+        viewModel.keyWords = keywordArray.joined(separator: ",")
+        print("Keywords: \(viewModel.keyWords!)")
+      }
+     } else {
+      print("IPTC Not Found")
+    }
+  }
+  
   private func getValue(dictionary: [String: Any?], keyName: String, displayName: String) -> String {
     if let optionalValue = dictionary[keyName], let value = optionalValue {
       print("\(displayName) \(value)")
@@ -185,4 +200,11 @@ class PhotoManager {
     return ""
   }
 
+  private func getValue(image: CIImage, keyName: String, displayName: String) -> String {
+    if let optionalValue = image.properties[keyName], let value = optionalValue as? String {
+      print("\(displayName) \(value)")
+      return String(describing: value)
+    }
+    return ""
+  }
 }

@@ -28,26 +28,45 @@ class PhotoInfoVC: DataLoadingVC {
     configurePhotoView()
     configureCreationDateView()
     configureCreationTimeView()
-    getPhotoInformation()
+    getPhoto()
+    getPhotoExtendedInformation()
   }
   
   @objc func dismissVC() {
       dismiss(animated: true)
   }
   
-  private func getPhotoInformation() {
+  private func getPhoto() {
+    PhotoManager.shared.getPhoto(viewModel: currentViewModel)
+    self.photoImageView.image = self.currentViewModel.image
+    creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
+    creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
+  }
   
+  private func getPhotoExtendedInformation() {
     PhotoManager.shared.getPhotoInformation(viewModel: currentViewModel) { [weak self] result in
       guard let self = self else { return }
       
       switch result {
       case .success(let viewModel):
         self.currentViewModel = viewModel
-        print("Done")
       case .failure(let error):
         print(error.rawValue)
       }
     }
+  }
+  
+  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+    if sender.direction == .right && currentIndex > 0 { currentIndex -= 1 }
+    if sender.direction == .left && currentIndex < (viewModels.count - 1) { currentIndex += 1 }
+    
+    currentViewModel = viewModels[currentIndex]
+    getPhotoExtendedInformation()
+    
+    UIView.transition(with: photoImageView, duration: 0.3,
+                      options: [.transitionCrossDissolve], animations: {
+      self.getPhoto()
+    }, completion: nil)
   }
   
   private func configureViewController() {
@@ -73,37 +92,13 @@ class PhotoInfoVC: DataLoadingVC {
     NSLayoutConstraint.activate([
       photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-      photoImageView.heightAnchor.constraint(equalToConstant: (photoImageView.image?.size.height)!)
+      photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])
-  }
-  
-  @objc func tap(_ sender: UITapGestureRecognizer) {
-    print("Tap")
-  }
-  
-  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
-    
-    print(currentIndex)
-    if sender.direction == .right && currentIndex > 0 { currentIndex -= 1 }
-    
-    if sender.direction == .left && currentIndex < (viewModels.count - 1) { currentIndex += 1 }
-    
-    currentViewModel = viewModels[currentIndex]
-    PhotoManager.shared.getPhoto(viewModel: currentViewModel)
-    
-    UIView.transition(with: photoImageView, duration: 0.3, options: [.transitionCrossDissolve], animations: {
-      self.photoImageView.image = self.currentViewModel.image
-    }, completion: nil)
-
-    getPhotoInformation()
-    
   }
   
   private func configureCreationDateView() {
     view.addSubviews(creationDateView)
     creationDateView.title = "Date"
-    creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
@@ -115,7 +110,6 @@ class PhotoInfoVC: DataLoadingVC {
   private func configureCreationTimeView() {
     view.addSubviews(creationTimeView)
     creationTimeView.title = "Time:"
-    creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
 
     NSLayoutConstraint.activate([
       creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),

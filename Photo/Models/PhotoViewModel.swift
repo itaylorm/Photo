@@ -33,6 +33,24 @@ class PhotoViewModel: Hashable {
   let isScreenShot: Bool
   let isLive: Bool
   let isDepthEffect: Bool
+  var make: String?
+  var model: String?
+  var software: String?
+  var lens: String?
+  var focalLength: String?
+  var focalLength35mm: String?
+  var aperture: String?
+  var shutterSpeed: String?
+  var resolutionX: String?
+  var resolutionY: String?
+  var bodySerialNumber: String?
+  var lensSerialNumber: String?
+  var colorModel: String?
+  var profileName: String?
+  var starRating: String?
+  var keyWords: String?
+  var iso: String?
+  var informationLoaded = false
   
   init(asset: PHAsset, thumbNail: UIImage) {
       self.asset = asset
