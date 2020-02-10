@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ValueView: UIImageView {
+class ValueView: UIView {
 
   private var stackView = UIStackView()
   private var titleLabel = SecondaryTitleLabel()
@@ -16,7 +16,10 @@ class ValueView: UIImageView {
   
   var title: String {
     get { return titleLabel.text ?? "" }
-    set { titleLabel.text = newValue }
+    set {
+      titleLabel.text = newValue
+      titleLabel.widthAnchor.constraint(equalToConstant: 65).isActive = true
+    }
   }
   
   var titleFontSize: CGFloat {
@@ -26,7 +29,10 @@ class ValueView: UIImageView {
   
   var value: String {
     get { return valueLabel.text ?? "" }
-    set { valueLabel.text = newValue }
+    set {
+      valueLabel.text = newValue
+
+    }
   }
   
   override init(frame: CGRect) {
@@ -38,11 +44,19 @@ class ValueView: UIImageView {
       fatalError("init(coder:) has not been implemented")
   }
   
+  convenience init(title: String) {
+    self.init(frame: .zero)
+    self.title = title
+  }
+  
+  override func sizeToFit() {
+    titleLabel.sizeToFit()
+    valueLabel.sizeToFit()
+  }
+  
   private func configure() {
     configureView()
     configureStackView(padding: 5)
-    configureTitlelabel()
-    configureValuelabel()
   }
   
   private func configureView() {
@@ -53,27 +67,18 @@ class ValueView: UIImageView {
   private func configureStackView(padding: CGFloat) {
     addSubview(stackView)
     stackView.axis = .horizontal
+    stackView.distribution = .fill
+    stackView.spacing = 5.0
+    stackView.addArrangedSubviews(titleLabel, valueLabel)
+    
     stackView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
         stackView.topAnchor.constraint(equalTo: topAnchor),
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
         stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
     
-  }
-  
-  func configureTitlelabel() {
-    stackView.addArrangedSubview(titleLabel)
-    titleLabel.sizeToFit()
-    NSLayoutConstraint.activate([
-      titleLabel.widthAnchor.constraint(equalToConstant: 65)
-    ])
-  }
-
-  func configureValuelabel() {
-    stackView.addArrangedSubview(valueLabel)
-    valueLabel.sizeToFit()
   }
   
 }

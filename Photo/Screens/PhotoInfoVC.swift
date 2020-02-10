@@ -12,8 +12,13 @@ import SpriteKit
 class PhotoInfoVC: DataLoadingVC {
   
   let photoImageView = PhotoImageView(frame: .zero)
-  var creationDateView = ValueView(frame: .zero)
-  var creationTimeView = ValueView(frame: .zero)
+  let informationView = UIStackView()
+  var spaceView = ValueView(frame: .zero)
+  var creationDateView = ValueView(title: "Date:")
+  var creationTimeView = ValueView(title: "Time:")
+  var makeView = ValueView(title: "Make:")
+  var modelView = ValueView(title: "Model:")
+  var lensView = ValueView(title: "Lens:")
   
   var viewModels: [PhotoViewModel]!
   var currentViewModel: PhotoViewModel!
@@ -26,10 +31,10 @@ class PhotoInfoVC: DataLoadingVC {
     
     configureViewController()
     configurePhotoView()
-    configureCreationDateView()
-    configureCreationTimeView()
+    configureInformationView()
     getPhoto()
     getPhotoExtendedInformation()
+
   }
   
   @objc func dismissVC() {
@@ -37,28 +42,34 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   private func getPhoto() {
-    PhotoManager.shared.getPhoto(viewModel: currentViewModel)
-    self.photoImageView.image = self.currentViewModel.image
-    self.photoImageView.layoutIfNeeded()
+    if currentViewModel.image == nil {
+      currentViewModel.image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
+    }
     
-    let image = PhotoManager.shared.resizePhoto(image: self.photoImageView.image, bounds: self.photoImageView.bounds)
-    if let image = image {
+    photoImageView.image = currentViewModel.image
+    photoImageView.layoutIfNeeded()
+    
+    if let image = photoImageView.image {
       photoImageView.image = image
       photoImageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
       
       creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
       creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
     }
-    
   }
   
   private func getPhotoExtendedInformation() {
+    informationView.isHidden = true
     PhotoManager.shared.getPhotoInformation(viewModel: currentViewModel) { [weak self] result in
       guard let self = self else { return }
       
       switch result {
       case .success(let viewModel):
         self.currentViewModel = viewModel
+        self.makeView.value = viewModel.make ?? ""
+        self.modelView.value = viewModel.model ?? ""
+        self.lensView.value = viewModel.lens ?? ""
+        self.informationView.isHidden = false
       case .failure(let error):
         print(error.rawValue)
       }
@@ -87,7 +98,6 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func configurePhotoView() {
     view.addSubviews(photoImageView)
-    photoImageView.image = PhotoManager.shared.getPhoto(viewModel: currentViewModel)
     photoImageView.isUserInteractionEnabled = true
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     leftSwipe.direction = .left
@@ -104,26 +114,20 @@ class PhotoInfoVC: DataLoadingVC {
     ])
   }
   
-  private func configureCreationDateView() {
-    view.addSubviews(creationDateView)
-    creationDateView.title = "Date"
+  private func configureInformationView() {
+    view.addSubview(informationView)
+    informationView.axis = .vertical
+    informationView.distribution = .equalSpacing
+    informationView.translatesAutoresizingMaskIntoConstraints = false
+    
+    informationView.addArrangedSubviews(spaceView, creationDateView, creationTimeView, makeView, modelView, lensView)
     
     NSLayoutConstraint.activate([
-      creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
-      creationDateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      creationDateView.heightAnchor.constraint(equalToConstant: 30)
+      informationView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
+      informationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+      informationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])
-  }
-  
-  private func configureCreationTimeView() {
-    view.addSubviews(creationTimeView)
-    creationTimeView.title = "Time:"
     
-    NSLayoutConstraint.activate([
-      creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),
-      creationTimeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      creationTimeView.heightAnchor.constraint(equalToConstant: 30)
-    ])
   }
   
 }

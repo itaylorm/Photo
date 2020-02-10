@@ -22,6 +22,50 @@ class PhotoManager {
 
   private init() {}
 
+  func getPhoto(photoViewModel: PhotoViewModel, bounds: CGRect, photoType: PhotoType) -> UIImage? {
+    var photo: UIImage?
+    let asset = photoViewModel.asset
+    let size = getPhotoSizeToRequest(size: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), bounds: bounds)
+
+    let options = PHImageRequestOptions()
+    options.isSynchronous = true
+    options.resizeMode = .exact
+    
+    switch photoType {
+    case .forList:
+      options.deliveryMode = .fastFormat
+    case .forInfo:
+      options.deliveryMode = .highQualityFormat
+    }
+
+    PHImageManager.default().requestImage(for: asset,
+    targetSize: size,
+    contentMode: .aspectFit, options: options) { (image, _) in
+      if let image = image {
+        photo = image
+      } else {
+        print("Failed to retrieve image")
+      }
+    }
+    return photo
+  }
+  
+  func resizePhoto(image: UIImage?, bounds: CGRect) -> UIImage? {
+    guard let image = image else { return nil }
+    
+    var newImage: UIImage?
+    let newSize = getPhotoSizeToRequest(size: image.size, bounds: bounds)
+    
+    let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+    image.draw(in: rect)
+    newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage
+  }
+  
   func getPhotos(page: Int, completed: @escaping(Result<[PhotoViewModel], IMError>) -> Void) {
     requestAccessToPhotos { (authorization: PHAuthorizationStatus) in
       switch authorization {
@@ -74,85 +118,10 @@ class PhotoManager {
       
       for imageIndex in startIndex...endIndex {
         let asset = fetchResult.object(at: imageIndex) as PHAsset
-        if let thumbNail = getPhoto(photoType: .forList, asset: asset) {
-          images.append(PhotoViewModel(asset: asset, thumbNail: thumbNail))
-        }
+        images.append(PhotoViewModel(asset: asset))
       }
     } else { print("Returned no records") }
     return images
-  }
-
-  @discardableResult
-  func getPhoto(viewModel: PhotoViewModel) -> UIImage? {
-    if viewModel.image != nil { return viewModel.image }
-    
-    let image = getPhoto(photoType: .forInfo, asset: viewModel.asset)
-    viewModel.image = image
-    return image
-  }
-  
-  private func getPhoto(photoType: PhotoType, asset: PHAsset) -> UIImage? {
-    var photo: UIImage?
-    let size = getPhotoSize(photoType: photoType, asset: asset)
-
-    let options = PHImageRequestOptions()
-    options.isSynchronous = true
-    options.deliveryMode = .highQualityFormat
-    options.resizeMode = .exact
-    
-    PHImageManager.default().requestImage(for: asset,
-    targetSize: size,
-    contentMode: .aspectFit, options: options) { (image, _) in
-      if let image = image {
-        photo = image
-      } else {
-        print("Failed to retrieve image")
-      }
-    }
-    return photo
-  }
-  
-  func resizePhoto(image: UIImage?, bounds: CGRect) -> UIImage? {
-   guard let image = image else { return nil }
-   var newSize: CGSize = CGSize(width: 0, height: 0)
-   var newImage: UIImage?
-   
-   let size = image.size
-
-   var widthRatio: CGFloat = 0
-   var heightRatio: CGFloat = 0
-   
-   if size.height > size.width {
-     widthRatio = bounds.width / size.width
-     heightRatio = size.height * widthRatio
-     newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-   } else {
-     widthRatio = 1.0
-     heightRatio = bounds.width / size.width
-     newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-   }
-
-   let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-   UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-   image.draw(in: rect)
-   newImage = UIGraphicsGetImageFromCurrentImageContext()
-   UIGraphicsEndImageContext()
-   
-   return newImage
-  }
-  
-  private func getPhotoSize(photoType: PhotoType, asset: PHAsset) -> CGSize {
-    switch photoType {
-    case .forInfo:
-      var minRatio: CGFloat = 1
-      if CGFloat(asset.pixelWidth) > UIScreen.main.bounds.width || CGFloat(asset.pixelHeight) > UIScreen.main.bounds.height {
-        minRatio = min(CGFloat(asset.pixelWidth), CGFloat(asset.pixelHeight))
-      }
-      return CGSize(width: CGFloat(asset.pixelWidth) * minRatio, height: CGFloat(asset.pixelHeight) * minRatio)
-    case .forList:
-      return CGSize(width: CGFloat(asset.pixelWidth) * 0.01, height: CGFloat(asset.pixelHeight) * 0.1)
-    }
   }
   
   func getPhotoInformation(viewModel: PhotoViewModel, completed: @escaping(Result<PhotoViewModel, IMError>) -> Void) {
@@ -220,6 +189,23 @@ class PhotoManager {
      } else {
       print("IPTC Not Found")
     }
+  }
+  
+  private func getPhotoSizeToRequest(size: CGSize, bounds: CGRect) -> CGSize {
+    var newSize: CGSize
+    var widthRatio: CGFloat = 0
+    var heightRatio: CGFloat = 0
+    
+    if size.height > size.width {
+      widthRatio = bounds.width / size.width
+      heightRatio = size.height * widthRatio
+      newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+    } else {
+      widthRatio = 1.0
+      heightRatio = bounds.width / size.width
+      newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+    }
+    return newSize
   }
   
   private func getValue(dictionary: [String: Any?], keyName: String, displayName: String) -> String {

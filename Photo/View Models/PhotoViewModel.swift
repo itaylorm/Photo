@@ -20,7 +20,7 @@ class PhotoViewModel: Hashable {
 
   let asset: PHAsset
   var image: UIImage?
-  let thumbNail: UIImage
+  var thumbNail: UIImage?
   var location: CLLocation?
   let localIdentifier: String
   let creationDate: Date?
@@ -52,9 +52,8 @@ class PhotoViewModel: Hashable {
   var iso: String?
   var informationLoaded = false
   
-  init(asset: PHAsset, thumbNail: UIImage) {
+  init(asset: PHAsset) {
       self.asset = asset
-      self.thumbNail = thumbNail
       self.location = asset.location
       self.localIdentifier = asset.localIdentifier
       

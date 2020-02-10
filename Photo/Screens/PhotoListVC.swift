@@ -77,6 +77,9 @@ class PhotoListVC: DataLoadingVC {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell
         
         if let cell = cell {
+          if photoViewModel.thumbNail == nil {
+            photoViewModel.thumbNail = PhotoManager.shared.getPhoto(photoViewModel: photoViewModel, bounds: cell.bounds, photoType: .forList)
+          }
           cell.set(photoViewModel: photoViewModel)
         }
         return cell
@@ -84,7 +87,7 @@ class PhotoListVC: DataLoadingVC {
   }
   
   func updateData(on images: [PhotoViewModel]) {
-    //if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
+    if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
     
     self.photoViewModels.append(contentsOf: images)
     
