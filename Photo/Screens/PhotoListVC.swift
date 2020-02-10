@@ -37,7 +37,7 @@ class PhotoListVC: DataLoadingVC {
     print("Swipe")
   }
   
-  func getPhotos() {
+  private func getPhotos() {
     
     showLoadingView()
     isLoadingMorePhotos = true
@@ -57,13 +57,13 @@ class PhotoListVC: DataLoadingVC {
     self.isLoadingMorePhotos = false
   }
   
-  func configureViewController() {
+  private func configureViewController() {
     title = "Photos"
     view.backgroundColor = Colors.background
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
-  func configureCollectionView() {
+  private func configureCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createColumnFlowLayout(in: view))
     view.addSubview(collectionView)
     collectionView.backgroundColor = .systemBackground
@@ -71,7 +71,7 @@ class PhotoListVC: DataLoadingVC {
     collectionView.delegate = self
   }
   
-  func configureDataSource() {
+  private func configureDataSource() {
     dataSource = UICollectionViewDiffableDataSource<Section, PhotoViewModel>(
       collectionView: collectionView, cellProvider: { (collectionView, indexPath, photoViewModel) -> UICollectionViewCell? in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell
@@ -86,7 +86,7 @@ class PhotoListVC: DataLoadingVC {
     })
   }
   
-  func updateData(on images: [PhotoViewModel]) {
+  private func updateData(on images: [PhotoViewModel]) {
     if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
     
     self.photoViewModels.append(contentsOf: images)

@@ -28,17 +28,28 @@ class PhotoInfoVC: DataLoadingVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configureViewController()
     configurePhotoView()
     configureInformationView()
     getPhoto()
     getPhotoExtendedInformation()
-
   }
   
   @objc func dismissVC() {
     dismiss(animated: true)
+  }
+  
+  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+    if sender.direction == .right && currentIndex > 0 { currentIndex -= 1 }
+    if sender.direction == .left && currentIndex < (viewModels.count - 1) { currentIndex += 1 }
+    
+    currentViewModel = viewModels[currentIndex]
+    getPhotoExtendedInformation()
+    
+    UIView.transition(with: photoImageView, duration: 0.3,
+                      options: [.transitionCrossDissolve], animations: {
+                        self.getPhoto()
+    }, completion: nil)
   }
   
   private func getPhoto() {
@@ -58,6 +69,13 @@ class PhotoInfoVC: DataLoadingVC {
     }
   }
   
+  private func displayPhotoInformation() {
+    makeView.value = currentViewModel.make ?? ""
+    modelView.value = currentViewModel.model ?? ""
+    lensView.value = currentViewModel.lens ?? ""
+    informationView.isHidden = false
+  }
+  
   private func getPhotoExtendedInformation() {
     informationView.isHidden = true
     PhotoManager.shared.getPhotoInformation(viewModel: currentViewModel) { [weak self] result in
@@ -66,27 +84,11 @@ class PhotoInfoVC: DataLoadingVC {
       switch result {
       case .success(let viewModel):
         self.currentViewModel = viewModel
-        self.makeView.value = viewModel.make ?? ""
-        self.modelView.value = viewModel.model ?? ""
-        self.lensView.value = viewModel.lens ?? ""
-        self.informationView.isHidden = false
+        self.displayPhotoInformation()
       case .failure(let error):
         print(error.rawValue)
       }
     }
-  }
-  
-  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
-    if sender.direction == .right && currentIndex > 0 { currentIndex -= 1 }
-    if sender.direction == .left && currentIndex < (viewModels.count - 1) { currentIndex += 1 }
-    
-    currentViewModel = viewModels[currentIndex]
-    getPhotoExtendedInformation()
-    
-    UIView.transition(with: photoImageView, duration: 0.3,
-                      options: [.transitionCrossDissolve], animations: {
-                        self.getPhoto()
-    }, completion: nil)
   }
   
   private func configureViewController() {
