@@ -21,7 +21,7 @@ extension Date {
     let dateComponents = DateComponents(calendar: calendar, year: year, month: month, day: day)
     return calendar.date(from: dateComponents)
   }
-
+  
   static func createWithTime(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date? {
     let calendar = Calendar.current
     let dateComponents = DateComponents(calendar: calendar, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
@@ -36,7 +36,7 @@ extension Date {
   }
   
   static func isLeapYear(_ year: Int) -> Bool {
-      return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
+    return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
   }
   
   static func convertToNSDate(_ date: Date?) -> NSDate? {
@@ -58,27 +58,27 @@ extension Date {
   }
   
   func convertToString() -> String {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-      dateFormatter.timeZone = .current
-      return dateFormatter.string(from: self)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.timeZone = .current
+    return dateFormatter.string(from: self)
   }
   
   func convertToDateFormat() -> String {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "MMM dd yyyy"
-      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-      dateFormatter.timeZone = .current
-      return dateFormatter.string(from: self)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MMM dd yyyy"
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.timeZone = .current
+    return dateFormatter.string(from: self)
   }
   
   func convertToTimeFormat() -> String {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "H:mm:ss a zzz"
-      dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-      dateFormatter.timeZone = .current
-      return dateFormatter.string(from: self)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "H:mm:ss a zzz"
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.timeZone = .current
+    return dateFormatter.string(from: self)
   }
   
   func convertToMonthYearFormat() -> String {
@@ -179,21 +179,21 @@ extension Date {
     }
     return self == date
   }
-
+  
   func isGreaterThan(_ date: Date, _ ignoreTime: Bool = false) -> Bool {
     if ignoreTime {
       let order = Calendar.current.compare(self, to: date, toGranularity: .day)
       return order == ComparisonResult.orderedDescending
     }
-     return self > date
+    return self > date
   }
-
+  
   func isSmallerThan(_ date: Date, _ ignoreTime: Bool = false) -> Bool {
     if ignoreTime {
       let order = Calendar.current.compare(self, to: date, toGranularity: .day)
       return order == ComparisonResult.orderedAscending
     }
-     return self < date
+    return self < date
   }
   
   func isBetween(_ date1: Date, and date2: Date) -> Bool {

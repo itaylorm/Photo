@@ -11,13 +11,13 @@ import Photos
 
 class PhotoViewModel: Hashable {
   static func == (lhs: PhotoViewModel, rhs: PhotoViewModel) -> Bool {
-      return lhs.image == rhs.image
+    return lhs.image == rhs.image
   }
   
   func hash(into hasher: inout Hasher) {
-      hasher.combine(localIdentifier)
+    hasher.combine(localIdentifier)
   }
-
+  
   let asset: PHAsset
   var image: UIImage?
   var thumbNail: UIImage?
@@ -53,31 +53,31 @@ class PhotoViewModel: Hashable {
   var informationLoaded = false
   
   init(asset: PHAsset) {
-      self.asset = asset
-      self.location = asset.location
-      self.localIdentifier = asset.localIdentifier
-      
-      if let creationDate = asset.creationDate {
-          self.creationDate = creationDate
-      } else {
-          self.creationDate = nil
-      }
-
-      if let modificationDate = asset.modificationDate {
-          self.modificationDate = modificationDate
-      } else {
-          self.modificationDate = nil
-      }
-      
-      self.pixelHeight = asset.pixelHeight
-      self.pixelWidth = asset.pixelWidth
-      self.isFavorite = asset.isFavorite
-      
-      let subMediaType = asset.mediaSubtypes
-      isDepthEffect = subMediaType.contains(.photoDepthEffect)
-      isHDR = subMediaType.contains(.photoHDR)
-      isPanorama = subMediaType.contains(.photoPanorama)
-      isScreenShot = subMediaType.contains(.photoScreenshot)
-      isLive = subMediaType.contains(.photoLive)
+    self.asset = asset
+    self.location = asset.location
+    self.localIdentifier = asset.localIdentifier
+    
+    if let creationDate = asset.creationDate {
+      self.creationDate = creationDate
+    } else {
+      self.creationDate = nil
+    }
+    
+    if let modificationDate = asset.modificationDate {
+      self.modificationDate = modificationDate
+    } else {
+      self.modificationDate = nil
+    }
+    
+    self.pixelHeight = asset.pixelHeight
+    self.pixelWidth = asset.pixelWidth
+    self.isFavorite = asset.isFavorite
+    
+    let subMediaType = asset.mediaSubtypes
+    isDepthEffect = subMediaType.contains(.photoDepthEffect)
+    isHDR = subMediaType.contains(.photoHDR)
+    isPanorama = subMediaType.contains(.photoPanorama)
+    isScreenShot = subMediaType.contains(.photoScreenshot)
+    isLive = subMediaType.contains(.photoLive)
   }
 }

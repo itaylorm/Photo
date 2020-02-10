@@ -9,10 +9,10 @@
 import Photos
 
 extension PHFetchResult {
-    
-    @objc func isEmpty() -> Bool {
-        // swiftlint:disable empty_count
-        return self.count == 0
-        // swiftlint:enable empty_count
-    }
+  
+  @objc func isEmpty() -> Bool {
+    // swiftlint:disable empty_count
+    return self.count == 0
+    // swiftlint:enable empty_count
+  }
 }

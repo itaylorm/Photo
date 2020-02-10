@@ -11,12 +11,12 @@ import XCTest
 
 class PhotoImageViewTests: XCTestCase {
 
-    func testValidPhotoImageViewCreate() {
-        let imageView = PhotoImageView(frame: .zero)
-        let expectedContentMode = UIView.ContentMode.scaleAspectFill
-        XCTAssertEqual(imageView.contentMode, expectedContentMode, "ImageView is \(imageView.contentMode) expected \(expectedContentMode)")
-        XCTAssertTrue(imageView.clipsToBounds, "ImageView clipsToBounds is not true")
-        XCTAssertFalse(imageView.translatesAutoresizingMaskIntoConstraints, "ImageView is not true")
-    }
+  func testValidPhotoImageViewCreate() {
+    let imageView = PhotoImageView(frame: .zero)
+    let expectedContentMode = UIView.ContentMode.scaleAspectFill
+    XCTAssertEqual(imageView.contentMode, expectedContentMode, "ImageView is \(imageView.contentMode) expected \(expectedContentMode)")
+    XCTAssertTrue(imageView.clipsToBounds, "ImageView clipsToBounds is not true")
+    XCTAssertFalse(imageView.translatesAutoresizingMaskIntoConstraints, "ImageView is not true")
+  }
 
 }

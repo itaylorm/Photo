@@ -9,17 +9,17 @@
 import UIKit
 
 class AlbumsVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureViewController()
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureViewController()
+  }
+  
+  func configureViewController() {
+    title = "Albums"
+    view.backgroundColor = Colors.background
+    navigationController?.navigationBar.prefersLargeTitles = true
     
-    func configureViewController() {
-        title = "Albums"
-        view.backgroundColor = Colors.background
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-    }
-
+  }
+  
 }

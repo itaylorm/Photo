@@ -9,8 +9,8 @@
 import UIKit
 
 extension UITextField {
-    
-    var unwrappedText: String {
-        return self.text ?? ""
-    }
+  
+  var unwrappedText: String {
+    return self.text ?? ""
+  }
 }

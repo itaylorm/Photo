@@ -12,21 +12,21 @@ import CoreLocation
 
 class PhotoManager {
   static let shared = PhotoManager()
-
+  
   enum PhotoType {
     case forList
     case forInfo
   }
   
   let itemCountPerPage = 1000
-
+  
   private init() {}
-
+  
   func getPhoto(photoViewModel: PhotoViewModel, bounds: CGRect, photoType: PhotoType) -> UIImage? {
     var photo: UIImage?
     let asset = photoViewModel.asset
     let size = getPhotoSizeToRequest(size: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), bounds: bounds)
-
+    
     let options = PHImageRequestOptions()
     options.isSynchronous = true
     options.resizeMode = .exact
@@ -37,15 +37,15 @@ class PhotoManager {
     case .forInfo:
       options.deliveryMode = .highQualityFormat
     }
-
+    
     PHImageManager.default().requestImage(for: asset,
-    targetSize: size,
-    contentMode: .aspectFit, options: options) { (image, _) in
-      if let image = image {
-        photo = image
-      } else {
-        print("Failed to retrieve image")
-      }
+                                          targetSize: size,
+                                          contentMode: .aspectFit, options: options) { (image, _) in
+                                            if let image = image {
+                                              photo = image
+                                            } else {
+                                              print("Failed to retrieve image")
+                                            }
     }
     return photo
   }
@@ -70,25 +70,25 @@ class PhotoManager {
     requestAccessToPhotos { (authorization: PHAuthorizationStatus) in
       switch authorization {
       case .authorized:
-          let photos = self.getImagesFromPhotoLibrary(page: page)
-          completed(.success(photos))
+        let photos = self.getImagesFromPhotoLibrary(page: page)
+        completed(.success(photos))
       case .denied:
-          completed(.failure(.denied))
+        completed(.failure(.denied))
       case .notDetermined:
-          completed(.failure(.notDetermined))
+        completed(.failure(.notDetermined))
       case .restricted:
-          completed(.failure(.restricted))
+        completed(.failure(.restricted))
       @unknown default:
-          completed(.failure(.unableToComplete))
+        completed(.failure(.unableToComplete))
       }
     }
-      
+    
   }
   
   private func requestAccessToPhotos(authClosure: @escaping (PHAuthorizationStatus) -> Void) {
-      PHPhotoLibrary.requestAuthorization { (authStatus: PHAuthorizationStatus) -> Void in
-          authClosure(authStatus)
-      }
+    PHPhotoLibrary.requestAuthorization { (authStatus: PHAuthorizationStatus) -> Void in
+      authClosure(authStatus)
+    }
   }
   
   private func getImagesFromPhotoLibrary(page: Int) -> [PhotoViewModel] {
@@ -103,9 +103,9 @@ class PhotoManager {
     fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
     
     //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
-//    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
-//    let endDate = Date.convertToNSDate(Date.create(year: 2019, month: 12, day: 31))!
-//    fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
+    //    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
+    //    let endDate = Date.convertToNSDate(Date.create(year: 2019, month: 12, day: 31))!
+    //    fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
     let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
     if !fetchResult.isEmpty() {
       
@@ -140,7 +140,7 @@ class PhotoManager {
       self.getIptcInformation(fullImage: fullImage, viewModel: viewModel)
       self.getTifInformation(fullImage: fullImage, viewModel: viewModel)
       self.getExifInformation(fullImage: fullImage, viewModel: viewModel)
-
+      
       viewModel.informationLoaded = true
       completed(.success(viewModel))
       
@@ -186,7 +186,7 @@ class PhotoManager {
         viewModel.keyWords = keywordArray.joined(separator: ",")
         print("Keywords: \(viewModel.keyWords!)")
       }
-     } else {
+    } else {
       print("IPTC Not Found")
     }
   }
@@ -215,7 +215,7 @@ class PhotoManager {
     }
     return ""
   }
-
+  
   private func getValue(image: CIImage, keyName: String, displayName: String) -> String {
     if let optionalValue = image.properties[keyName], let value = optionalValue as? String {
       print("\(displayName) \(value)")

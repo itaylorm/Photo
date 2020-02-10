@@ -9,16 +9,16 @@
 import UIKit
 
 class MemoriesVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureViewController()
-    }
-
-    func configureViewController() {
-        title = "Memories"
-        view.backgroundColor = Colors.background
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureViewController()
+  }
+  
+  func configureViewController() {
+    title = "Memories"
+    view.backgroundColor = Colors.background
+    navigationController?.navigationBar.prefersLargeTitles = true
+    
+  }
 }

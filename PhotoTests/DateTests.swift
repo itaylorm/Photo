@@ -10,14 +10,14 @@ import XCTest
 @testable import Photo
 
 class DateTests: XCTestCase {
-
+  
   func testDateCreateSuccess() {
     let now = Date()
     let assembled = Date.create(year: now.year(), month: now.month(), day: now.day())
     XCTAssertNotNil(assembled)
     XCTAssertTrue(now.isEqualTo(assembled!, true))
   }
-
+  
   func testDateCreateInvalidDay() {
     let assembled = Date.create(year: 2020, month: 10, day: 32)
     XCTAssertNil(assembled)

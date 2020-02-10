@@ -9,7 +9,7 @@
 import UIKit
 
 class ValueView: UIView {
-
+  
   private var stackView = UIStackView()
   private var titleLabel = SecondaryTitleLabel()
   private var valueLabel = BodyLabel()
@@ -31,17 +31,17 @@ class ValueView: UIView {
     get { return valueLabel.text ?? "" }
     set {
       valueLabel.text = newValue
-
+      
     }
   }
   
   override init(frame: CGRect) {
-      super.init(frame: frame)
-      configure()
+    super.init(frame: frame)
+    configure()
   }
   
   required init?(coder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
   
   convenience init(title: String) {
@@ -73,10 +73,10 @@ class ValueView: UIView {
     
     stackView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-        stackView.topAnchor.constraint(equalTo: topAnchor),
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+      stackView.topAnchor.constraint(equalTo: topAnchor),
+      stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+      stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
     
   }
