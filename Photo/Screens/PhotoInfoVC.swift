@@ -39,6 +39,37 @@ class PhotoInfoVC: DataLoadingVC {
   private func getPhoto() {
     PhotoManager.shared.getPhoto(viewModel: currentViewModel)
     self.photoImageView.image = self.currentViewModel.image
+    self.photoImageView.layoutIfNeeded()
+
+    var newSize: CGSize = CGSize(width: 0, height: 0)
+    
+    if let image = self.currentViewModel.image {
+      let size = image.size
+
+      var widthRatio: CGFloat = 0
+      var heightRatio: CGFloat = 0
+      
+      if size.height > size.width {
+        widthRatio = photoImageView.bounds.width / size.width
+        heightRatio = size.height * widthRatio
+        newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+      } else {
+        widthRatio = 1.0
+        heightRatio = photoImageView.bounds.width / size.width
+        newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+      }
+
+      let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+      UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+      image.draw(in: rect)
+      let newImage = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      self.photoImageView.image = newImage
+    }
+
+    photoImageView.frame = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    
     creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
     creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
   }
@@ -79,7 +110,6 @@ class PhotoInfoVC: DataLoadingVC {
   private func configurePhotoView() {
     view.addSubviews(photoImageView)
     photoImageView.image = PhotoManager.shared.getPhoto(viewModel: currentViewModel)
-    
     photoImageView.isUserInteractionEnabled = true
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     leftSwipe.direction = .left
@@ -90,7 +120,7 @@ class PhotoInfoVC: DataLoadingVC {
     view.addGestureRecognizer(rightSwipe)
     
     NSLayoutConstraint.activate([
-      photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
+      photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 65),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])

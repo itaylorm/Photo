@@ -117,7 +117,7 @@ class PhotoManager {
     case .forInfo:
       var minRatio: CGFloat = 1
       if CGFloat(asset.pixelWidth) > UIScreen.main.bounds.width || CGFloat(asset.pixelHeight) > UIScreen.main.bounds.height {
-        minRatio = min(UIScreen.main.bounds.width/(CGFloat(asset.pixelWidth)), (UIScreen.main.bounds.height/CGFloat(asset.pixelHeight)))
+        minRatio = min(CGFloat(asset.pixelWidth), CGFloat(asset.pixelHeight))
       }
       return CGSize(width: CGFloat(asset.pixelWidth) * minRatio, height: CGFloat(asset.pixelHeight) * minRatio)
     case .forList:
