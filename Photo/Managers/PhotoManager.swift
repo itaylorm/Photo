@@ -112,6 +112,36 @@ class PhotoManager {
     return photo
   }
   
+  func resizePhoto(image: UIImage?, bounds: CGRect) -> UIImage? {
+   guard let image = image else { return nil }
+   var newSize: CGSize = CGSize(width: 0, height: 0)
+   var newImage: UIImage?
+   
+   let size = image.size
+
+   var widthRatio: CGFloat = 0
+   var heightRatio: CGFloat = 0
+   
+   if size.height > size.width {
+     widthRatio = bounds.width / size.width
+     heightRatio = size.height * widthRatio
+     newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+   } else {
+     widthRatio = 1.0
+     heightRatio = bounds.width / size.width
+     newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+   }
+
+   let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+   UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+   image.draw(in: rect)
+   newImage = UIGraphicsGetImageFromCurrentImageContext()
+   UIGraphicsEndImageContext()
+   
+   return newImage
+  }
+  
   private func getPhotoSize(photoType: PhotoType, asset: PHAsset) -> CGSize {
     switch photoType {
     case .forInfo:

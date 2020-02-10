@@ -33,45 +33,23 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   @objc func dismissVC() {
-      dismiss(animated: true)
+    dismiss(animated: true)
   }
   
   private func getPhoto() {
     PhotoManager.shared.getPhoto(viewModel: currentViewModel)
     self.photoImageView.image = self.currentViewModel.image
     self.photoImageView.layoutIfNeeded()
-
-    var newSize: CGSize = CGSize(width: 0, height: 0)
     
-    if let image = self.currentViewModel.image {
-      let size = image.size
-
-      var widthRatio: CGFloat = 0
-      var heightRatio: CGFloat = 0
+    let image = PhotoManager.shared.resizePhoto(image: self.photoImageView.image, bounds: self.photoImageView.bounds)
+    if let image = image {
+      photoImageView.image = image
+      photoImageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
       
-      if size.height > size.width {
-        widthRatio = photoImageView.bounds.width / size.width
-        heightRatio = size.height * widthRatio
-        newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-      } else {
-        widthRatio = 1.0
-        heightRatio = photoImageView.bounds.width / size.width
-        newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-      }
-
-      let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-      UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-      image.draw(in: rect)
-      let newImage = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-      self.photoImageView.image = newImage
+      creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
+      creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
     }
-
-    photoImageView.frame = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
     
-    creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
-    creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
   }
   
   private func getPhotoExtendedInformation() {
@@ -96,7 +74,7 @@ class PhotoInfoVC: DataLoadingVC {
     
     UIView.transition(with: photoImageView, duration: 0.3,
                       options: [.transitionCrossDissolve], animations: {
-      self.getPhoto()
+                        self.getPhoto()
     }, completion: nil)
   }
   
@@ -114,7 +92,7 @@ class PhotoInfoVC: DataLoadingVC {
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     leftSwipe.direction = .left
     view.addGestureRecognizer(leftSwipe)
-
+    
     let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     rightSwipe.direction = .right
     view.addGestureRecognizer(rightSwipe)
@@ -129,18 +107,18 @@ class PhotoInfoVC: DataLoadingVC {
   private func configureCreationDateView() {
     view.addSubviews(creationDateView)
     creationDateView.title = "Date"
-
+    
     NSLayoutConstraint.activate([
       creationDateView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
       creationDateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       creationDateView.heightAnchor.constraint(equalToConstant: 30)
     ])
   }
-
+  
   private func configureCreationTimeView() {
     view.addSubviews(creationTimeView)
     creationTimeView.title = "Time:"
-
+    
     NSLayoutConstraint.activate([
       creationTimeView.topAnchor.constraint(equalTo: creationDateView.bottomAnchor, constant: padding),
       creationTimeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
