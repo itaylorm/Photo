@@ -29,6 +29,9 @@ protocol AssetManagerProtocol {
   func requestContentEditingInput(
     with options: PHContentEditingInputRequestOptions?,
     asset: PHAsset, completionHandler: @escaping (PHContentEditingInput?, [AnyHashable: Any]) -> Void) -> PHContentEditingInputRequestID
+  
+  func getCIImage(contentsOf: URL) -> CIImage?
+  
 }
 
 class AssetManager: AssetManagerProtocol {
@@ -59,5 +62,9 @@ class AssetManager: AssetManagerProtocol {
     return asset.requestContentEditingInput(with: options) { (contentEditingInput: PHContentEditingInput?, hashable) in
       completionHandler(contentEditingInput, hashable)
     }
+  }
+  
+  func getCIImage(contentsOf url: URL) -> CIImage? {
+    return CIImage(contentsOf: url)
   }
 }

@@ -15,7 +15,7 @@
 		342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */; };
 		342C98BA23F2067A008454B9 /* PHAssetMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B923F2067A008454B9 /* PHAssetMock.swift */; };
 		342C98BC23F21AE3008454B9 /* PHResultMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98BB23F21AE3008454B9 /* PHResultMock.swift */; };
-		342C98C023F22530008454B9 /* PhotoManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98BF23F22530008454B9 /* PhotoManagerTests.swift */; };
+		342C98C023F22530008454B9 /* PhotoManagerGetPhotosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98BF23F22530008454B9 /* PhotoManagerGetPhotosTests.swift */; };
 		342C98C223F2347C008454B9 /* AuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98C123F2347C008454B9 /* AuthorizationTests.swift */; };
 		3474472623EC97FE004E05BC /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474472523EC97FD004E05BC /* PhotoViewModel.swift */; };
 		349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4D23EB97860041431F /* PhotoCell.swift */; };
@@ -55,6 +55,9 @@
 		34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227223EB1F7700B5F25D /* MemoriesVC.swift */; };
 		34CF227723EB347600B5F25D /* UITabBarController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF227623EB347600B5F25D /* UITabBarController+Ext.swift */; };
 		34CF228723EB3C2400B5F25D /* TabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF228623EB3C2400B5F25D /* TabBarControllerTests.swift */; };
+		34D77CAC23F30508009FB6EB /* CIImageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAB23F30508009FB6EB /* CIImageMock.swift */; };
+		34D77CAE23F30A0C009FB6EB /* PHContentEditingInputMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */; };
+		34D77CB023F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */; };
 		34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */; };
 		8A788BB2104C70BCC72C0765 /* libPods-Photo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */; };
 /* End PBXBuildFile section */
@@ -79,7 +82,7 @@
 		342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManagerMock.swift; sourceTree = "<group>"; };
 		342C98B923F2067A008454B9 /* PHAssetMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetMock.swift; sourceTree = "<group>"; };
 		342C98BB23F21AE3008454B9 /* PHResultMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHResultMock.swift; sourceTree = "<group>"; };
-		342C98BF23F22530008454B9 /* PhotoManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerTests.swift; sourceTree = "<group>"; };
+		342C98BF23F22530008454B9 /* PhotoManagerGetPhotosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerGetPhotosTests.swift; sourceTree = "<group>"; };
 		342C98C123F2347C008454B9 /* AuthorizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTests.swift; sourceTree = "<group>"; };
 		3474472523EC97FD004E05BC /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		349CDC4D23EB97860041431F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -123,6 +126,9 @@
 		34CF227C23EB3B8A00B5F25D /* PhotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CF228023EB3B8A00B5F25D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34CF228623EB3C2400B5F25D /* TabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerTests.swift; sourceTree = "<group>"; };
+		34D77CAB23F30508009FB6EB /* CIImageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageMock.swift; sourceTree = "<group>"; };
+		34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHContentEditingInputMock.swift; sourceTree = "<group>"; };
+		34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerGetPhotoInformationTests.swift; sourceTree = "<group>"; };
 		34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContainerView+Ext.swift"; sourceTree = "<group>"; };
 		71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo.release.xcconfig"; path = "Target Support Files/Pods-Photo/Pods-Photo.release.xcconfig"; sourceTree = "<group>"; };
 		87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Photo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +168,8 @@
 				342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */,
 				342C98B923F2067A008454B9 /* PHAssetMock.swift */,
 				342C98BB23F21AE3008454B9 /* PHResultMock.swift */,
+				34D77CAB23F30508009FB6EB /* CIImageMock.swift */,
+				34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -307,8 +315,9 @@
 				349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */,
 				34B5111323EDA296001C9B6D /* DateTests.swift */,
 				34B5111923EDD86E001C9B6D /* SecondaryTitleLabelTests.swift */,
-				342C98BF23F22530008454B9 /* PhotoManagerTests.swift */,
+				342C98BF23F22530008454B9 /* PhotoManagerGetPhotosTests.swift */,
 				342C98C123F2347C008454B9 /* AuthorizationTests.swift */,
+				34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */,
 			);
 			path = PhotoTests;
 			sourceTree = "<group>";
@@ -509,14 +518,17 @@
 				342C98BA23F2067A008454B9 /* PHAssetMock.swift in Sources */,
 				34CF228723EB3C2400B5F25D /* TabBarControllerTests.swift in Sources */,
 				3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */,
+				34D77CAE23F30A0C009FB6EB /* PHContentEditingInputMock.swift in Sources */,
 				349CDC5223EB98F70041431F /* PhotoImageViewTests.swift in Sources */,
 				34B5111423EDA296001C9B6D /* DateTests.swift in Sources */,
 				3406763423EB682500DED300 /* BodyLabelTests.swift in Sources */,
-				342C98C023F22530008454B9 /* PhotoManagerTests.swift in Sources */,
+				342C98C023F22530008454B9 /* PhotoManagerGetPhotosTests.swift in Sources */,
+				34D77CAC23F30508009FB6EB /* CIImageMock.swift in Sources */,
 				3406763223EB5E9B00DED300 /* TitleLabelTests.swift in Sources */,
 				342C98C223F2347C008454B9 /* AuthorizationTests.swift in Sources */,
 				34B5111A23EDD86E001C9B6D /* SecondaryTitleLabelTests.swift in Sources */,
 				342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */,
+				34D77CB023F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift in Sources */,
 				342C98BC23F21AE3008454B9 /* PHResultMock.swift in Sources */,
 				3406763623EB691800DED300 /* ButtonTests.swift in Sources */,
 			);

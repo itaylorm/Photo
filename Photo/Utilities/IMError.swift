@@ -14,4 +14,6 @@ enum IMError: String, Error {
   case notDetermined = "Unable to determine if app has access to your photos. Please try again"
   case restricted = "Access to photos is restricted"
   case dataNotFound = "Unable to find requested data"
+  case pageIndexCannotBeZeroOrNegative = "Cannot ask for a zero or negative page index"
+  case noMorePhotos = "There are no more photos in the library"
 }

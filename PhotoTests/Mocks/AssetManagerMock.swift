@@ -10,14 +10,24 @@ import UIKit
 import Photos
 @testable import Photo
 
+enum ImageInformationStatus {
+  case success
+  case slrSuccess
+  case missingExif
+  case missingTiff
+  case missingIptc
+}
+
 class AssetManagerMock {
   
   var shouldReturnError = false
   var authorizationStatus = PHAuthorizationStatus.authorized
+  var imageInformationStatus = ImageInformationStatus.success
   
   func reset() {
     shouldReturnError = false
     authorizationStatus = PHAuthorizationStatus.authorized
+    imageInformationStatus = ImageInformationStatus.success
   }
 
   convenience init() {
@@ -61,7 +71,61 @@ extension AssetManagerMock: AssetManagerProtocol {
                                   asset: PHAsset,
                                   completionHandler: @escaping (PHContentEditingInput?, [AnyHashable: Any]) -> Void)
     -> PHContentEditingInputRequestID {
+      completionHandler(PHContentEditingInputMock(), [:])
     return PHContentEditingInputRequestID()
   }
   
+  func getCIImage(contentsOf url: URL) -> CIImage? {
+    let image = CIImageMock(contentsOf: url)
+    switch imageInformationStatus {
+    case .success:
+      image?.configure(dictionary: createSuccessInformation())
+    case .slrSuccess:
+      image?.configure(dictionary: createSlrSuccessInformation())
+    case .missingExif:
+      image?.configure(dictionary: createInformationWithMissingExif())
+    case .missingIptc:
+      image?.configure(dictionary: createInformationWithMissingIPTC())
+    case .missingTiff:
+      image?.configure(dictionary: createInformationWithMissingTiff())
+    }
+    return image
+  }
+  
+  private func createSuccessInformation() -> [String: Any?] {
+    var dictionary: [String: Any?] = [:]
+    dictionary[ImageKeys.exif.rawValue] = CIImageMock.iphoneExifDictionary
+    dictionary[ImageKeys.tiff.rawValue] = CIImageMock.iphoneTiffDictionary
+    dictionary[ImageKeys.iptc.rawValue] = CIImageMock.iptcDictionary
+    return dictionary
+  }
+  
+  private func createSlrSuccessInformation() -> [String: Any?] {
+    var dictionary: [String: Any?] = [:]
+    dictionary[ImageKeys.exif.rawValue] = CIImageMock.slrExifDictionary
+    dictionary[ImageKeys.tiff.rawValue] = CIImageMock.slrTiffDictionary
+    dictionary[ImageKeys.iptc.rawValue] = CIImageMock.iptcDictionary
+    return dictionary
+  }
+  
+  private func createInformationWithMissingExif() -> [String: Any?] {
+    var dictionary: [String: Any?] = [:]
+    dictionary[ImageKeys.tiff.rawValue] = CIImageMock.iphoneTiffDictionary
+    dictionary[ImageKeys.iptc.rawValue] = CIImageMock.iptcDictionary
+    return dictionary
+  }
+  
+  private func createInformationWithMissingTiff() -> [String: Any?] {
+    var dictionary: [String: Any?] = [:]
+    dictionary[ImageKeys.exif.rawValue] = CIImageMock.iphoneExifDictionary
+    dictionary[ImageKeys.iptc.rawValue] = CIImageMock.iptcDictionary
+    return dictionary
+  }
+  
+  private func createInformationWithMissingIPTC() -> [String: Any?] {
+    var dictionary: [String: Any?] = [:]
+    dictionary[ImageKeys.exif.rawValue] = CIImageMock.iphoneExifDictionary
+    dictionary[ImageKeys.tiff.rawValue] = CIImageMock.iphoneTiffDictionary
+    return dictionary
+  }
 }

@@ -73,6 +73,11 @@ class PhotoManager {
   }
   
   func getPhotos(page: Int, completed: @escaping(Result<[PhotoViewModel], IMError>) -> Void) {
+    guard page > 0 else {
+      completed(.failure(IMError.pageIndexCannotBeZeroOrNegative))
+      return
+    }
+    
     requestAccessToPhotos { (authorization: PHAuthorizationStatus) in
       switch authorization {
       case .authorized:
@@ -97,8 +102,33 @@ class PhotoManager {
     }
   }
   
+  func getPhotoInformation(viewModel: PhotoViewModel, completed: @escaping(Result<PhotoViewModel, IMError>) -> Void) {
+    guard !viewModel.informationLoaded else { return }
+    
+    let options = PHContentEditingInputRequestOptions()
+    options.isNetworkAccessAllowed = true
+    assetManager.requestContentEditingInput(with: options, asset: viewModel.asset) { (contentEditingInput: PHContentEditingInput?, _) in
+      guard let url = contentEditingInput?.fullSizeImageURL,
+        let fullImage = self.assetManager.getCIImage(contentsOf: url) else {
+        completed(.failure(.unableToComplete))
+        return
+      }
+ 
+      viewModel.colorModel = self.getValue(image: fullImage, keyName: "ColorModel", displayName: "Color Model: ")
+      viewModel.profileName = self.getValue(image: fullImage, keyName: "ProfileName", displayName: "Profile Name: ")
+      self.getIptcInformation(fullImage: fullImage, viewModel: viewModel)
+      self.getTifInformation(fullImage: fullImage, viewModel: viewModel)
+      self.getExifInformation(fullImage: fullImage, viewModel: viewModel)
+      
+      viewModel.informationLoaded = true
+      completed(.success(viewModel))
+      
+    }
+  }
+  
   private func getImagesFromPhotoLibrary(page: Int) -> [PhotoViewModel] {
     var images = [PhotoViewModel]()
+    guard page > 0 else { return images }
     
     let requestOptions = PHImageRequestOptions()
     requestOptions.isSynchronous = true
@@ -128,29 +158,6 @@ class PhotoManager {
       }
     } else { print("Returned no records") }
     return images
-  }
-  
-  func getPhotoInformation(viewModel: PhotoViewModel, completed: @escaping(Result<PhotoViewModel, IMError>) -> Void) {
-    guard !viewModel.informationLoaded else { return }
-    
-    let options = PHContentEditingInputRequestOptions()
-    options.isNetworkAccessAllowed = true
-    assetManager.requestContentEditingInput(with: options, asset: viewModel.asset) { (contentEditingInput: PHContentEditingInput?, _) in
-      guard let url = contentEditingInput?.fullSizeImageURL, let fullImage = CIImage(contentsOf: url) else {
-        completed(.failure(.unableToComplete))
-        return
-      }
-      
-      viewModel.colorModel = self.getValue(image: fullImage, keyName: "ColorModel", displayName: "Color Model: ")
-      viewModel.profileName = self.getValue(image: fullImage, keyName: "ProfileName", displayName: "Profile Name: ")
-      self.getIptcInformation(fullImage: fullImage, viewModel: viewModel)
-      self.getTifInformation(fullImage: fullImage, viewModel: viewModel)
-      self.getExifInformation(fullImage: fullImage, viewModel: viewModel)
-      
-      viewModel.informationLoaded = true
-      completed(.success(viewModel))
-      
-    }
   }
   
   private func getExifInformation(fullImage: CIImage, viewModel: PhotoViewModel) {
