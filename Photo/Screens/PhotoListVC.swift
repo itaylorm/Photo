@@ -33,8 +33,8 @@ class PhotoListVC: DataLoadingVC {
     configureDataSource()
   }
   
-  @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
-    print("Swipe")
+  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    collectionView.collectionViewLayout.invalidateLayout()
   }
   
   private func getPhotos() {
@@ -69,6 +69,7 @@ class PhotoListVC: DataLoadingVC {
     collectionView.backgroundColor = .systemBackground
     collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
     collectionView.delegate = self
+    collectionView.pinToEdges(of: view)
   }
   
   private func configureDataSource() {
