@@ -10,17 +10,23 @@ import UIKit
 import Photos
 import CoreLocation
 
+enum PhotoType {
+  case forList
+  case forInfo
+}
+
 class PhotoManager {
   static let shared = PhotoManager()
   
-  enum PhotoType {
-    case forList
-    case forInfo
-  }
+  var assetManager: AssetManagerProtocol = AssetManager()
   
   let itemCountPerPage = 1000
   
-  private init() {}
+  init() {}
+  
+  func configure(assetManager: AssetManagerProtocol) {
+    self.assetManager = assetManager
+  }
   
   func getPhoto(photoViewModel: PhotoViewModel, bounds: CGRect, photoType: PhotoType) -> UIImage? {
     var photo: UIImage?
@@ -38,7 +44,7 @@ class PhotoManager {
       options.deliveryMode = .highQualityFormat
     }
     
-    PHImageManager.default().requestImage(for: asset,
+    assetManager.requestImage(for: asset,
                                           targetSize: size,
                                           contentMode: .aspectFit, options: options) { (image, _) in
                                             if let image = image {
@@ -85,8 +91,8 @@ class PhotoManager {
     
   }
   
-  private func requestAccessToPhotos(authClosure: @escaping (PHAuthorizationStatus) -> Void) {
-    PHPhotoLibrary.requestAuthorization { (authStatus: PHAuthorizationStatus) -> Void in
+  func requestAccessToPhotos(authClosure: @escaping (PHAuthorizationStatus) -> Void) {
+    assetManager.requestAuthorization { (authStatus: PHAuthorizationStatus) -> Void in
       authClosure(authStatus)
     }
   }
@@ -106,7 +112,7 @@ class PhotoManager {
     //    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
     //    let endDate = Date.convertToNSDate(Date.create(year: 2019, month: 12, day: 31))!
     //    fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
-    let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+    let fetchResult: PHFetchResult = assetManager.fetchAssets(with: .image, options: fetchOptions)
     if !fetchResult.isEmpty() {
       
       let totalPhotos = fetchResult.count
@@ -129,7 +135,7 @@ class PhotoManager {
     
     let options = PHContentEditingInputRequestOptions()
     options.isNetworkAccessAllowed = true
-    viewModel.asset.requestContentEditingInput(with: options) { (contentEditingInput: PHContentEditingInput?, _) in
+    assetManager.requestContentEditingInput(with: options, asset: viewModel.asset) { (contentEditingInput: PHContentEditingInput?, _) in
       guard let url = contentEditingInput?.fullSizeImageURL, let fullImage = CIImage(contentsOf: url) else {
         completed(.failure(.unableToComplete))
         return

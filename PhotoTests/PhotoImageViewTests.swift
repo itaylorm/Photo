@@ -13,9 +13,9 @@ class PhotoImageViewTests: XCTestCase {
 
   func testValidPhotoImageViewCreate() {
     let imageView = PhotoImageView(frame: .zero)
-    let expectedContentMode = UIView.ContentMode.scaleAspectFill
+    let expectedContentMode = UIView.ContentMode.scaleAspectFit
     XCTAssertEqual(imageView.contentMode, expectedContentMode, "ImageView is \(imageView.contentMode) expected \(expectedContentMode)")
-    XCTAssertTrue(imageView.clipsToBounds, "ImageView clipsToBounds is not true")
+    XCTAssertFalse(imageView.clipsToBounds, "ImageView clipsToBounds is not false")
     XCTAssertFalse(imageView.translatesAutoresizingMaskIntoConstraints, "ImageView is not true")
   }
 

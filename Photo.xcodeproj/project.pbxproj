@@ -11,6 +11,12 @@
 		3406763423EB682500DED300 /* BodyLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763323EB682500DED300 /* BodyLabelTests.swift */; };
 		3406763623EB691800DED300 /* ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763523EB691800DED300 /* ButtonTests.swift */; };
 		3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763723EB6D4A00DED300 /* ContainerViewTests.swift */; };
+		342C98B523F1EDD9008454B9 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B423F1EDD9008454B9 /* AssetManager.swift */; };
+		342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */; };
+		342C98BA23F2067A008454B9 /* PHAssetMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B923F2067A008454B9 /* PHAssetMock.swift */; };
+		342C98BC23F21AE3008454B9 /* PHResultMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98BB23F21AE3008454B9 /* PHResultMock.swift */; };
+		342C98C023F22530008454B9 /* PhotoManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98BF23F22530008454B9 /* PhotoManagerTests.swift */; };
+		342C98C223F2347C008454B9 /* AuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98C123F2347C008454B9 /* AuthorizationTests.swift */; };
 		3474472623EC97FE004E05BC /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3474472523EC97FD004E05BC /* PhotoViewModel.swift */; };
 		349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4D23EB97860041431F /* PhotoCell.swift */; };
 		349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4F23EB985F0041431F /* PhotoImageView.swift */; };
@@ -69,6 +75,12 @@
 		3406763323EB682500DED300 /* BodyLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabelTests.swift; sourceTree = "<group>"; };
 		3406763523EB691800DED300 /* ButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTests.swift; sourceTree = "<group>"; };
 		3406763723EB6D4A00DED300 /* ContainerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewTests.swift; sourceTree = "<group>"; };
+		342C98B423F1EDD9008454B9 /* AssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
+		342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManagerMock.swift; sourceTree = "<group>"; };
+		342C98B923F2067A008454B9 /* PHAssetMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetMock.swift; sourceTree = "<group>"; };
+		342C98BB23F21AE3008454B9 /* PHResultMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHResultMock.swift; sourceTree = "<group>"; };
+		342C98BF23F22530008454B9 /* PhotoManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerTests.swift; sourceTree = "<group>"; };
+		342C98C123F2347C008454B9 /* AuthorizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTests.swift; sourceTree = "<group>"; };
 		3474472523EC97FD004E05BC /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		349CDC4D23EB97860041431F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		349CDC4F23EB985F0041431F /* PhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageView.swift; sourceTree = "<group>"; };
@@ -144,6 +156,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		342C98B623F1F88C008454B9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */,
+				342C98B923F2067A008454B9 /* PHAssetMock.swift */,
+				342C98BB23F21AE3008454B9 /* PHResultMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		3474472723EC9DA1004E05BC /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				34BA87FB23EC6ED5009CA973 /* PhotoManager.swift */,
+				342C98B423F1EDD9008454B9 /* AssetManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -274,6 +297,7 @@
 		34CF227D23EB3B8A00B5F25D /* PhotoTests */ = {
 			isa = PBXGroup;
 			children = (
+				342C98B623F1F88C008454B9 /* Mocks */,
 				34CF228023EB3B8A00B5F25D /* Info.plist */,
 				34CF228623EB3C2400B5F25D /* TabBarControllerTests.swift */,
 				3406763123EB5E9B00DED300 /* TitleLabelTests.swift */,
@@ -283,6 +307,8 @@
 				349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */,
 				34B5111323EDA296001C9B6D /* DateTests.swift */,
 				34B5111923EDD86E001C9B6D /* SecondaryTitleLabelTests.swift */,
+				342C98BF23F22530008454B9 /* PhotoManagerTests.swift */,
+				342C98C123F2347C008454B9 /* AuthorizationTests.swift */,
 			);
 			path = PhotoTests;
 			sourceTree = "<group>";
@@ -440,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */,
+				342C98B523F1EDD9008454B9 /* AssetManager.swift in Sources */,
 				34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */,
 				34BA87F723EC49F6009CA973 /* PHFetchResult+Ext.swift in Sources */,
 				34B5111C23EDE32B001C9B6D /* ValueView.swift in Sources */,
@@ -479,13 +506,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				342C98BA23F2067A008454B9 /* PHAssetMock.swift in Sources */,
 				34CF228723EB3C2400B5F25D /* TabBarControllerTests.swift in Sources */,
 				3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */,
 				349CDC5223EB98F70041431F /* PhotoImageViewTests.swift in Sources */,
 				34B5111423EDA296001C9B6D /* DateTests.swift in Sources */,
 				3406763423EB682500DED300 /* BodyLabelTests.swift in Sources */,
+				342C98C023F22530008454B9 /* PhotoManagerTests.swift in Sources */,
 				3406763223EB5E9B00DED300 /* TitleLabelTests.swift in Sources */,
+				342C98C223F2347C008454B9 /* AuthorizationTests.swift in Sources */,
 				34B5111A23EDD86E001C9B6D /* SecondaryTitleLabelTests.swift in Sources */,
+				342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */,
+				342C98BC23F21AE3008454B9 /* PHResultMock.swift in Sources */,
 				3406763623EB691800DED300 /* ButtonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
