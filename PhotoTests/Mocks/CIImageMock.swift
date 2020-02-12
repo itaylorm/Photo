@@ -28,7 +28,7 @@ class CIImageMock: CIImage {
                                         "ISOSpeedRatings": [400]]
   
   static let slrExifDictionary: [String: Any?] = ["LensModel": "EF24-105mm f/4L IS USM",
-                                        "BodySerialNumber":"082024007376",
+                                        "BodySerialNumber": "082024007376",
                                         "LensSerialNumber": "000011ed1e",
                                         "FocalLength": "4.25",
                                         "FocalLenIn35mmFilm": 28,
@@ -46,8 +46,7 @@ class CIImageMock: CIImage {
                                           "XResolution": 240,
                                           "YResolution": 240,
                                           "Software": "Adobe Photoshop Lightroom Classic 9.1 (Macintosh)"]
-  
-  
+
   static let iptcDictionary: [String: Any?] = ["Keywords": ["Beach", "Florida", "Fort Meyers", "Location", "Nature", "United States"]]
 
   override init?(contentsOf url: URL) {

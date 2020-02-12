@@ -205,6 +205,12 @@ class PhotoManager {
   }
   
   private func getPhotoSizeToRequest(size: CGSize, bounds: CGRect) -> CGSize {
+    return UIScreen.main.bounds.height > UIScreen.main.bounds.width
+      ? getPortraitSize(size: size, bounds: bounds)
+      : getLandscapeSize(size: size, bounds: bounds)
+  }
+  
+  private func getPortraitSize(size: CGSize, bounds: CGRect) -> CGSize {
     var newSize: CGSize
     var widthRatio: CGFloat = 0
     var heightRatio: CGFloat = 0
@@ -217,6 +223,23 @@ class PhotoManager {
       widthRatio = 1.0
       heightRatio = bounds.width / size.width
       newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+    }
+    return newSize
+  }
+  
+  private func getLandscapeSize(size: CGSize, bounds: CGRect) -> CGSize {
+    var newSize: CGSize
+    var widthRatio: CGFloat = 0
+    var heightRatio: CGFloat = 0
+    
+    if size.width < size.height {
+      heightRatio = bounds.height / size.height
+      widthRatio = size.width * heightRatio
+      newSize = CGSize(width: size.width * widthRatio, height: (size.height * heightRatio) - 65)
+    } else {
+      heightRatio = 1.0
+      widthRatio = bounds.height / size.height
+      newSize = CGSize(width: size.width * widthRatio, height: (size.height * widthRatio) - 65)
     }
     return newSize
   }

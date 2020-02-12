@@ -11,7 +11,7 @@ import Photos
 
 class PhotoViewModel: Hashable {
   static func == (lhs: PhotoViewModel, rhs: PhotoViewModel) -> Bool {
-    return lhs.image == rhs.image
+    return lhs.imagePortrait == rhs.imagePortrait
   }
   
   func hash(into hasher: inout Hasher) {
@@ -19,7 +19,8 @@ class PhotoViewModel: Hashable {
   }
   
   let asset: PHAsset
-  var image: UIImage?
+  var imagePortrait: UIImage?
+  var imageLandscape: UIImage?
   var thumbNail: UIImage?
   var location: CLLocation?
   let localIdentifier: String

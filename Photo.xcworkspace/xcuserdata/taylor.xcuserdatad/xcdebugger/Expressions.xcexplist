@@ -3,9 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
-      </ContextState>
-      <ContextState
          contextName = "PhotoInfoVC.getPhoto():PhotoInfoVC.swift">
          <PersistentStrings>
             <PersistentString
@@ -20,12 +17,50 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "PhotoManager.getLandscapeSize(size:bounds:):PhotoManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "bounds.height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoManagerGetPhotoInformationTests.testPhotoManagerGetPhotoInformationSuccess():PhotoManagerGetPhotoInformationTests.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "expectedISOArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoInfoVC.getLandscapePhoto():PhotoInfoVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "view.bounds.height">
+            </PersistentString>
+            <PersistentString
+               value = "view.bounds.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
          <PersistentStrings>
             <PersistentString
                value = "asset.pixelWidth">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotosVC.getPhotos():PhotosVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "fetchResult.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
       </ContextState>
       <ContextState
          contextName = "PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
@@ -36,10 +71,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PhotosVC.getPhotos():PhotosVC.swift">
+         contextName = "CIImageMock.init(contentsOf:):CIImageMock.swift">
          <PersistentStrings>
             <PersistentString
-               value = "fetchResult.count">
+               value = "exifData.replacingOccurrences(of: &quot;\n&quot;, with: &quot;&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "_properties">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

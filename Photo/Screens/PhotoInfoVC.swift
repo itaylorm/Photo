@@ -11,8 +11,12 @@ import SpriteKit
 
 class PhotoInfoVC: DataLoadingVC {
   
+  let scrollView = UIScrollView()
+  let contentView = UIView()
+  
   let photoImageView = PhotoImageView(frame: .zero)
   let informationView = UIStackView()
+
   var spaceView = ValueView(frame: .zero)
   var creationDateView = ValueView(title: "Date:")
   var creationTimeView = ValueView(title: "Time:")
@@ -28,11 +32,22 @@ class PhotoInfoVC: DataLoadingVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     configureViewController()
+    configureScrollView()
     configurePhotoView()
     configureInformationView()
     getPhoto()
     getPhotoExtendedInformation()
+  }
+  
+  deinit {
+     NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+  }
+  
+  @objc func rotated() {
+    getPhoto()
   }
   
   @objc func dismissVC() {
@@ -53,20 +68,54 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   private func getPhoto() {
-    if currentViewModel.image == nil {
-      currentViewModel.image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
-    }
     
-    photoImageView.image = currentViewModel.image
+    let image: UIImage? = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? getPortraitPhoto() : getLandscapePhoto()
+    photoImageView.image = image
     photoImageView.layoutIfNeeded()
     
-    if let image = photoImageView.image {
+    if let image = image {
       photoImageView.image = image
       photoImageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
       
       creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
       creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
     }
+    
+    // Still not working properly, but better
+    // https://stackoverflow.com/questions/9450302/get-uiscrollview-to-scroll-to-the-top
+    var offset = CGPoint(
+        x: -scrollView.contentInset.left,
+        y: -scrollView.contentInset.top)
+
+    if #available(iOS 11.0, *) {
+        offset = CGPoint(
+            x: -scrollView.adjustedContentInset.left,
+            y: -scrollView.adjustedContentInset.top)
+    }
+
+    scrollView.setContentOffset(offset, animated: true)
+  }
+  
+  private func getPortraitPhoto() -> UIImage? {
+    var image: UIImage?
+    if currentViewModel.imagePortrait == nil {
+      image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
+      currentViewModel.imagePortrait = image
+    } else {
+      image = currentViewModel.imagePortrait
+    }
+    return image
+  }
+  
+  private func getLandscapePhoto() -> UIImage? {
+    var image: UIImage?
+    if currentViewModel.imageLandscape == nil {
+      image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
+      currentViewModel.imageLandscape = image
+    } else {
+      image = currentViewModel.imageLandscape
+    }
+    return image
   }
   
   private func displayPhotoInformation() {
@@ -98,8 +147,20 @@ class PhotoInfoVC: DataLoadingVC {
     navigationItem.rightBarButtonItem = doneButton
   }
   
+  private func configureScrollView() {
+    view.addSubview(scrollView)
+    scrollView.addSubview(contentView)
+    scrollView.pinToEdges(of: view)
+    contentView.pinToEdges(of: scrollView)
+    
+    NSLayoutConstraint.activate([
+         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+         contentView.heightAnchor.constraint(equalToConstant: 800)
+     ])
+  }
+  
   private func configurePhotoView() {
-    view.addSubviews(photoImageView)
+    contentView.addSubviews(photoImageView)
     photoImageView.isUserInteractionEnabled = true
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     leftSwipe.direction = .left
@@ -110,14 +171,14 @@ class PhotoInfoVC: DataLoadingVC {
     view.addGestureRecognizer(rightSwipe)
     
     NSLayoutConstraint.activate([
-      photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 65),
-      photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
+      photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 65),
+      photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+      photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
     ])
   }
   
   private func configureInformationView() {
-    view.addSubview(informationView)
+    contentView.addSubview(informationView)
     informationView.axis = .vertical
     informationView.distribution = .equalSpacing
     informationView.translatesAutoresizingMaskIntoConstraints = false
@@ -126,8 +187,8 @@ class PhotoInfoVC: DataLoadingVC {
     
     NSLayoutConstraint.activate([
       informationView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
-      informationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      informationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
+      informationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+      informationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
     ])
     
   }
