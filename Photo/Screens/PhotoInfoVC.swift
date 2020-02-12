@@ -11,9 +11,6 @@ import SpriteKit
 
 class PhotoInfoVC: DataLoadingVC {
   
-  let scrollView = UIScrollView()
-  let contentView = UIView()
-  
   let photoImageView = PhotoImageView(frame: .zero)
   let informationView = UIStackView()
 
@@ -30,12 +27,13 @@ class PhotoInfoVC: DataLoadingVC {
   
   let padding: CGFloat = 10
   
+  var showPhotoInformation = true
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     configureViewController()
-    configureScrollView()
     configurePhotoView()
     configureInformationView()
     getPhoto()
@@ -68,61 +66,30 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   private func getPhoto() {
-    
-    let image: UIImage? = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? getPortraitPhoto() : getLandscapePhoto()
-    photoImageView.image = image
-    photoImageView.layoutIfNeeded()
+    var image: UIImage?
+    let heightModifier: CGFloat = showPhotoInformation ? 170 : 0
+    let imageBounds = CGRect(x: 0, y: 0, width: view.bounds.width - padding, height: view.bounds.height - heightModifier)
+    image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, available: imageBounds, photoType: .forInfo)
+    currentViewModel.imagePortrait = image
+    photoImageView.contentMode = .top
     
     if let image = image {
       photoImageView.image = image
-      photoImageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-      
+      let height = image.size.height
+      let width = image.size.width
+      photoImageView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+      print(image.size.height)
+      print(image.size.width)
       creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
       creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
     }
-    
-    // Still not working properly, but better
-    // https://stackoverflow.com/questions/9450302/get-uiscrollview-to-scroll-to-the-top
-    var offset = CGPoint(
-        x: -scrollView.contentInset.left,
-        y: -scrollView.contentInset.top)
-
-    if #available(iOS 11.0, *) {
-        offset = CGPoint(
-            x: -scrollView.adjustedContentInset.left,
-            y: -scrollView.adjustedContentInset.top)
-    }
-
-    scrollView.setContentOffset(offset, animated: true)
-  }
-  
-  private func getPortraitPhoto() -> UIImage? {
-    var image: UIImage?
-    if currentViewModel.imagePortrait == nil {
-      image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
-      currentViewModel.imagePortrait = image
-    } else {
-      image = currentViewModel.imagePortrait
-    }
-    return image
-  }
-  
-  private func getLandscapePhoto() -> UIImage? {
-    var image: UIImage?
-    if currentViewModel.imageLandscape == nil {
-      image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, bounds: view.bounds, photoType: .forInfo)
-      currentViewModel.imageLandscape = image
-    } else {
-      image = currentViewModel.imageLandscape
-    }
-    return image
   }
   
   private func displayPhotoInformation() {
     makeView.value = currentViewModel.make ?? ""
     modelView.value = currentViewModel.model ?? ""
     lensView.value = currentViewModel.lens ?? ""
-    informationView.isHidden = false
+    informationView.isHidden = !showPhotoInformation
   }
   
   private func getPhotoExtendedInformation() {
@@ -145,22 +112,26 @@ class PhotoInfoVC: DataLoadingVC {
     
     let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
     navigationItem.rightBarButtonItem = doneButton
+    
+    let segmented = SegmentedControl(titles: ["Display Info", "Hide Info"])
+    segmented.addTarget(self, action: #selector(changeInformationDisplay(_:)), for: .valueChanged)
+    let segmentedButton = UIBarButtonItem(customView: segmented)
+    navigationItem.leftBarButtonItem = segmentedButton
+    
   }
   
-  private func configureScrollView() {
-    view.addSubview(scrollView)
-    scrollView.addSubview(contentView)
-    scrollView.pinToEdges(of: view)
-    contentView.pinToEdges(of: scrollView)
-    
-    NSLayoutConstraint.activate([
-         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-         contentView.heightAnchor.constraint(equalToConstant: 800)
-     ])
+  @objc func changeInformationDisplay(_ sender: SegmentedControl) {
+    showPhotoInformation = sender.selectedSegmentIndex == 0 ? true : false
+    informationView.isHidden = !showPhotoInformation
+    getPhoto()
+  }
+  
+  @objc func changeSwitch(_ sender: UISwitch) {
+    title = sender.isOn == true ? "" : "Photo info hidden"
   }
   
   private func configurePhotoView() {
-    contentView.addSubviews(photoImageView)
+    view.addSubviews(photoImageView)
     photoImageView.isUserInteractionEnabled = true
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
     leftSwipe.direction = .left
@@ -171,14 +142,14 @@ class PhotoInfoVC: DataLoadingVC {
     view.addGestureRecognizer(rightSwipe)
     
     NSLayoutConstraint.activate([
-      photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 65),
-      photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-      photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
+      photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 65),
+      photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+      photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])
   }
   
   private func configureInformationView() {
-    contentView.addSubview(informationView)
+    view.addSubview(informationView)
     informationView.axis = .vertical
     informationView.distribution = .equalSpacing
     informationView.translatesAutoresizingMaskIntoConstraints = false
@@ -187,8 +158,8 @@ class PhotoInfoVC: DataLoadingVC {
     
     NSLayoutConstraint.activate([
       informationView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
-      informationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-      informationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
+      informationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+      informationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])
     
   }

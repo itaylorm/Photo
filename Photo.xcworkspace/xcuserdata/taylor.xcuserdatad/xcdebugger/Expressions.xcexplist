@@ -6,21 +6,38 @@
          contextName = "PhotoInfoVC.getPhoto():PhotoInfoVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "image.size.width">
+               value = "photo!.size.width">
             </PersistentString>
             <PersistentString
-               value = "image.size.height">
+               value = "image!.size.width">
             </PersistentString>
             <PersistentString
-               value = "self.photoImageView.bounds.width">
+               value = "image!.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PhotoManager.getLandscapeSize(size:bounds:):PhotoManager.swift">
+         contextName = "CIImageMock.init(contentsOf:):CIImageMock.swift">
          <PersistentStrings>
             <PersistentString
-               value = "bounds.height">
+               value = "exifData.replacingOccurrences(of: &quot;\n&quot;, with: &quot;&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "_properties">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoInfoVC.changeInformationDisplay(_:):PhotoInfoVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PhotoInfoVC.getLandscapePhoto():PhotoInfoVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "view.bounds.height">
+            </PersistentString>
+            <PersistentString
+               value = "view.bounds.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -33,13 +50,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PhotoInfoVC.getLandscapePhoto():PhotoInfoVC.swift">
+         contextName = "PhotoManager.getPhoto(photoViewModel:available:photoType:):PhotoManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "view.bounds.height">
+               value = "photo!.size.width">
             </PersistentString>
             <PersistentString
-               value = "view.bounds.width">
+               value = "photo!.size.height">
+            </PersistentString>
+            <PersistentString
+               value = "asset.pixelHeight">
+            </PersistentString>
+            <PersistentString
+               value = "asset.pixelWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -63,21 +86,18 @@
          contextName = "closure #1 in PhotoManager.getPhotoInformation(viewModel:completed:):PhotoManager.swift">
       </ContextState>
       <ContextState
-         contextName = "PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
+         contextName = "PhotoManager.getLandscapeSize(size:bounds:):PhotoManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "assetManager">
+               value = "bounds.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CIImageMock.init(contentsOf:):CIImageMock.swift">
+         contextName = "PhotoManager.getImagesFromPhotoLibrary(page:):PhotoManager.swift">
          <PersistentStrings>
             <PersistentString
-               value = "exifData.replacingOccurrences(of: &quot;\n&quot;, with: &quot;&quot;)">
-            </PersistentString>
-            <PersistentString
-               value = "_properties">
+               value = "assetManager">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

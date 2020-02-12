@@ -79,7 +79,7 @@ class PhotoListVC: DataLoadingVC {
         
         if let cell = cell {
           if photoViewModel.thumbNail == nil {
-            photoViewModel.thumbNail = PhotoManager.shared.getPhoto(photoViewModel: photoViewModel, bounds: cell.bounds, photoType: .forList)
+            photoViewModel.thumbNail = PhotoManager.shared.getPhoto(photoViewModel: photoViewModel, available: cell.bounds, photoType: .forList)
           }
           cell.set(photoViewModel: photoViewModel)
         }

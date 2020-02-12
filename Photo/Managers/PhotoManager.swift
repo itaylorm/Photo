@@ -28,14 +28,13 @@ class PhotoManager {
     self.assetManager = assetManager
   }
   
-  func getPhoto(photoViewModel: PhotoViewModel, bounds: CGRect, photoType: PhotoType) -> UIImage? {
+  func getPhoto(photoViewModel: PhotoViewModel, available: CGRect, photoType: PhotoType) -> UIImage? {
     var photo: UIImage?
     let asset = photoViewModel.asset
-    let size = getPhotoSizeToRequest(size: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), bounds: bounds)
-    
+    let size = getPhotoSizeToRequest(assetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), available: available)
     let options = PHImageRequestOptions()
     options.isSynchronous = true
-    options.resizeMode = .exact
+    options.resizeMode = .fast
     
     switch photoType {
     case .forList:
@@ -46,7 +45,7 @@ class PhotoManager {
     
     assetManager.requestImage(for: asset,
                                           targetSize: size,
-                                          contentMode: .aspectFit, options: options) { (image, _) in
+                                          contentMode: .default, options: options) { (image, _) in
                                             if let image = image {
                                               photo = image
                                             } else {
@@ -56,11 +55,11 @@ class PhotoManager {
     return photo
   }
   
-  func resizePhoto(image: UIImage?, bounds: CGRect) -> UIImage? {
+  func resizePhoto(image: UIImage?, available: CGRect) -> UIImage? {
     guard let image = image else { return nil }
     
     var newImage: UIImage?
-    let newSize = getPhotoSizeToRequest(size: image.size, bounds: bounds)
+    let newSize = getPhotoSizeToRequest(assetSize: image.size, available: available)
     
     let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
     
@@ -124,6 +123,22 @@ class PhotoManager {
       completed(.success(viewModel))
       
     }
+  }
+  
+  func getPhotoSizeToRequest(assetSize: CGSize, available: CGRect) -> CGSize {
+    var height: CGFloat
+    var width: CGFloat
+    
+    let heightScale: CGFloat = available.height / assetSize.height
+    let widthScale: CGFloat = available.width / assetSize.width
+    if heightScale < widthScale {
+      height = assetSize.height * heightScale
+      width = assetSize.width * heightScale
+    } else {
+      height = assetSize.height * widthScale
+      width = assetSize.width * widthScale
+    }
+    return CGSize(width: width, height: height)
   }
   
   private func getImagesFromPhotoLibrary(page: Int) -> [PhotoViewModel] {
@@ -202,46 +217,6 @@ class PhotoManager {
     } else {
       print("IPTC Not Found")
     }
-  }
-  
-  private func getPhotoSizeToRequest(size: CGSize, bounds: CGRect) -> CGSize {
-    return UIScreen.main.bounds.height > UIScreen.main.bounds.width
-      ? getPortraitSize(size: size, bounds: bounds)
-      : getLandscapeSize(size: size, bounds: bounds)
-  }
-  
-  private func getPortraitSize(size: CGSize, bounds: CGRect) -> CGSize {
-    var newSize: CGSize
-    var widthRatio: CGFloat = 0
-    var heightRatio: CGFloat = 0
-    
-    if size.height > size.width {
-      widthRatio = bounds.width / size.width
-      heightRatio = size.height * widthRatio
-      newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-    } else {
-      widthRatio = 1.0
-      heightRatio = bounds.width / size.width
-      newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-    }
-    return newSize
-  }
-  
-  private func getLandscapeSize(size: CGSize, bounds: CGRect) -> CGSize {
-    var newSize: CGSize
-    var widthRatio: CGFloat = 0
-    var heightRatio: CGFloat = 0
-    
-    if size.width < size.height {
-      heightRatio = bounds.height / size.height
-      widthRatio = size.width * heightRatio
-      newSize = CGSize(width: size.width * widthRatio, height: (size.height * heightRatio) - 65)
-    } else {
-      heightRatio = 1.0
-      widthRatio = bounds.height / size.height
-      newSize = CGSize(width: size.width * widthRatio, height: (size.height * widthRatio) - 65)
-    }
-    return newSize
   }
   
   private func getValue(dictionary: [String: Any?], keyName: String, displayName: String) -> String {

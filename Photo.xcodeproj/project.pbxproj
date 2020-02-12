@@ -11,6 +11,8 @@
 		3406763423EB682500DED300 /* BodyLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763323EB682500DED300 /* BodyLabelTests.swift */; };
 		3406763623EB691800DED300 /* ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763523EB691800DED300 /* ButtonTests.swift */; };
 		3406763823EB6D4A00DED300 /* ContainerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3406763723EB6D4A00DED300 /* ContainerViewTests.swift */; };
+		340CCA3D23F426F400F80808 /* SegmentedContol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340CCA3C23F426F400F80808 /* SegmentedContol.swift */; };
+		340CCA3F23F44BA200F80808 /* PhotoManagerGetSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340CCA3E23F44BA200F80808 /* PhotoManagerGetSizeTests.swift */; };
 		342C98B523F1EDD9008454B9 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B423F1EDD9008454B9 /* AssetManager.swift */; };
 		342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */; };
 		342C98BA23F2067A008454B9 /* PHAssetMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C98B923F2067A008454B9 /* PHAssetMock.swift */; };
@@ -78,6 +80,8 @@
 		3406763323EB682500DED300 /* BodyLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabelTests.swift; sourceTree = "<group>"; };
 		3406763523EB691800DED300 /* ButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTests.swift; sourceTree = "<group>"; };
 		3406763723EB6D4A00DED300 /* ContainerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewTests.swift; sourceTree = "<group>"; };
+		340CCA3C23F426F400F80808 /* SegmentedContol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedContol.swift; sourceTree = "<group>"; };
+		340CCA3E23F44BA200F80808 /* PhotoManagerGetSizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerGetSizeTests.swift; sourceTree = "<group>"; };
 		342C98B423F1EDD9008454B9 /* AssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		342C98B723F1F8A9008454B9 /* AssetManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManagerMock.swift; sourceTree = "<group>"; };
 		342C98B923F2067A008454B9 /* PHAssetMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAssetMock.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 				349CDC4F23EB985F0041431F /* PhotoImageView.swift */,
 				34B5111723EDD809001C9B6D /* SecondaryTitleLabel.swift */,
 				34B5111B23EDE32B001C9B6D /* ValueView.swift */,
+				340CCA3C23F426F400F80808 /* SegmentedContol.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,18 +311,19 @@
 			isa = PBXGroup;
 			children = (
 				342C98B623F1F88C008454B9 /* Mocks */,
-				34CF228023EB3B8A00B5F25D /* Info.plist */,
-				34CF228623EB3C2400B5F25D /* TabBarControllerTests.swift */,
-				3406763123EB5E9B00DED300 /* TitleLabelTests.swift */,
+				342C98C123F2347C008454B9 /* AuthorizationTests.swift */,
 				3406763323EB682500DED300 /* BodyLabelTests.swift */,
 				3406763523EB691800DED300 /* ButtonTests.swift */,
 				3406763723EB6D4A00DED300 /* ContainerViewTests.swift */,
-				349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */,
 				34B5111323EDA296001C9B6D /* DateTests.swift */,
-				34B5111923EDD86E001C9B6D /* SecondaryTitleLabelTests.swift */,
-				342C98BF23F22530008454B9 /* PhotoManagerGetPhotosTests.swift */,
-				342C98C123F2347C008454B9 /* AuthorizationTests.swift */,
+				34CF228023EB3B8A00B5F25D /* Info.plist */,
+				349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */,
 				34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */,
+				342C98BF23F22530008454B9 /* PhotoManagerGetPhotosTests.swift */,
+				34B5111923EDD86E001C9B6D /* SecondaryTitleLabelTests.swift */,
+				34CF228623EB3C2400B5F25D /* TabBarControllerTests.swift */,
+				3406763123EB5E9B00DED300 /* TitleLabelTests.swift */,
+				340CCA3E23F44BA200F80808 /* PhotoManagerGetSizeTests.swift */,
 			);
 			path = PhotoTests;
 			sourceTree = "<group>";
@@ -477,6 +483,7 @@
 				349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */,
 				342C98B523F1EDD9008454B9 /* AssetManager.swift in Sources */,
 				34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */,
+				340CCA3D23F426F400F80808 /* SegmentedContol.swift in Sources */,
 				34BA87F723EC49F6009CA973 /* PHFetchResult+Ext.swift in Sources */,
 				34B5111C23EDE32B001C9B6D /* ValueView.swift in Sources */,
 				34BA87FC23EC6ED5009CA973 /* PhotoManager.swift in Sources */,
@@ -530,6 +537,7 @@
 				342C98B823F1F8A9008454B9 /* AssetManagerMock.swift in Sources */,
 				34D77CB023F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift in Sources */,
 				342C98BC23F21AE3008454B9 /* PHResultMock.swift in Sources */,
+				340CCA3F23F44BA200F80808 /* PhotoManagerGetSizeTests.swift in Sources */,
 				3406763623EB691800DED300 /* ButtonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
