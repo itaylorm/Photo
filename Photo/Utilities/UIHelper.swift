@@ -25,18 +25,22 @@ enum UIHelper {
     return flowLayout
   }
   
+  static func isLandscape() -> Bool {
+    return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+  }
+  
   static func createColumnFlowLayout(in view: UIView) -> UICollectionViewFlowLayout {
     
     var columns: CGFloat
     
     if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8Zoomed {
-      columns = 3
+      columns = isLandscape() ? 5 : 3
     } else if DeviceTypes.isiPhone8PlusStandard || DeviceTypes.isiPhoneX || DeviceTypes.isiPhoneXsMaxAndXr {
-      columns = 4
+      columns = isLandscape() ? 7 : 4
     } else if DeviceTypes.isiPad {
-      columns = 6
+      columns = isLandscape() ? 10 : 6
     } else {
-      columns = 4
+      columns = isLandscape() ? 7 : 4
     }
     
     let width = view.bounds.width

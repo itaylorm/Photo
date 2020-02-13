@@ -26,7 +26,6 @@ class PhotoListVC: DataLoadingVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configureViewController()
     configureCollectionView()
     getPhotos()
