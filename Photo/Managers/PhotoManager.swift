@@ -44,13 +44,13 @@ class PhotoManager {
     }
     
     assetManager.requestImage(for: asset,
-                                          targetSize: size,
-                                          contentMode: .default, options: options) { (image, _) in
-                                            if let image = image {
-                                              photo = image
-                                            } else {
-                                              print("Failed to retrieve image")
-                                            }
+                              targetSize: size,
+                              contentMode: .default, options: options) { (image, _) in
+                                if let image = image {
+                                  photo = image
+                                } else {
+                                  print("Failed to retrieve image")
+                                }
     }
     return photo
   }
@@ -109,10 +109,10 @@ class PhotoManager {
     assetManager.requestContentEditingInput(with: options, asset: viewModel.asset) { (contentEditingInput: PHContentEditingInput?, _) in
       guard let url = contentEditingInput?.fullSizeImageURL,
         let fullImage = self.assetManager.getCIImage(contentsOf: url) else {
-        completed(.failure(.unableToComplete))
-        return
+          completed(.failure(.unableToComplete))
+          return
       }
- 
+      
       viewModel.colorModel = self.getValue(image: fullImage, keyName: "ColorModel", displayName: "Color Model: ")
       viewModel.profileName = self.getValue(image: fullImage, keyName: "ProfileName", displayName: "Profile Name: ")
       self.getIptcInformation(fullImage: fullImage, viewModel: viewModel)
