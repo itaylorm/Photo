@@ -60,6 +60,7 @@
 		34D77CAC23F30508009FB6EB /* CIImageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAB23F30508009FB6EB /* CIImageMock.swift */; };
 		34D77CAE23F30A0C009FB6EB /* PHContentEditingInputMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */; };
 		34D77CB023F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */; };
+		34EC5AE723F7206D002E001F /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EC5AE623F7206D002E001F /* UIButton+Ext.swift */; };
 		34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */; };
 		8A788BB2104C70BCC72C0765 /* libPods-Photo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		34D77CAB23F30508009FB6EB /* CIImageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageMock.swift; sourceTree = "<group>"; };
 		34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHContentEditingInputMock.swift; sourceTree = "<group>"; };
 		34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerGetPhotoInformationTests.swift; sourceTree = "<group>"; };
+		34EC5AE623F7206D002E001F /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContainerView+Ext.swift"; sourceTree = "<group>"; };
 		71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo.release.xcconfig"; path = "Target Support Files/Pods-Photo/Pods-Photo.release.xcconfig"; sourceTree = "<group>"; };
 		87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Photo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,6 +305,7 @@
 				34CF227623EB347600B5F25D /* UITabBarController+Ext.swift */,
 				34BA87F623EC49F6009CA973 /* PHFetchResult+Ext.swift */,
 				34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */,
+				34EC5AE623F7206D002E001F /* UIButton+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				34CF226123EB1D5300B5F25D /* ContainerView.swift in Sources */,
 				34CF227323EB1F7700B5F25D /* MemoriesVC.swift in Sources */,
 				34CF226D23EB1EB800B5F25D /* PhotoListVC.swift in Sources */,
+				34EC5AE723F7206D002E001F /* UIButton+Ext.swift in Sources */,
 				34CF226B23EB1E3000B5F25D /* UITableView+Ext.swift in Sources */,
 				34CF223523EB030900B5F25D /* AppDelegate.swift in Sources */,
 				34CF226F23EB1EEE00B5F25D /* AlbumsVC.swift in Sources */,

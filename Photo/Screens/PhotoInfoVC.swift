@@ -92,8 +92,6 @@ class PhotoInfoVC: DataLoadingVC {
       let height = image.size.height
       let width = image.size.width
       photoImageView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-      print(image.size.height)
-      print(image.size.width)
       creationDateView.value = currentViewModel.creationDate?.convertToDateFormat() ?? "Unknown"
       creationTimeView.value = currentViewModel.creationDate?.convertToTimeFormat() ?? "Unknown"
     }
@@ -174,8 +172,7 @@ class PhotoInfoVC: DataLoadingVC {
     NSLayoutConstraint.activate([
       informationView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
       informationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-      informationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-      informationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+      informationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
     ])
     
   }
