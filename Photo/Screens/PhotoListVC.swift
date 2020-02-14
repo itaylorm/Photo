@@ -68,7 +68,15 @@ class PhotoListVC: DataLoadingVC {
     collectionView.backgroundColor = .systemBackground
     collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
     collectionView.delegate = self
-    collectionView.pinToEdges(of: view)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+      collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    ])
+
   }
   
   private func configureDataSource() {

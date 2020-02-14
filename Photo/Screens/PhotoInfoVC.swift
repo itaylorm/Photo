@@ -173,8 +173,9 @@ class PhotoInfoVC: DataLoadingVC {
     
     NSLayoutConstraint.activate([
       informationView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: padding),
-      informationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-      informationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
+      informationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
+      informationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+      informationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     ])
     
   }

@@ -187,7 +187,7 @@ class PhotoManager {
       
       if let isoRaw = exifDictionary["ISOSpeedRatings"], let isoArray = isoRaw as? [Int] {
         viewModel.iso = isoArray.map { String($0) }.joined(separator: ",")
-        print("ISO: \(viewModel.iso!)")
+        //print("ISO: \(viewModel.iso!)")
       }
     } else {
       print("EXIF Not Found")
@@ -212,7 +212,7 @@ class PhotoManager {
       
       if let keywordRaw = iptcDictionary["Keywords"], let keywordArray = keywordRaw as? [String] {
         viewModel.keyWords = keywordArray.joined(separator: ",")
-        print("Keywords: \(viewModel.keyWords!)")
+        //print("Keywords: \(viewModel.keyWords!)")
       }
     } else {
       print("IPTC Not Found")
@@ -221,7 +221,7 @@ class PhotoManager {
   
   private func getValue(dictionary: [String: Any?], keyName: String, displayName: String) -> String {
     if let optionalValue = dictionary[keyName], let value = optionalValue {
-      print("\(displayName) \(value)")
+      //print("\(displayName) \(value)")
       return String(describing: value)
     }
     return ""
@@ -229,7 +229,7 @@ class PhotoManager {
   
   private func getValue(image: CIImage, keyName: String, displayName: String) -> String {
     if let optionalValue = image.properties[keyName], let value = optionalValue as? String {
-      print("\(displayName) \(value)")
+      //print("\(displayName) \(value)")
       return String(describing: value)
     }
     return ""
