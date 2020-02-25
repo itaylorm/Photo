@@ -49,7 +49,6 @@ class PhotoInfoVC: DataLoadingVC {
   }
   
   @objc func rotated() {
-    configurePhotoViewTopConstraint()
     getPhoto()
   }
   
@@ -68,17 +67,6 @@ class PhotoInfoVC: DataLoadingVC {
                       options: [.transitionCrossDissolve], animations: {
                         self.getPhoto()
     }, completion: nil)
-  }
-  
-  private func configurePhotoViewTopConstraint() {
-    if photoViewTopConstraint != nil { photoViewTopConstraint?.isActive = false }
-    if UIHelper.isLandscape() {
-      photoViewTopConstraint = photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
-      photoViewTopConstraint?.isActive = true
-    } else {
-      photoViewTopConstraint = photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 65)
-      photoViewTopConstraint?.isActive = true
-    }
   }
   
   private func getPhoto() {
@@ -171,9 +159,8 @@ class PhotoInfoVC: DataLoadingVC {
     rightSwipe.direction = .right
     view.addGestureRecognizer(rightSwipe)
     
-    configurePhotoViewTopConstraint()
     NSLayoutConstraint.activate([
-      photoViewTopConstraint!,
+      photoImageView.topAnchor.constraint(equalTo: segmented.bottomAnchor, constant: padding),
       photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
     ])
