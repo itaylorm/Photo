@@ -130,9 +130,11 @@ extension PhotoListVC: UICollectionViewDelegate {
     destinationVC.viewModels = photoViewModels
     destinationVC.currentIndex = indexPath.row
     destinationVC.currentViewModel = viewModel
-    let navigationController = UINavigationController(rootViewController: destinationVC)
-    navigationController.modalPresentationStyle = .fullScreen
-    present(navigationController, animated: true)
+    destinationVC.modalPresentationStyle = .fullScreen
+    present(destinationVC, animated: true)
+    //let navigationController = UINavigationController(rootViewController: destinationVC)
+    //navigationController.modalPresentationStyle = .fullScreen
+    //present(navigationController, animated: true)
     
   }
 }

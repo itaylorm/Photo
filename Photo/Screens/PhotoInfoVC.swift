@@ -13,7 +13,9 @@ class PhotoInfoVC: DataLoadingVC {
   
   let photoImageView = PhotoImageView(frame: .zero)
   let informationView = UIStackView()
-
+  let doneButton = Button(backgroundColor: UIColor.systemGreen, title: "Done")
+  let segmented = SegmentedControl(titles: ["Display Info", "Hide Info"])
+  
   var spaceView = ValueView(frame: .zero)
   var creationDateView = ValueView(title: "Date:")
   var creationTimeView = ValueView(title: "Time:")
@@ -81,7 +83,7 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func getPhoto() {
     var image: UIImage?
-    let heightModifier: CGFloat = showPhotoInformation ? 170 : 0
+    let heightModifier: CGFloat = showPhotoInformation ? 170 : 60
     let imageBounds = CGRect(x: 0, y: 0, width: view.bounds.width - padding, height: view.bounds.height - heightModifier)
     image = PhotoManager.shared.getPhoto(photoViewModel: currentViewModel, available: imageBounds, photoType: .forInfo)
     currentViewModel.imagePortrait = image
@@ -121,15 +123,9 @@ class PhotoInfoVC: DataLoadingVC {
   
   private func configureViewController() {
     view.backgroundColor = .systemBackground
-    
-    let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
-    navigationItem.rightBarButtonItem = doneButton
-    
-    let segmented = SegmentedControl(titles: ["Display Info", "Hide Info"])
-    segmented.addTarget(self, action: #selector(changeInformationDisplay(_:)), for: .valueChanged)
-    let segmentedButton = UIBarButtonItem(customView: segmented)
-    navigationItem.leftBarButtonItem = segmentedButton
-    
+    view.addSubviews(doneButton, segmented)
+    configureDoneButton()
+    configureSegmented()
   }
   
   @objc func changeInformationDisplay(_ sender: SegmentedControl) {
@@ -140,6 +136,28 @@ class PhotoInfoVC: DataLoadingVC {
   
   @objc func changeSwitch(_ sender: UISwitch) {
     title = sender.isOn == true ? "" : "Photo info hidden"
+  }
+  
+  private func configureDoneButton() {
+    doneButton.addTarget(self, action: #selector(dismissVC), for: .touchDown)
+    
+    NSLayoutConstraint.activate([
+      doneButton.widthAnchor.constraint(equalToConstant: 75),
+      doneButton.heightAnchor.constraint(equalToConstant: 30),
+      doneButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+      doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+    ])
+  }
+  
+  private func configureSegmented() {
+    segmented.addTarget(self, action: #selector(changeInformationDisplay(_:)), for: .valueChanged)
+    view.addSubview(segmented)
+    NSLayoutConstraint.activate([
+      segmented.widthAnchor.constraint(equalToConstant: 175),
+      segmented.heightAnchor.constraint(equalToConstant: 30),
+      segmented.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+      segmented.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding)
+    ])
   }
   
   private func configurePhotoView() {

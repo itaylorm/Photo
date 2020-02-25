@@ -153,7 +153,7 @@ class PhotoManager {
     let fetchOptions = PHFetchOptions()
     fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
     
-    //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
+  //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
     //    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
     //    let endDate = Date.convertToNSDate(Date.create(year: 2019, month: 12, day: 31))!
     //    fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
