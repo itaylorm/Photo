@@ -24,12 +24,15 @@ class PhotoListVC: DataLoadingVC {
   var photoViewModels = [PhotoViewModel]()
   var dataSource: UICollectionViewDiffableDataSource<Section, PhotoViewModel>!
   
+  var searchCriteria = SearchCriteria()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     configureViewController()
     configureCollectionView()
     getPhotos()
     configureDataSource()
+    configureSearchCriteria()
   }
   
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -57,9 +60,7 @@ class PhotoListVC: DataLoadingVC {
   }
   
   private func configureViewController() {
-    title = "Photos"
     view.backgroundColor = Colors.background
-    navigationController?.navigationBar.prefersLargeTitles = true
   }
   
   private func configureCollectionView() {
@@ -77,6 +78,16 @@ class PhotoListVC: DataLoadingVC {
       collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     ])
 
+  }
+  
+  private func configureSearchCriteria() {
+    view.addSubview(searchCriteria)
+    
+    NSLayoutConstraint.activate([
+      searchCriteria.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+      searchCriteria.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+      searchCriteria.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
+    ])
   }
   
   private func configureDataSource() {

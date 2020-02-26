@@ -17,8 +17,11 @@ class TabBarController: UITabBarController {
         self.viewControllers = [createPhotosNC(), createAlbumsNC(), createLocationsNC(), createMemoriesNC()]
     }
     
-    func createPhotosNC() -> UINavigationController {
-        return createNC(viewController: PhotoListVC(), title: TabBarNames.photos, image: Images.tabImagePhotos, tabPosition: TabBarIndexes.photos)
+    func createPhotosNC() -> UIViewController {
+      let viewController = PhotoListVC()
+      viewController.title = title
+      viewController.tabBarItem = UITabBarItem(title: TabBarNames.photos, image: Images.tabImagePhotos, tag: TabBarIndexes.photos)
+      return viewController
     }
     
     func createAlbumsNC() -> UINavigationController {

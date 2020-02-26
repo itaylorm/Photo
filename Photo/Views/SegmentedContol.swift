@@ -42,4 +42,5 @@ class SegmentedControl: UISegmentedControl {
       backgroundColor = .systemGroupedBackground
       selectedSegmentTintColor = .systemGreen
   }
+  
 }

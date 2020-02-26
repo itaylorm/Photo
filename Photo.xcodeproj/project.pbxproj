@@ -23,6 +23,8 @@
 		349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4D23EB97860041431F /* PhotoCell.swift */; };
 		349CDC5023EB985F0041431F /* PhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC4F23EB985F0041431F /* PhotoImageView.swift */; };
 		349CDC5223EB98F70041431F /* PhotoImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */; };
+		34AEAC5D2405B3F600D26EF2 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AEAC5C2405B3F600D26EF2 /* FloatingActionButton.swift */; };
+		34AEAC5F2405B99400D26EF2 /* FloatingSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AEAC5E2405B99400D26EF2 /* FloatingSegment.swift */; };
 		34B5111423EDA296001C9B6D /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B5111323EDA296001C9B6D /* DateTests.swift */; };
 		34B5111623EDC923001C9B6D /* PhotoInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B5111523EDC923001C9B6D /* PhotoInfoVC.swift */; };
 		34B5111823EDD809001C9B6D /* SecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B5111723EDD809001C9B6D /* SecondaryTitleLabel.swift */; };
@@ -60,6 +62,7 @@
 		34D77CAC23F30508009FB6EB /* CIImageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAB23F30508009FB6EB /* CIImageMock.swift */; };
 		34D77CAE23F30A0C009FB6EB /* PHContentEditingInputMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */; };
 		34D77CB023F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */; };
+		34E466CB2406D3A700F2EB5D /* SearchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E466CA2406D3A700F2EB5D /* SearchCriteria.swift */; };
 		34EC5AE723F7206D002E001F /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EC5AE623F7206D002E001F /* UIButton+Ext.swift */; };
 		34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */; };
 		8A788BB2104C70BCC72C0765 /* libPods-Photo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC7ECEFCAE816ECA7D63C7 /* libPods-Photo.a */; };
@@ -93,6 +96,8 @@
 		349CDC4D23EB97860041431F /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		349CDC4F23EB985F0041431F /* PhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageView.swift; sourceTree = "<group>"; };
 		349CDC5123EB98F70041431F /* PhotoImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageViewTests.swift; sourceTree = "<group>"; };
+		34AEAC5C2405B3F600D26EF2 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
+		34AEAC5E2405B99400D26EF2 /* FloatingSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSegment.swift; sourceTree = "<group>"; };
 		34B5111323EDA296001C9B6D /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 		34B5111523EDC923001C9B6D /* PhotoInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoVC.swift; sourceTree = "<group>"; };
 		34B5111723EDD809001C9B6D /* SecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryTitleLabel.swift; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 		34D77CAB23F30508009FB6EB /* CIImageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageMock.swift; sourceTree = "<group>"; };
 		34D77CAD23F30A0C009FB6EB /* PHContentEditingInputMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHContentEditingInputMock.swift; sourceTree = "<group>"; };
 		34D77CAF23F31435009FB6EB /* PhotoManagerGetPhotoInformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerGetPhotoInformationTests.swift; sourceTree = "<group>"; };
+		34E466CA2406D3A700F2EB5D /* SearchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCriteria.swift; sourceTree = "<group>"; };
 		34EC5AE623F7206D002E001F /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		34F7EA2023F1C86200A8ACA5 /* UIContainerView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContainerView+Ext.swift"; sourceTree = "<group>"; };
 		71AAAE327A6E3C6EB79E7025 /* Pods-Photo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo.release.xcconfig"; path = "Target Support Files/Pods-Photo/Pods-Photo.release.xcconfig"; sourceTree = "<group>"; };
@@ -279,6 +285,9 @@
 				34B5111723EDD809001C9B6D /* SecondaryTitleLabel.swift */,
 				34B5111B23EDE32B001C9B6D /* ValueView.swift */,
 				340CCA3C23F426F400F80808 /* SegmentedContol.swift */,
+				34AEAC5C2405B3F600D26EF2 /* FloatingActionButton.swift */,
+				34AEAC5E2405B99400D26EF2 /* FloatingSegment.swift */,
+				34E466CA2406D3A700F2EB5D /* SearchCriteria.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -488,6 +497,8 @@
 				34F7EA2123F1C86200A8ACA5 /* UIContainerView+Ext.swift in Sources */,
 				340CCA3D23F426F400F80808 /* SegmentedContol.swift in Sources */,
 				34BA87F723EC49F6009CA973 /* PHFetchResult+Ext.swift in Sources */,
+				34AEAC5F2405B99400D26EF2 /* FloatingSegment.swift in Sources */,
+				34E466CB2406D3A700F2EB5D /* SearchCriteria.swift in Sources */,
 				34B5111C23EDE32B001C9B6D /* ValueView.swift in Sources */,
 				34BA87FC23EC6ED5009CA973 /* PhotoManager.swift in Sources */,
 				34B5111823EDD809001C9B6D /* SecondaryTitleLabel.swift in Sources */,
@@ -517,6 +528,7 @@
 				349CDC4E23EB97860041431F /* PhotoCell.swift in Sources */,
 				34CF227123EB1F5500B5F25D /* LocationsVC.swift in Sources */,
 				34CF225923EB1C8600B5F25D /* String+Ext.swift in Sources */,
+				34AEAC5D2405B3F600D26EF2 /* FloatingActionButton.swift in Sources */,
 				34BA87F323EC420F009CA973 /* UIHelper.swift in Sources */,
 				34CF225423EB1BD000B5F25D /* Constants.swift in Sources */,
 			);
