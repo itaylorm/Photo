@@ -9,14 +9,21 @@
 import Foundation
 import UIKit
 
+protocol SearchCriterialDelegate: class {
+  func didTapSearch()
+  func didCancelSearch()
+}
+
 class SearchCriteria: UIView {
+  
+  weak var delegate: SearchCriterialDelegate!
   
   var startDate: Date? {
     if selectedYear != -1 {
       let calendar = Calendar.current
-      selectedMonth = selectedMonth == -1 ? 1 : selectedMonth
-      selectedDay = selectedDay == -1 ? 1 : selectedDay
-      let components = DateComponents(calendar: calendar, year: selectedYear, month: selectedMonth, day: selectedDay)
+      let month = selectedMonth == -1 ? 1 : selectedMonth
+      let day = selectedDay == -1 ? 1 : selectedDay
+      let components = DateComponents(calendar: calendar, year: selectedYear, month: month, day: day)
       return components.date
     } else {
       return nil
@@ -28,9 +35,8 @@ class SearchCriteria: UIView {
       let calendar = Calendar.current
       let current = Date()
       selectedYear = selectedYear == 0 ? Date().year() : selectedYear
-      selectedMonth = selectedMonth == -1 ? 1 : selectedMonth
-
-      var components = DateComponents(calendar: calendar, year: selectedYear, month: selectedMonth)
+      let month = selectedMonth == -1 ? 12 : selectedMonth
+      var components = DateComponents(calendar: calendar, year: selectedYear, month: month)
       let selectedYearMonth = components.date ?? current
       let endOfMonthDay = selectedDay == -1 ? selectedYearMonth.endOfMonth()?.day() : selectedDay
       components.day = endOfMonthDay
@@ -57,7 +63,12 @@ class SearchCriteria: UIView {
   }
   
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+      fatalError("init(coder:) has not been implemented")
+  }
+  
+  convenience init(delegate: SearchCriterialDelegate) {
+    self.init(frame: .zero)
+    self.delegate = delegate
   }
   
   @objc func mainChange( _ mainSegment: FloatingSegment) {
@@ -101,6 +112,7 @@ class SearchCriteria: UIView {
         segment.isHidden = true
         mainSegment.isHidden = false
         mainSegment.selectedSegmentIndex = 0
+        delegate.didCancelSearch()
       }
     } else if segment.selectedSegmentIndex == 7 {
       if let yearString = segment.titleForSegment(at: 6),
@@ -119,6 +131,9 @@ class SearchCriteria: UIView {
       }
       //yearSegment.isHidden = true
       //monthSegment.isHidden = false
+      
+      delegate.didTapSearch()
+      
     }
   }
   

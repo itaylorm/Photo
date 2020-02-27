@@ -41,7 +41,7 @@ class PhotoInfoVC: DataLoadingVC {
     configurePhotoView()
     configureInformationView()
     getPhoto()
-    getPhotoExtendedInformation()
+    //getPhotoExtendedInformation()
   }
   
   deinit {

@@ -20,7 +20,7 @@ class PhotoManager {
   
   var assetManager: AssetManagerProtocol = AssetManager()
   
-  let itemCountPerPage = 1000
+  let itemCountPerPage = 10000
   
   init() {}
   

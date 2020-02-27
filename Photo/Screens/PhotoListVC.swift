@@ -19,12 +19,14 @@ class PhotoListVC: DataLoadingVC {
   private var page = 1
   private var isLoadingMorePhotos = false
   private var hasMorePhotos = true
+  private var isSearching = false
   
   var collectionView: UICollectionView!
-  var photoViewModels = [PhotoViewModel]()
+  var photos: [PhotoViewModel] = []
+  var filteredPhotos: [PhotoViewModel] = []
   var dataSource: UICollectionViewDiffableDataSource<Section, PhotoViewModel>!
   
-  var searchCriteria = SearchCriteria()
+  var searchCriteria: SearchCriteria!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,19 +46,31 @@ class PhotoListVC: DataLoadingVC {
     showLoadingView()
     isLoadingMorePhotos = true
     
-    PhotoManager.shared.getPhotos(page: page, startDate: searchCriteria.startDate, endDate: searchCriteria.endDate) { [weak self] result in
+    PhotoManager.shared.getPhotos(page: page) { [weak self] result in
       guard let self = self else { return }
       
       self.dismissLoadingView()
       
       switch result {
       case .success(let photoViewModels):
-        self.updateData(on: photoViewModels)
+        self.photos.append(contentsOf: photoViewModels)
+        self.updateData(on: self.photos)
       case .failure(let error):
         self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "OK")
       }
     }
     self.isLoadingMorePhotos = false
+  }
+  
+  private func getPhotosFiltered() {
+    guard let startDate = searchCriteria.startDate, let endDate = searchCriteria.endDate else {
+      filteredPhotos.removeAll()
+      updateData(on: photos)
+      return
+    }
+    
+    filteredPhotos = photos.filter { ($0.creationDate?.isBetween(startDate, and: endDate) ?? false)}
+    updateData(on: filteredPhotos)
   }
   
   private func configureViewController() {
@@ -81,6 +95,7 @@ class PhotoListVC: DataLoadingVC {
   }
   
   private func configureSearchCriteria() {
+    searchCriteria = SearchCriteria(delegate: self)
     view.addSubview(searchCriteria)
     
     NSLayoutConstraint.activate([
@@ -106,13 +121,11 @@ class PhotoListVC: DataLoadingVC {
   }
   
   private func updateData(on images: [PhotoViewModel]) {
-    if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
-    
-    self.photoViewModels.append(contentsOf: images)
+    //if images.count < PhotoManager.shared.itemCountPerPage { self.hasMorePhotos = false }
     
     var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoViewModel>()
     snapshot.appendSections([.main])
-    snapshot.appendItems(self.photoViewModels)
+    snapshot.appendItems(images)
     
     DispatchQueue.main.async {
       self.dataSource.apply(snapshot, animatingDifferences: true)
@@ -134,14 +147,26 @@ extension PhotoListVC: UICollectionViewDelegate {
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let viewModel = photoViewModels[indexPath.row]
-    
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {    
     let destinationVC = PhotoInfoVC()
-    destinationVC.viewModels = photoViewModels
+    destinationVC.viewModels = isSearching ? filteredPhotos : photos
     destinationVC.currentIndex = indexPath.row
-    destinationVC.currentViewModel = viewModel
+    destinationVC.currentViewModel = isSearching ? filteredPhotos[indexPath.row] : photos[indexPath.row]
     destinationVC.modalPresentationStyle = .fullScreen
     present(destinationVC, animated: true)
   }
+}
+
+extension PhotoListVC: SearchCriterialDelegate {
+  
+  func didTapSearch() {
+    isSearching = true
+    getPhotosFiltered()
+  }
+  
+  func didCancelSearch() {
+    isSearching = false
+    updateData(on: photos)
+  }
+  
 }
