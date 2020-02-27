@@ -44,7 +44,7 @@ class PhotoListVC: DataLoadingVC {
     showLoadingView()
     isLoadingMorePhotos = true
     
-    PhotoManager.shared.getPhotos(page: page) { [weak self] result in
+    PhotoManager.shared.getPhotos(page: page, startDate: searchCriteria.startDate, endDate: searchCriteria.endDate) { [weak self] result in
       guard let self = self else { return }
       
       self.dismissLoadingView()

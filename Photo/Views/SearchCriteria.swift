@@ -6,19 +6,48 @@
 //  Copyright © 2020 Taylor Maxwell. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class SearchCriteria: UIView {
   
-  var startDate: Date?
-  var endDate: Date?
-  var selectedYear = 0
-  var selectedMonth = 0
-  var selectedDay = 0
+  var startDate: Date? {
+    if selectedYear != -1 {
+      let calendar = Calendar.current
+      selectedMonth = selectedMonth == -1 ? 1 : selectedMonth
+      selectedDay = selectedDay == -1 ? 1 : selectedDay
+      let components = DateComponents(calendar: calendar, year: selectedYear, month: selectedMonth, day: selectedDay)
+      return components.date
+    } else {
+      return nil
+    }
+  }
+  
+  var endDate: Date? {
+    if selectedYear != -1 {
+      let calendar = Calendar.current
+      let current = Date()
+      selectedYear = selectedYear == 0 ? Date().year() : selectedYear
+      selectedMonth = selectedMonth == -1 ? 1 : selectedMonth
+
+      var components = DateComponents(calendar: calendar, year: selectedYear, month: selectedMonth)
+      let selectedYearMonth = components.date ?? current
+      let endOfMonthDay = selectedDay == -1 ? selectedYearMonth.endOfMonth()?.day() : selectedDay
+      components.day = endOfMonthDay
+      return components.date
+    } else {
+      return nil
+    }
+  }
+  
+  var displayedYears = [Int]()
+  var selectedYear = -1
+  var selectedMonth = -1
+  var selectedDay = -1
   
   let mainSegment = FloatingSegment(titles: ["All", "Search"])
   let yearSegment = FloatingSegment(frame: .zero)
-  let monthSegment = FloatingSegment(titles: ["Jan", "Feb", "March", "April", "May", "June", "July",
+  let monthSegment = FloatingSegment(titles: ["Back", "Jan", "Feb", "March", "April", "May", "June", "July",
                                               "August", "September", "October", "November", "December"])
   let daySegment = FloatingSegment(frame: .zero)
   
@@ -31,39 +60,108 @@ class SearchCriteria: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  @objc func changeDisplay( _ segment: FloatingSegment) {
+  @objc func mainChange( _ mainSegment: FloatingSegment) {
   
-    switch segment.selectedSegmentIndex {
+    switch mainSegment.selectedSegmentIndex {
     case 0:
-      segment.removeAllSegments()
-      segment.insertSegment(withTitle: "All", at: 0, animated: true)
-      segment.insertSegment(withTitle: "Search", at: 1, animated: true)
-      segment.selectedSegmentIndex = 0
+      print("Search All")
     case 1:
-      segment.removeAllSegments()
-      segment.insertSegment(withTitle: "Back", at: 0, animated: true)
-      segment.insertSegment(withTitle: "Year", at: 1, animated: true)
-      segment.insertSegment(withTitle: "Month", at: 2, animated: true)
-      segment.insertSegment(withTitle: "Day", at: 3, animated: true)
-      segment.selectedSegmentIndex = 1
+      if yearSegment.numberOfSegments <= 0 {
+        displayYears(Date().year(), 5)
+      }
+      mainSegment.isHidden = true
+      yearSegment.isHidden = false
     default:
-      segment.removeAllSegments()
-      segment.insertSegment(withTitle: "All", at: 0, animated: true)
-      segment.insertSegment(withTitle: "Search", at: 1, animated: true)
-      segment.selectedSegmentIndex = 0
+      mainSegment.isHidden = false
+      yearSegment.isHidden = true
     }
+  }
+  
+  func displayYears(_ end: Int, _ increment: Int) {
+    let start = end - increment
+    let range = start < end ? [Int](start...end).reversed() : [Int](end...start).reversed()
+    yearSegment.removeAllSegments()
+    yearSegment.insertSegment(withTitle: "Back", at: 0, animated: true)
+    var index = 1
+    range.forEach { year in
+      yearSegment.insertSegment(withTitle: String(year), at: index, animated: true)
+      index += 1
+    }
+    yearSegment.insertSegment(withTitle: "...", at: 7, animated: true)
+    
+  }
+  
+  @objc func yearChange( _ segment: FloatingSegment) {
+    
+    if segment.selectedSegmentIndex == 0 {
+      if let yearString = segment.titleForSegment(at: 1),
+        let year = Int(yearString), year != Date().year() {
+        displayYears(year, -5)
+      } else {
+        segment.isHidden = true
+        mainSegment.isHidden = false
+        mainSegment.selectedSegmentIndex = 0
+      }
+    } else if segment.selectedSegmentIndex == 7 {
+      if let yearString = segment.titleForSegment(at: 6),
+        let year = Int(yearString) {
+        displayYears(year, 5)
+      } else {
+        displayYears(2020, 5)
+      }
+    } else {
+      
+      if let yearString = segment.titleForSegment(at: segment.selectedSegmentIndex),
+        let year = Int(yearString) {
+        selectedYear = year
+      } else {
+        selectedYear = 2020
+      }
+      //yearSegment.isHidden = true
+      //monthSegment.isHidden = false
+    }
+  }
+  
+  @objc func monthChange( _ segment: FloatingSegment) {
+  }
+  
+  @objc func dayChange( _ segment: FloatingSegment) {
   }
   
   private func configure() {
     backgroundColor = UIColor.clear
     translatesAutoresizingMaskIntoConstraints = false
+    
     configureMainSegment()
+    configureYearSegment()
+    configureMonthSegment()
+    configureDaySegment()
   }
   
   private func configureMainSegment() {
     addSubview(mainSegment)
-    mainSegment.addTarget(self, action: #selector(changeDisplay(_:)), for: .valueChanged)
+    mainSegment.addTarget(self, action: #selector(mainChange(_:)), for: .valueChanged)
     mainSegment.pinToEdges(of: self)
   }
   
+  private func configureYearSegment() {
+    addSubview(yearSegment)
+    yearSegment.addTarget(self, action: #selector(yearChange(_:)), for: .valueChanged)
+    yearSegment.pinToEdges(of: self)
+    yearSegment.isHidden = true
+  }
+  
+  private func configureMonthSegment() {
+    addSubview(monthSegment)
+    monthSegment.addTarget(self, action: #selector(monthChange(_:)), for: .valueChanged)
+    monthSegment.pinToEdges(of: self)
+    monthSegment.isHidden = true
+  }
+  
+  private func configureDaySegment() {
+    addSubview(daySegment)
+    daySegment.addTarget(self, action: #selector(dayChange(_:)), for: .valueChanged)
+    daySegment.pinToEdges(of: self)
+    daySegment.isHidden = true
+  }
 }

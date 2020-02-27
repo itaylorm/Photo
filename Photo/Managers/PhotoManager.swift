@@ -71,7 +71,7 @@ class PhotoManager {
     return newImage
   }
   
-  func getPhotos(page: Int, completed: @escaping(Result<[PhotoViewModel], IMError>) -> Void) {
+  func getPhotos(page: Int, startDate: Date? = nil, endDate: Date? = nil, completed: @escaping(Result<[PhotoViewModel], IMError>) -> Void) {
     guard page > 0 else {
       completed(.failure(IMError.pageIndexCannotBeZeroOrNegative))
       return
@@ -80,7 +80,7 @@ class PhotoManager {
     requestAccessToPhotos { (authorization: PHAuthorizationStatus) in
       switch authorization {
       case .authorized:
-        let photos = self.getImagesFromPhotoLibrary(page: page)
+        let photos = self.getImagesFromPhotoLibrary(page: page, startDate: startDate, endDate: endDate)
         completed(.success(photos))
       case .denied:
         completed(.failure(.denied))
@@ -141,7 +141,7 @@ class PhotoManager {
     return CGSize(width: width, height: height)
   }
   
-  private func getImagesFromPhotoLibrary(page: Int) -> [PhotoViewModel] {
+  private func getImagesFromPhotoLibrary(page: Int, startDate: Date?, endDate: Date?) -> [PhotoViewModel] {
     var images = [PhotoViewModel]()
     guard page > 0 else { return images }
     
@@ -154,9 +154,12 @@ class PhotoManager {
     fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
     
   //https://stackoverflow.com/questions/53098339/fetch-all-photos-from-library-based-on-creationdate-in-swift-faster-way
-    //    let startDate = Date.convertToNSDate(Date.create(year: 2018, month: 01, day: 01))!
-    //    let endDate = Date.convertToNSDate(Date.create(year: 2019, month: 12, day: 31))!
-    //    fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
+    if let startDate = startDate, let endDate = endDate {
+      let start = Date.convertToNSDate(startDate)!
+      let end = Date.convertToNSDate(endDate)!
+      fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", start, end)
+    }
+
     let fetchResult: PHFetchResult = assetManager.fetchAssets(with: .image, options: fetchOptions)
     if !fetchResult.isEmpty() {
       

@@ -169,7 +169,7 @@ extension Date {
   
   func addYears(_ years: Int) -> Date? {
     let calendar = Calendar.current
-    return calendar.date(bySetting: .year, value: years, of: self)
+    return calendar.date(byAdding: .year, value: years, to: self)
   }
   
   func isEqualTo(_ date: Date, _ ignoreTime: Bool = false) -> Bool {
