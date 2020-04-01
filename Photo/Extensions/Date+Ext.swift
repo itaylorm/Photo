@@ -57,6 +57,15 @@ extension Date {
     return dateFormatter.date(from: dateString)
   }
   
+  static func year() -> Int {
+    let calendar = Calendar.current
+    return calendar.component(.year, from: Date())
+  }
+  
+  static func months() -> [String] {
+    return  ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  }
+  
   func convertToString() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -142,9 +151,13 @@ extension Date {
     return calendar.dateInterval(of: .month, for: self)?.start
   }
   
-  func endOfMonth() -> Date? {
+  func endOfMonth() -> Int {
     let calendar = Calendar.current
-    return calendar.dateInterval(of: .month, for: self)?.end
+    let month = calendar.component(.month, from: self)
+    let year = calendar.component(.year, from: self)
+    if [4, 6, 9, 11].contains(month) { return 30 }
+    if [1, 3, 5, 7, 8, 10, 12].contains(month) { return 31}
+    if month == 2 && Date.isLeapYear(year) { return 29 } else { return 28 }
   }
   
   func addMinutes(_ minutes: Int) -> Date? {

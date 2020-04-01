@@ -9,6 +9,18 @@
 import Foundation
 import UIKit
 
+var displayedYears = [Int]()
+var selectedYear = -1
+var selectedMonth = -1
+var selectedDay = -1
+var currentYear = Date.year()
+var startMonthIndex = 0
+
+let mainSegment = FloatingSegment(titles: ["All", "Search"])
+let yearSegment = FloatingSegment(frame: .zero)
+let monthSegment = FloatingSegment(titles: ["Back"])
+let daySegment = FloatingSegment(frame: .zero)
+
 protocol SearchCriterialDelegate: class {
   func didTapSearch()
   func didCancelSearch()
@@ -38,24 +50,13 @@ class SearchCriteria: UIView {
       let month = selectedMonth == -1 ? 12 : selectedMonth
       var components = DateComponents(calendar: calendar, year: selectedYear, month: month)
       let selectedYearMonth = components.date ?? current
-      let endOfMonthDay = selectedDay == -1 ? selectedYearMonth.endOfMonth()?.day() : selectedDay
+      let endOfMonthDay = selectedDay == -1 ? selectedYearMonth.endOfMonth() : selectedDay
       components.day = endOfMonthDay
       return components.date
     } else {
       return nil
     }
   }
-  
-  var displayedYears = [Int]()
-  var selectedYear = -1
-  var selectedMonth = -1
-  var selectedDay = -1
-  
-  let mainSegment = FloatingSegment(titles: ["All", "Search"])
-  let yearSegment = FloatingSegment(frame: .zero)
-  let monthSegment = FloatingSegment(titles: ["Back", "Jan", "Feb", "March", "April", "May", "June", "July",
-                                              "August", "September", "October", "November", "December"])
-  let daySegment = FloatingSegment(frame: .zero)
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -102,6 +103,23 @@ class SearchCriteria: UIView {
     
   }
   
+  func displayMonths(_ increment: Int) {
+    let months = Date.months()
+    var end = startMonthIndex + increment
+    if end > 11 { end = 11 }
+    let range = [Int](startMonthIndex...end)
+    startMonthIndex = end
+    monthSegment.removeAllSegments()
+    monthSegment.insertSegment(withTitle: "Back", at: 0, animated: true)
+    
+    var index = 1
+    range.forEach { month in
+      monthSegment.insertSegment(withTitle: months[month], at: index, animated: true)
+      index += 1
+    }
+    monthSegment.insertSegment(withTitle: "...", at: 8, animated: true)
+  }
+  
   @objc func yearChange( _ segment: FloatingSegment) {
     
     if segment.selectedSegmentIndex == 0 {
@@ -119,7 +137,7 @@ class SearchCriteria: UIView {
         let year = Int(yearString) {
         displayYears(year, 5)
       } else {
-        displayYears(2020, 5)
+        displayYears(currentYear, 5)
       }
     } else {
       
@@ -127,10 +145,13 @@ class SearchCriteria: UIView {
         let year = Int(yearString) {
         selectedYear = year
       } else {
-        selectedYear = 2020
+        selectedYear = currentYear
       }
-      //yearSegment.isHidden = true
-      //monthSegment.isHidden = false
+      
+      startMonthIndex = 0
+      displayMonths(6)
+      yearSegment.isHidden = true
+      monthSegment.isHidden = false
       
       delegate.didTapSearch()
       
@@ -138,6 +159,28 @@ class SearchCriteria: UIView {
   }
   
   @objc func monthChange( _ segment: FloatingSegment) {
+    if segment.selectedSegmentIndex == 0 {
+      if startMonthIndex == 11 {
+        startMonthIndex = 0
+        displayMonths(6)
+      } else {
+        segment.isHidden = true
+        yearSegment.isHidden = false
+        monthSegment.isHidden = true
+      }
+
+    } else if segment.selectedSegmentIndex == 8 {
+      if startMonthIndex >= 8 {
+        startMonthIndex = 0
+      }
+      displayMonths(6)
+    } else {
+      if let monthName = segment.titleForSegment(at: segment.selectedSegmentIndex), let position = Date.months().firstIndex(of: monthName) {
+        selectedMonth = position + 1
+        delegate.didTapSearch()
+      }
+      
+    }
   }
   
   @objc func dayChange( _ segment: FloatingSegment) {
