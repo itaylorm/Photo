@@ -148,6 +148,7 @@ class SearchCriteria: UIView {
         selectedYear = currentYear
       }
       
+      selectedMonth = 0
       startMonthIndex = 0
       displayMonths(6)
       yearSegment.isHidden = true
