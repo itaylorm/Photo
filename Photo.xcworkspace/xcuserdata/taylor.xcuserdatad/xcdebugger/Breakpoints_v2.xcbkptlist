@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "23050036-0143-4F80-9EC8-7C8BA7505B82"
-            shouldBeEnabled = "No"
+            uuid = "7B3459EE-2CA3-4719-B194-7243D060677D"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Photo/Views/SearchCriteria.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "displayMonths(_:)"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "yearChange(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -9,24 +9,24 @@
 import Foundation
 import UIKit
 
-var displayedYears = [Int]()
-var selectedYear = -1
-var selectedMonth = -1
-var selectedDay = -1
-var currentYear = Date.year()
-var startMonthIndex = 0
-
-let mainSegment = FloatingSegment(titles: ["All", "Search"])
-let yearSegment = FloatingSegment(frame: .zero)
-let monthSegment = FloatingSegment(titles: ["Back"])
-let daySegment = FloatingSegment(frame: .zero)
-
 protocol SearchCriterialDelegate: class {
   func didTapSearch()
   func didCancelSearch()
 }
 
 class SearchCriteria: UIView {
+  
+  var displayedYears = [Int]()
+  var selectedYear = -1
+  var selectedMonth = -1
+  var selectedDay = -1
+  var currentYear = Date.year()
+  var startMonthIndex = 0
+
+  let mainSegment = FloatingSegment(titles: ["All", "Search"])
+  let yearSegment = FloatingSegment(frame: .zero)
+  let monthSegment = FloatingSegment(titles: ["Back"])
+  let daySegment = FloatingSegment(frame: .zero)
   
   weak var delegate: SearchCriterialDelegate!
   
@@ -73,7 +73,6 @@ class SearchCriteria: UIView {
   }
   
   @objc func mainChange( _ mainSegment: FloatingSegment) {
-  
     switch mainSegment.selectedSegmentIndex {
     case 0:
       print("Search All")
@@ -121,8 +120,10 @@ class SearchCriteria: UIView {
   }
   
   @objc func yearChange( _ segment: FloatingSegment) {
-    
     if segment.selectedSegmentIndex == 0 {
+      selectedMonth = -1
+      startMonthIndex = 0
+      
       if let yearString = segment.titleForSegment(at: 1),
         let year = Int(yearString), year != Date().year() {
         displayYears(year, -5)
@@ -148,7 +149,7 @@ class SearchCriteria: UIView {
         selectedYear = currentYear
       }
       
-      selectedMonth = 0
+      selectedMonth = -1
       startMonthIndex = 0
       displayMonths(6)
       yearSegment.isHidden = true
