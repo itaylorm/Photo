@@ -88,6 +88,8 @@ class PhotoManager {
         completed(.failure(.notDetermined))
       case .restricted:
         completed(.failure(.restricted))
+      case .limited:
+        completed(.failure(.denied))
       @unknown default:
         completed(.failure(.unableToComplete))
       }

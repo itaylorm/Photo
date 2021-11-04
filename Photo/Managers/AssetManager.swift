@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-protocol PHAssetProtocol: class {
+protocol PHAssetProtocol: AnyObject {
   var pixelWidth: Int { get set }
   var pixelHeight: Int { get set }
   var creationDate: Date? { get set }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol SearchCriterialDelegate: class {
+protocol SearchCriterialDelegate: AnyObject {
   func didTapSearch()
   func didCancelSearch()
 }
